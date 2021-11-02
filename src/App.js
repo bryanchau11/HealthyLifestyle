@@ -9,6 +9,14 @@ function App() {
   const args = JSON.parse(document.getElementById("data").text);
 
   // TODO: Implement your main page as a React component.
+  return (
+    <>
+    <h1> Welcome {args.current_user}</h1>
+    <form id="signup" method="POST" action="/logout">
+        <input id="submit" type="submit" value="LOGOUT" />
+    </form>
+    </>
+  );
 }
 
 export default App;
