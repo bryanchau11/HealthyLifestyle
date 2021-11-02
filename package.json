@@ -1,15 +1,14 @@
 {
   "dependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.6.3",
     "npm-watch": "^0.11.0",
-    "prettier": "^2.4.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-scripts": "^4.0.3",
-    "watch": "^1.0.2",
-    "web-vitals": "^1.1.2"
+    "prettier": "^2.2.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "^4.0.2",
+    "web-vitals": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -25,16 +24,17 @@
       ],
       "extensions": "js"
     }
-  },
+  }, 
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest",
-      "airbnb", 
-      "airbnb/hooks"
+      "react-app/jest"
     ]
   },
-  "eslintIgnore": ["index.js", "setupTests.js", "reportWebVitals.js", "App_testpurpose.test.js"],
+  "engines": {
+    "node": "16.13.0",
+    "npm": "8.1.0"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -47,13 +47,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8081",
-  "devDependencies": {
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-plugin-import": "^2.25.2",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-react": "^7.26.1",
-    "eslint-plugin-react-hooks": "^1.7.0"
-  }
+  "proxy": "http://localhost:8081"
 }
