@@ -1,11 +1,54 @@
 <html>
-    <head></head>
-    <body>
-        <h1>Sign up!</h1>
-        <form method="POST" action="/signup">
-            <input class="input is-large" type="text" name="username" placeholder="Your Username" autofocus="">
-            <input type="submit" value="Submit">
+
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="static/css/signup.css" type="text/css"/>
+</head>
+
+<body>
+    <div class="container">
+
+        <form id="signup" method="POST" action="/signup">
+
+            <div class="header">
+
+                <h3>Sign Up</h3>
+
+                <p>You want to fill out this form</p>
+
+            </div>
+
+            <div class="sep"></div>
+
+            <div class="inputs">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul id="flashes" class=flashes>
+                    {% for message in messages %}
+                    <li>{{ message }} </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+
+
+                <input type="text" name="username" placeholder="Username" />
+
+                <input type="password" name="password" placeholder="Password" />
+
+                <div class="checkboxy">
+                    <input name="cecky" id="checky" value="1" type="checkbox" /><label class="terms">I accept the terms
+                        of use</label>
+                </div>
+                <input id="submit" type="submit" value="SIGN UP HERE">
+
+
+            </div>
+            <p>Click here if you already have an account: <a href="login">Log in</a></p>
         </form>
-        <a href={{ url_for('login') }}>Log In</a>
-    </body>
+
+    </div>
+    ​
+</body>
+
 </html>
