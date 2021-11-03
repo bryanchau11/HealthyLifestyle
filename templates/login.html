@@ -1,11 +1,54 @@
 <html>
-    <head></head>
-    <body>
-        <h1>Log In</h1>
-        <form method="POST" action="/login">
-            <input type="text" name="username" placeholder="Your Username">
-            <input type="submit" value="Submit">
+
+<head>
+    <title>Log In</title>
+    <link rel="stylesheet" href="static/css/signup.css" type="text/css"/>
+</head>
+
+<body>
+    <div class="container">
+
+        <form id="signup" method="POST" action="/login">
+
+            <div class="header">
+
+                <h3>Log In</h3>
+
+                <p>You want to fill out this form</p>
+
+            </div>
+
+            <div class="sep"></div>
+
+            <div class="inputs">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                <ul id="flashes" class=flashes>
+                    {% for message in messages %}
+                    <li>{{ message }} </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% endwith %}
+
+
+                <input type="text" name="username" placeholder="Username" />
+
+                <input type="password" name="password" placeholder="Password" />
+
+                <div class="checkboxy">
+                    <input name="cecky" id="checky" value="1" type="checkbox" /><label class="terms">I accept the terms
+                        of use</label>
+                </div>
+                <input id="submit" type="submit" value="LOG IN HERE">
+
+
+            </div>
+            <p>Click here if you don't have an account: <a href="signup">Sign Up</a></p>
         </form>
-        <a href={{ url_for('signup') }}>Sign Up</a>
-    </body>
+
+    </div>
+
+</body>
+
 </html>

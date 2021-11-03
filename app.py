@@ -12,7 +12,7 @@ from flask import redirect
 load_dotenv(find_dotenv())
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
-
+from werkzeug.security import generate_password_hash, check_password_hash
 app = flask.Flask(__name__, static_folder="./build/static")
 # This tells our Flask app to look at the results of `npm build` instead of the
 # actual files in /templates when we're looking for the index page file. This allows
@@ -32,6 +32,7 @@ db = SQLAlchemy(app)
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80))
+    password = db.Column(db.String(700))
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -78,41 +79,47 @@ def load_user(user_name):
     return User.query.get(user_name)
 
 
-@app.route("/signup")
+@app.route("/signup", methods=["POST", "GET"])
 def signup():
+    if current_user.is_authenticated:
+        return flask.redirect(flask.url_for("bp.index"))
+    if flask.request.method == "POST":
+        username = flask.request.form.get("username")
+        password = flask.request.form.get("password")
+        if username == "" or password == "":
+            flask.flash("Please enter username or password")
+            return flask.render_template("signup.html")
+        user = User.query.filter_by(username=username).first()
+        if user:
+            flask.flash("User exists")
+            return flask.render_template("signup.html")
+        new_user = User(username=username, password=generate_password_hash(password, method='sha256'))
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect("/login")
     return flask.render_template("signup.html")
 
 
-@app.route("/signup", methods=["POST"])
-def signup_post():
-    username = flask.request.form.get("username")
-    user = User.query.filter_by(username=username).first()
-    if user:
-        pass
-    else:
-        user = User(username=username)
-        db.session.add(user)
-        db.session.commit()
-
-    return flask.redirect(flask.url_for("login"))
-
-
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    return flask.render_template("login.html")
+    if current_user.is_authenticated:
+        return flask.redirect(flask.url_for("bp.index"))
+    if flask.request.method == "POST":
+        username = flask.request.form.get("username")
+        password = flask.request.form.get("password")
+        if username == "" or password == "":
+            flask.flash("Please enter username or password")
+            return flask.render_template("login.html")
+        my_user = User.query.filter_by(username=username).first()
 
+        if not my_user or not check_password_hash(my_user.password, password):
+            flask.flash("Please check your login details and try again")
+            return redirect("/login")
 
-@app.route("/login", methods=["POST"])
-def login_post():
-    username = flask.request.form.get("username")
-    user = User.query.filter_by(username=username).first()
-    if user:
-        login_user(user)
+        login_user(my_user)
         return flask.redirect(flask.url_for("bp.index"))
 
-    else:
-        return flask.jsonify({"status": 401, "reason": "Username or Password Error"})
-
+    return flask.render_template("login.html")
 
 @app.route("/")
 def main():
