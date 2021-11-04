@@ -3,11 +3,25 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import { BrowserRouter as Router, Switch, Route, Routes } from "react-router-dom";
+import Footer from './components/Footer';
+import Header from './components/Navigation';
+import NotFoundPage from './pages/NotFound';
+const routing  = ( 
+  <Router>
+    <div>
+      <Header/>
+      <Routes>
+        <Route exact path="/index" component={App}/>
+        <Route component={NotFoundPage} />
+      </Routes>
+      <Footer/>
+    </div>
+  </Router>
+ 
+);
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  routing,
   document.getElementById('root')
 );
 
