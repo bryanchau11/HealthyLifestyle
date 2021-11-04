@@ -10,7 +10,7 @@ function App() {
   // TODO: Implement your main page as a React component.
   return (
     <>
-      <h1> Welcome {args.current_user}</h1>
+      <h1> Recommended Meals</h1>
       <form id="signup" method="POST" action="/logout">
         <input id="submit" type="submit" value="LOGOUT" />
       </form>
