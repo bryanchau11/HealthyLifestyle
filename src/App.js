@@ -9,7 +9,6 @@ function App() {
   // in public/index.html in the script with id "data"
   const args = JSON.parse(document.getElementById('data').text);
   const list = args.list_of_item;
-  console.log(list);
   return (
     <>
       <h1> Recommended Meals</h1>
@@ -17,7 +16,6 @@ function App() {
         {list.map((item) => (
           <li key={item.food}>
             <Link to={`/recipe/${item.food}`}>
-            console.log(item.food);
             <div>{item.food}</div>
             <div>
               <img className="fixed_img" src={item.image} alt="food pictures" />{' '}
