@@ -14,6 +14,7 @@ import base64
 import requests
 import urllib.request
 from flask import redirect, send_from_directory
+from function.recommendedMeals import get_recommended_meals
 
 load_dotenv(find_dotenv())
 from flask_sqlalchemy import SQLAlchemy
@@ -56,8 +57,17 @@ bp = flask.Blueprint("bp", __name__, template_folder="./build")
 @bp.route("/index")
 @login_required
 def index():
-    # TODO: insert the data fetched by your app main page here as a JSON
-    DATA = {"current_user": current_user.username}
+    list_of_food, list_of_image = get_recommended_meals()
+    list_of_item = [
+        {"food": food, "image": image}
+        for food, image in zip(list_of_food, list_of_image)
+    ]
+    DATA = {
+        "current_user": current_user.username,
+        "list_of_food": list_of_food,
+        "list_of_image": list_of_image,
+        "list_of_item": list_of_item,
+    }
     data = json.dumps(DATA)
     return flask.render_template(
         "index.html",
