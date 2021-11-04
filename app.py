@@ -13,14 +13,14 @@ import random
 import base64
 import requests
 import urllib.request
-from flask import redirect
+from flask import redirect, send_from_directory
 
 load_dotenv(find_dotenv())
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-app = flask.Flask(__name__, static_folder="./static")
+app = flask.Flask(__name__, static_folder="./build/static")
 # This tells our Flask app to look at the results of `npm build` instead of the
 # actual files in /templates when we're looking for the index page file. This allows
 # us to load React code into a webpage. Look up create-react-app for more reading on
