@@ -2,17 +2,24 @@ import flask
 import os
 import json
 from dotenv import load_dotenv, find_dotenv
-from flask_login import login_user, current_user, LoginManager, logout_user, login_required
+from flask_login import (
+    login_user,
+    current_user,
+    LoginManager,
+    logout_user,
+    login_required,
+)
 import random
 import base64
 import requests
 import urllib.request
-from flask import redirect
+from flask import redirect, send_from_directory
 
 load_dotenv(find_dotenv())
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+
 app = flask.Flask(__name__, static_folder="./build/static")
 # This tells our Flask app to look at the results of `npm build` instead of the
 # actual files in /templates when we're looking for the index page file. This allows
@@ -56,6 +63,8 @@ def index():
         "index.html",
         data=data,
     )
+
+
 @app.route("/logout", methods=["POST"])
 @login_required
 def logout():
@@ -65,6 +74,7 @@ def logout():
     """
     logout_user()
     return redirect("/")
+
 
 app.register_blueprint(bp)
 
@@ -93,7 +103,10 @@ def signup():
         if user:
             flask.flash("User exists")
             return flask.render_template("signup.html")
-        new_user = User(username=username, password=generate_password_hash(password, method='sha256'))
+        new_user = User(
+            username=username,
+            password=generate_password_hash(password, method="sha256"),
+        )
         db.session.add(new_user)
         db.session.commit()
         return redirect("/login")
@@ -121,11 +134,13 @@ def login():
 
     return flask.render_template("login.html")
 
+
 @app.route("/")
 def main():
     if current_user.is_authenticated:
         return flask.redirect(flask.url_for("bp.index"))
     return flask.redirect(flask.url_for("login"))
+
 
 app.run(
     host=os.getenv("IP", "0.0.0.0"),
