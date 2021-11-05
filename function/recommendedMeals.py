@@ -7,22 +7,18 @@ load_dotenv(find_dotenv())
 
 
 def get_recommended_meals():
-    """Yummly API: https://rapidapi.com/apidojo/api/yummly2/"""
 
-    url = "https://yummly2.p.rapidapi.com/feeds/list"
-
-    querystring = {"limit": "30", "start": "0", "tag": "list.recipe.popular"}
-
+    url = "https://themealdb.p.rapidapi.com/randomselection.php"
     headers = {
-        "x-rapidapi-host": "yummly2.p.rapidapi.com",
+        "x-rapidapi-host": "themealdb.p.rapidapi.com",
         "x-rapidapi-key": os.getenv("RapidAPI"),
     }
 
-    response = requests.request("GET", url, headers=headers, params=querystring).json()
+    response = requests.request("GET", url, headers=headers).json()
     list_of_food = []
     list_of_image = []
-    for food in response["feed"]:
-        list_of_food.append(food["display"]["displayName"])
-    for image in response["feed"]:
-        list_of_image.append(image["display"]["images"][0])
+    for food in response["meals"]:
+        list_of_food.append(food["strMeal"])
+    for image in response["meals"]:
+        list_of_image.append(image["strMealThumb"])
     return list_of_food, list_of_image
