@@ -21,8 +21,9 @@ def get_recommended_meals():
     response = requests.request("GET", url, headers=headers, params=querystring).json()
     list_of_food = []
     list_of_image = []
-    for food in response["feed"]:
-        list_of_food.append(food["display"]["displayName"])
-    for image in response["feed"]:
-        list_of_image.append(image["display"]["images"][0])
+    if "feed" in response:
+        for food in response["feed"]:
+            list_of_food.append(food["display"]["displayName"])
+        for image in response["feed"]:
+            list_of_image.append(image["display"]["images"][0])
     return list_of_food, list_of_image
