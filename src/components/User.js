@@ -1,5 +1,4 @@
 import React from 'react';
-
 function Users() {
   const [error, setError] = React.useState("")
   const [data, setData] = React.useState({ username: "" })
