@@ -18,6 +18,7 @@ from function.recommendedMeals import get_recommended_meals
 
 load_dotenv(find_dotenv())
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -41,6 +42,8 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80))
     password = db.Column(db.String(700))
+    height = db.Column(db.String(10))
+    weight = db.Column(db.String(10))
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -49,6 +52,8 @@ class User(UserMixin, db.Model):
         return self.username
 
 
+engine = create_engine(db_url)
+# User.__table__.drop(engine)
 db.create_all()
 
 bp = flask.Blueprint("bp", __name__, template_folder="./build")
@@ -64,6 +69,8 @@ def index():
     ]
     DATA = {
         "current_user": current_user.username,
+        "height": current_user.height,
+        "weight": current_user.weight,
         "list_of_food": list_of_food,
         "list_of_image": list_of_image,
         "list_of_item": list_of_item,
@@ -143,6 +150,47 @@ def login():
         return flask.redirect(flask.url_for("bp.index"))
 
     return flask.render_template("login.html")
+
+
+@app.route("/user", methods=["PUT"])
+@login_required
+def get_user():
+    data = flask.request.get_json(force=True)
+    print(data)
+    DATA = {
+        "current_user": current_user.username,
+        "height": current_user.height,
+        "weight": current_user.weight,
+    }
+    if data["username"] != "":
+        user = User.query.filter_by(username=current_user.username).first()
+        user.username = data["username"]
+        db.session.commit()
+        current_user.username = data["username"]
+        DATA["current_user"] = data["username"]
+
+    if data["height"] != "":
+        user = User.query.filter_by(username=current_user.username).first()
+        user.height = data["height"]
+        db.session.commit()
+        DATA["height"] = data["height"]
+
+    if data["weight"] != "":
+        user = User.query.filter_by(username=current_user.username).first()
+        user.weight = data["weight"]
+        db.session.commit()
+        DATA["weight"] = data["weight"]
+
+    if data["password"] != "":
+        user = User.query.filter_by(username=current_user.username).first()
+        user.password = generate_password_hash(data["password"], method="sha256")
+        db.session.commit()
+        DATA["password"] = data["password"]
+
+    response = app.response_class(
+        response=json.dumps(DATA), status=200, mimetype="application/json"
+    )
+    return response
 
 
 @app.route("/")
