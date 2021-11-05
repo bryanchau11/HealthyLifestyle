@@ -1,9 +1,10 @@
 /* eslint-disable eqeqeq */
 import { React, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link  } from 'react-router-dom';
 import '../App.css';
-import { Button } from 'react-bootstrap';
+import { Button, Nav } from 'react-bootstrap';
 import YoutubeEmbed from './YoutubeEmbed';
+import 'bootstrap/dist/css/bootstrap.css';
 function RecipeDetail() {
   const args = JSON.parse(document.getElementById('data').text);
   const list = args.list_of_item;
@@ -80,7 +81,7 @@ function RecipeDetail() {
       <ul>
         {ingredientAndMeasure.map((item) => (
           <li>
-            {item.ingre} : {item.meas}
+            <Nav.Link as={Link} to={`/nutrition/${item.ingre}`} > {item.ingre} </Nav.Link> : {item.meas}
           </li>
         ))}
       </ul>
