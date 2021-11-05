@@ -11,16 +11,18 @@ import Users from './components/User';
 import Contact from './components/Contact';
 import RecipeDetail from './components/FoodRecipe';
 import Category from './components/Category';
+import Nutrition from './components/Nutrition';
 const routing = (
   <Router>
     <div>
       <Header />
       <Routes>
-        <Route path="/index" element={<App />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/recipe/:foodName" element={<RecipeDetail />} />
-        <Route path="/category/:categoryName" element={<Category />} />
+        <Route exact path="/index" element={<App />} />
+        <Route exact path="/users" element={<Users />} />
+        <Route exact path="/contact" element={<Contact />} />
+        <Route exact path="/recipe/:foodName" element={<RecipeDetail />} />
+        <Route exact path="/category/:categoryName" element={<Category />} />
+        <Route exact path="/nutrition/:ingredientName" element={<Nutrition />} />
         <Route element={<NotFoundPage />} />
       </Routes>
       <Footer />
