@@ -11,17 +11,16 @@ function App() {
   const list = args.list_of_item;
   return (
     <>
-      <h1> Recommended Meals</h1>
+      <h1> 10 Random Meals</h1>
       <ul>
         {list.map((item) => (
           <li key={item.food}>
-            <Link to={`/recipe/${item.food}`}>
-            <div>{item.food}</div>
-            <div>
-              <img className="fixed_img" src={item.image} alt="food pictures" />{' '}
-            </div>
-            </Link>
-            
+            <Nav.Link as={Link} to={`/recipe/${item.food}`}>
+              <div>{item.food}</div>
+              <div>
+                <img className="fixed_img" src={item.image} alt="food pictures" />{' '}
+              </div>
+            </Nav.Link>
           </li>
         ))}
       </ul>
