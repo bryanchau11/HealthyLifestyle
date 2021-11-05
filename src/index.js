@@ -10,6 +10,7 @@ import NotFoundPage from './pages/NotFound';
 import Users from './components/User';
 import Contact from './components/Contact';
 import RecipeDetail from './components/FoodRecipe';
+import Category from './components/Category';
 const routing = (
   <Router>
     <div>
@@ -18,7 +19,8 @@ const routing = (
         <Route path="/index" element={<App />} />
         <Route path="/users" element={<Users />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/recipe/:foodName" element={<RecipeDetail/>}/>
+        <Route path="/recipe/:foodName" element={<RecipeDetail />} />
+        <Route path="/category/:categoryName" element={<Category />} />
         <Route element={<NotFoundPage />} />
       </Routes>
       <Footer />
