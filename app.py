@@ -37,7 +37,7 @@ app.secret_key = os.getenv("SECRETKEY")  # don't defraud my app ok?
 
 db = SQLAlchemy(app)
 
-
+# testing
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80))
