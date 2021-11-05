@@ -1,9 +1,10 @@
 /* eslint-disable eqeqeq */
-import { React, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { React, useState, useEffect } from 'react';
+import { useParams, Link  } from 'react-router-dom';
 import '../App.css';
-import { Button } from 'react-bootstrap';
+import { Button, Nav } from 'react-bootstrap';
 import YoutubeEmbed from './YoutubeEmbed';
+import 'bootstrap/dist/css/bootstrap.css';
 function RecipeDetail() {
   const args = JSON.parse(document.getElementById('data').text);
   const list = args.list_of_item;
@@ -26,7 +27,7 @@ function RecipeDetail() {
     }
     return ID;
   }
-  function onShowRecipe() {
+  useEffect(() =>  {
     const options = {
       method: 'GET',
       url: 'https://themealdb.p.rapidapi.com/search.php',
@@ -68,19 +69,17 @@ function RecipeDetail() {
       setYoutubeLink(videoLink);
       setIngredientAndMeasure(ingredientAndMeasureResult);
     });
-  }
+  }, []);
   return (
     <div>
       <h1>{thisFood.food}</h1>
       <img className="fixed_img" src={thisFood.image} alt="food pictures" />{' '}
-      <Button onClick={onShowRecipe} variant="info">
-        SHOW RECEIPT
-      </Button>
+       
       <h2>Ingredient</h2>
       <ul>
         {ingredientAndMeasure.map((item) => (
           <li>
-            {item.ingre} : {item.meas}
+            <Button style={{color: "black"}}  as={Link} to={`/nutrition/${item.ingre}`} variant="outline-info">{item.ingre} : {item.meas}</Button>
           </li>
         ))}
       </ul>
