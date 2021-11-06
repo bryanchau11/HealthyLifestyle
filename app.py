@@ -199,6 +199,23 @@ def get_user():
     return response
 
 
+@app.route("/save_meal", methods=["POST"])
+def save_meal():
+    meal_db = Food.query.filter_by(username=current_user.username).all()
+    meal_db_list = [meal.food for meal in meal_db]
+    meal = flask.request.json.get("save_meal")
+    result_color = "success"
+    result_text = "Success! You have saved your meal"
+    if meal in meal_db_list:
+        result_color = "danger"
+        result_text = "You already saved this meal!!"
+        pass
+    else:
+        db.session.add(Food(username=current_user.username, food=meal))
+        db.session.commit()
+    return flask.jsonify({"color": result_color, "text": result_text})
+
+
 @app.route("/")
 def main():
     if current_user.is_authenticated:
