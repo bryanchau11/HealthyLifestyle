@@ -1,6 +1,6 @@
 /* eslint-disable eqeqeq */
 import { React, useState, useEffect } from 'react';
-import { useParams, Link  } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import '../App.css';
 import { Button, Nav } from 'react-bootstrap';
 import YoutubeEmbed from './YoutubeEmbed';
@@ -27,7 +27,7 @@ function RecipeDetail() {
     }
     return ID;
   }
-  useEffect(() =>  {
+  useEffect(() => {
     const options = {
       method: 'GET',
       url: 'https://themealdb.p.rapidapi.com/search.php',
@@ -73,13 +73,18 @@ function RecipeDetail() {
   return (
     <div>
       <h1>{thisFood.food}</h1>
-      <img className="fixed_img" src={thisFood.image} alt="food pictures" />{' '}
-       
-      <h2>Ingredient</h2>
+      <img className="fixed_img" src={thisFood.image} alt="food pictures" /> <h2>Ingredient</h2>
       <ul>
         {ingredientAndMeasure.map((item) => (
           <li>
-            <Button style={{color: "black"}}  as={Link} to={`/nutrition/${item.ingre}`} variant="outline-info">{item.ingre} : {item.meas}</Button>
+            <Button
+              style={{ color: 'black' }}
+              as={Link}
+              to={`/nutrition/${item.ingre}`}
+              variant="outline-info"
+            >
+              {item.ingre} : {item.meas}
+            </Button>
           </li>
         ))}
       </ul>
