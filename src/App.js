@@ -1,5 +1,4 @@
 /* eslint-disable eqeqeq */
-import logo from './logo.svg';
 import './App.css';
 import { React, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,7 +6,6 @@ import { Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useScroll } from 'react-use-gesture';
 import { animated, useSpring } from 'react-spring';
-import Category from './components/Category';
 const request = require('request');
 function App() {
   const args = JSON.parse(document.getElementById('data').text);
