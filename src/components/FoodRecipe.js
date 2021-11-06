@@ -12,6 +12,7 @@ function RecipeDetail() {
   const thisFood = list.find((i) => i.food === foodName);
   const request = require('request');
   const [instruction, setInstruction] = useState();
+  const [mealImage, setImage] = useState();
   //const [ingredient, setIngredient] = useState([]);
   //const [measure, setMeasure] = useState([]);
   const [ingredientAndMeasure, setIngredientAndMeasure] = useState([]);
@@ -43,6 +44,7 @@ function RecipeDetail() {
       if (error) throw new Error(error);
       let result = JSON.parse(body).meals[0];
       setInstruction(result.strInstructions);
+      setImage(result.strMealThumb);
       var ingredientArray = [];
       var key = '';
       for (key in result) {
@@ -72,8 +74,9 @@ function RecipeDetail() {
   }, []);
   return (
     <div>
-      <h1>{thisFood.food}</h1>
-      <img className="fixed_img" src={thisFood.image} alt="food pictures" /> <h2>Ingredient</h2>
+      <h1>{foodName}</h1>
+      <img className="fixed_img" src={mealImage} alt="food pictures" />
+      <h2>Ingredient</h2>
       <ul>
         {ingredientAndMeasure.map((item) => (
           <li>
