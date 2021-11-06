@@ -39,7 +39,7 @@ export const Contact = () => {
       <h1>Contact Us</h1>
       <form onSubmit={sendEmail} ref={form}>
       <label>Name:</label>
-      <input type="text" name="form_name" value={nameValue}  onChange={handleName}/>
+      <input type="text" name="from_name" value={nameValue}  onChange={handleName}/>
       <br/><br/>
       <label>Email:</label>
       <input type="email" name="user_email" value={emailValue} onChange={handleEmail}/>
