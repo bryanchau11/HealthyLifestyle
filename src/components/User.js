@@ -9,14 +9,13 @@ const request = require('request');
 function Users() {
   const [error, setError] = React.useState('');
   const [data, setData] = React.useState({ username: '' });
-  const [bmi, setBmi] = React.useState(null);
 
   let calculate_bmi = (data) => {
     if (data.weight && data.height) {
       let height = data.height;
       let weight = data.weight;
-      let BMI = weight / (height * height);
-      setBmi(BMI.toFixed(4));
+      let BMI = (weight / (height * height)) * 703;
+      return BMI.toFixed(2);
     }
   };
 
@@ -34,6 +33,7 @@ function Users() {
     let height = document.getElementById('height').value;
     let weight = document.getElementById('weight').value;
     let password = document.getElementById('password').value;
+    let bmi = calculate_bmi({ height, weight });
     if (!username) {
       setError('Username cannot be empty.');
       return;
@@ -45,7 +45,7 @@ function Users() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password, height, weight }),
+      body: JSON.stringify({ username, password, height, weight, bmi }),
     })
       .then((response) => response.json())
       .then((result) => {
@@ -55,6 +55,7 @@ function Users() {
       })
       .catch((err) => {
         console.error('Request failed', err);
+        setError(err.message);
       });
   };
   // Display saved meal for current user
@@ -97,46 +98,61 @@ function Users() {
       <div className="col-6">
         <form>
           <div className="form-group mt-1">
-            <label>Username</label>
+            <label>
+              <b>Username</b>
+            </label>
             <input
               type="text"
               className="form-control"
               id="username"
-              placeholder="Enter username"
+              placeholder="Update username"
               defaultValue={data.current_user}
             />
           </div>
           <div className="form-group mt-1">
-            <label>Password</label>
-            <input type="password" className="form-control" id="password" placeholder="Password" />
+            <label>
+              <b>Password</b>
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              placeholder="Update Password"
+            />
           </div>
           <div className="form-group mt-1">
-            <label>Height</label>
+            <label>
+              <b>Height</b>
+            </label>
             <input
               type="number"
               className="form-control"
               id="height"
-              placeholder="Height"
+              placeholder="Update Height"
               min="0"
               defaultValue={data.height}
             />
             <small className="form-text text-muted">Height in inches</small>
           </div>
           <div className="form-group mt-1">
-            <label>Weight</label>
+            <label>
+              <b>Weight</b>
+            </label>
             <input
               type="number"
               className="form-control"
               id="weight"
-              placeholder="Weight"
+              placeholder="Update Weight"
               min="0"
               defaultValue={data.weight}
             />
             <small className="form-text text-muted">Weight in pounds</small>
           </div>
           <div className="form-group mt-1">
-            <label>Calculated BMI{' : '}</label>
-            <label>{bmi ? bmi : 'N/A'}</label>
+            <label>
+              <b>Calculated BMI{' : '}</b>
+            </label>
+            <label>{data.bmi ? data.bmi : 'N/A'}</label>
           </div>
           <div className="form-group mt-1">
             <small className="form-text text-danger">{error}</small>
