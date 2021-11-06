@@ -21,6 +21,21 @@ export const Contact = () => {
   const sendEmail = (e) => {
     e.preventDefault();
     
+    if (messageValue == '')
+    {
+    alert("No Message to Send");
+    return;
+    }
+    else if (emailValue == '')
+    {
+      alert("Please Enter a Return Email");
+      return; 
+    }
+    else if (nameValue == '')
+    {
+      alert("Please Enter a Name or UserName");
+      return; 
+    }
     emailjs.sendForm('healthyLifestyle', 'contact_healthyLifestyle',form.current, `${process.env.REACT_APP_UserID}`)
       .then((result) => {
           console.log(result.text);
@@ -30,7 +45,7 @@ export const Contact = () => {
           setMessageValue('')
 
       }, (error) => {
-          alert("Error, Try Again.")
+          alert("Oops, something went wrong")
           console.log(error.text);
       });
   };
