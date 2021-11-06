@@ -37,13 +37,14 @@ app.secret_key = os.getenv("SECRETKEY")  # don't defraud my app ok?
 
 db = SQLAlchemy(app)
 
-# testing
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80))
     password = db.Column(db.String(700))
     height = db.Column(db.String(10))
     weight = db.Column(db.String(10))
+    bmi = db.Column(db.String(10))
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -71,6 +72,7 @@ def index():
         "current_user": current_user.username,
         "height": current_user.height,
         "weight": current_user.weight,
+        "bmi": current_user.bmi,
         "list_of_food": list_of_food,
         "list_of_image": list_of_image,
         "list_of_item": list_of_item,
@@ -186,6 +188,12 @@ def get_user():
         user.password = generate_password_hash(data["password"], method="sha256")
         db.session.commit()
         DATA["password"] = data["password"]
+
+    if data["bmi"] != "":
+        user = User.query.filter_by(username=current_user.username).first()
+        user.bmi = data["bmi"]
+        db.session.commit()
+        DATA["bmi"] = data["bmi"]
 
     response = app.response_class(
         response=json.dumps(DATA), status=200, mimetype="application/json"
