@@ -52,6 +52,12 @@ class User(UserMixin, db.Model):
         return self.username
 
 
+class Food(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80))
+    food = db.Column(db.String(100))
+
+
 engine = create_engine(db_url)
 # User.__table__.drop(engine)
 db.create_all()
