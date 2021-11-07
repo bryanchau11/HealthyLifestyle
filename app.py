@@ -164,7 +164,7 @@ def login():
         return flask.redirect(flask.url_for("bp.index"))
 
     if flask.request.method == "POST":
-        if request.form['submit_button'] == "GOOGLE LOGIN":
+        if flask.request.form['submit_button'] == "GOOGLE LOGIN":
             # Find out what URL to hit for Google Login
             google_provider_cfg = requests.get(GOOGLE_DISCOVERY_URL).json()
             authorization_endpoint = google_provider_cfg["authorization_endpoint"]
@@ -175,7 +175,7 @@ def login():
                 scope=["openid", "email", "profile"],
             )
             return flask.redirect(request_uri)
-        if request.form['submit_button'] == "LOG IN HERE":
+        if flask.request.form['submit_button'] == "LOG IN HERE":
             username = flask.request.form.get("username")
             password = flask.request.form.get("password")
             if username == "" or password == "":
