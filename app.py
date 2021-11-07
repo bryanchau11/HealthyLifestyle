@@ -14,7 +14,7 @@ import base64
 import requests
 import urllib.request
 from flask import redirect, send_from_directory
-from function.recommendedMeals import get_recommended_meals
+from function.recommendedMeals import get_recommended_meals, get_meal
 
 load_dotenv(find_dotenv())
 from flask_sqlalchemy import SQLAlchemy
@@ -74,6 +74,15 @@ def index():
         {"food": food, "image": image}
         for food, image in zip(list_of_food, list_of_image)
     ]
+    meal_db_list = []
+    meal_db = Food.query.filter_by(username=current_user.username).all()
+    if len(meal_db) == 0:
+        pass
+    else:
+        for meal in meal_db:
+
+            name, image = get_meal(meal.food)
+            meal_db_list.append({"name": name, "image": image})
     DATA = {
         "current_user": current_user.username,
         "height": current_user.height,
@@ -82,6 +91,7 @@ def index():
         "list_of_food": list_of_food,
         "list_of_image": list_of_image,
         "list_of_item": list_of_item,
+        "saved_meal": meal_db_list,
     }
     data = json.dumps(DATA)
     return flask.render_template(
@@ -205,6 +215,31 @@ def get_user():
         response=json.dumps(DATA), status=200, mimetype="application/json"
     )
     return response
+
+
+@app.route("/save_meal", methods=["POST"])
+def save_meal():
+    meal_db = Food.query.filter_by(username=current_user.username).all()
+    meal_db_list = [meal.food for meal in meal_db]
+    meal = flask.request.json.get("save_meal")
+    result_color = "success"
+    result_text = "Success! You have saved your meal"
+    if meal in meal_db_list:
+        result_color = "danger"
+        result_text = "You already saved this meal!!"
+        pass
+    else:
+        db.session.add(Food(username=current_user.username, food=meal))
+        db.session.commit()
+    return flask.jsonify({"color": result_color, "text": result_text})
+
+
+@app.route("/delete_meal", methods=["POST"])
+def delete_meal():
+    meal = flask.request.json.get("delete_meal")
+    meal_db = Food.query.filter_by(username=current_user.username, food=meal).first()
+    db.session.delete(meal_db)
+    db.session.commit()
 
 
 @app.route("/")

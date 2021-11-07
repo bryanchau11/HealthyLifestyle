@@ -19,6 +19,7 @@ function Header() {
             <span>M</span>
             <span>E</span>
           </div>
+          <br />
           <Navbar.Brand>Welcome {args.current_user}</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link as={NavLink} to="/index">

@@ -46,7 +46,10 @@ function App() {
         <h1>Pick your category</h1>
         <div className="container" {...bind()}>
           {category.map((item) => (
-            <Nav.Link as={Link} to={`/category/${item.name}`}>
+            <div>
+              <Nav.Link as={Link} to={`/category/${item.name}`}>
+                {item.name}
+              </Nav.Link>
               <animated.div
                 key={item.name}
                 className="card"
@@ -54,10 +57,8 @@ function App() {
                   ...style,
                   backgroundImage: `url(${item.image})`,
                 }}
-              >
-                {item.name}
-              </animated.div>
-            </Nav.Link>
+              ></animated.div>
+            </div>
           ))}
         </div>
       </div>
@@ -65,7 +66,10 @@ function App() {
         <h1>10 Random Meals</h1>
         <div className="container" {...bind()}>
           {list.map((item) => (
-            <Nav.Link as={Link} to={`/recipe/${item.food}`}>
+            <div>
+              <Nav.Link as={Link} to={`/recipe/${item.food}`}>
+                {item.food}
+              </Nav.Link>
               <animated.div
                 key={item.food}
                 className="card"
@@ -73,10 +77,8 @@ function App() {
                   ...style,
                   backgroundImage: `url(${item.image})`,
                 }}
-              >
-                {item.food}
-              </animated.div>
-            </Nav.Link>
+              ></animated.div>
+            </div>
           ))}
         </div>
       </div>
