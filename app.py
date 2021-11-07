@@ -234,6 +234,14 @@ def save_meal():
     return flask.jsonify({"color": result_color, "text": result_text})
 
 
+@app.route("/delete_meal", methods=["POST"])
+def delete_meal():
+    meal = flask.request.json.get("delete_meal")
+    meal_db = Food.query.filter_by(username=current_user.username, food=meal).first()
+    db.session.delete(meal_db)
+    db.session.commit()
+
+
 @app.route("/")
 def main():
     if current_user.is_authenticated:

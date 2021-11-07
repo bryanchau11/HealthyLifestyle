@@ -46,7 +46,10 @@ function Category() {
       <div>
         <div className="container" {...bind()}>
           {category.map((item) => (
+            <div> 
             <Nav.Link as={Link} to={`/recipe/${item.name}`}>
+            {item.name}
+                </Nav.Link>
               <animated.div
                 key={item.name}
                 className="card"
@@ -55,9 +58,10 @@ function Category() {
                   backgroundImage: `url(${item.image})`,
                 }}
               >
-                {item.name}
+                 
               </animated.div>
-            </Nav.Link>
+            
+            </div>
           ))}
         </div>
       </div>

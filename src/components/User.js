@@ -2,7 +2,7 @@
 import { React, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
-import { Nav } from 'react-bootstrap';
+import { Nav, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useScroll } from 'react-use-gesture';
 import { animated, useSpring } from 'react-spring';
@@ -73,7 +73,18 @@ function Users() {
       transform: `perspective(500px) rotateY(${event.scrolling ? event.delta[0] : 0}deg)`,
     });
   });
-
+  function deleteItem(idDelete) {
+    const newarray = mealSave.filter((element) => element !== idDelete);
+    console.log(idDelete.name);
+    setMealSave(newarray);
+    fetch('/delete_meal', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ delete_meal: idDelete.name }),
+    });
+  }
   return (
     <>
       <div className="container">
@@ -153,7 +164,10 @@ function Users() {
       <div>
         <div className="container" {...bind()}>
           {mealSave.map((item) => (
-            <Nav.Link as={Link} to={`/recipe/${item.name}`}>
+            <div>
+              <Nav.Link as={Link} to={`/recipe/${item.name}`}>
+                {item.name}
+              </Nav.Link>
               <animated.div
                 key={item.name}
                 className="card"
@@ -161,10 +175,11 @@ function Users() {
                   ...style,
                   backgroundImage: `url(${item.image})`,
                 }}
-              >
-                {item.name}
-              </animated.div>
-            </Nav.Link>
+              ></animated.div>
+              <Button variant="primary" type="button" onClick={() => deleteItem(item)}>
+                X
+              </Button>
+            </div>
           ))}
         </div>
       </div>
