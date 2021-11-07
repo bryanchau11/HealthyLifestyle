@@ -21,6 +21,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from oauthlib.oauth2 import WebApplicationClient
 
 app = flask.Flask(__name__, static_folder="./build/static")
 # This tells our Flask app to look at the results of `npm build` instead of the
@@ -36,7 +37,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.secret_key = os.getenv("SECRETKEY")  # don't defraud my app ok?
 
 db = SQLAlchemy(app)
-
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -62,6 +62,16 @@ class Food(db.Model):
 engine = create_engine(db_url)
 # User.__table__.drop(engine)
 db.create_all()
+
+# Vars needed for google login
+GOOGLE_CLIENT_ID = os.getenv("GOOGLEOAUTH_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLEOAUTH_CLIENT_SECRET")
+GOOGLE_DISCOVERY_URL = (
+    "https://accounts.google.com/.well-known/openid-configuration"
+)
+
+# OAuth 2 client setup
+client = WebApplicationClient(GOOGLE_CLIENT_ID)
 
 bp = flask.Blueprint("bp", __name__, template_folder="./build")
 
@@ -152,23 +162,62 @@ def signup():
 def login():
     if current_user.is_authenticated:
         return flask.redirect(flask.url_for("bp.index"))
+
     if flask.request.method == "POST":
-        username = flask.request.form.get("username")
-        password = flask.request.form.get("password")
-        if username == "" or password == "":
-            flask.flash("Please enter username or password")
-            return flask.render_template("login.html")
-        my_user = User.query.filter_by(username=username).first()
+        if request.form['submit_button'] == "GOOGLE LOGIN":
+            # Find out what URL to hit for Google Login
+            google_provider_cfg = requests.get(GOOGLE_DISCOVERY_URL).json()
+            authorization_endpoint = google_provider_cfg["authorization_endpoint"]
 
-        if not my_user or not check_password_hash(my_user.password, password):
-            flask.flash("Please check your login details and try again")
-            return redirect("/login")
+            request_uri = client.prepare_request_uri(
+                authorization_endpoint,
+                redirect_uri=flask.request.base_url + "/callback",
+                scope=["openid", "email", "profile"],
+            )
+            return flask.redirect(request_uri)
+        if request.form['submit_button'] == "LOG IN HERE":
+            username = flask.request.form.get("username")
+            password = flask.request.form.get("password")
+            if username == "" or password == "":
+                flask.flash("Please enter username or password")
+                return flask.render_template("login.html")
+            my_user = User.query.filter_by(username=username).first()
 
-        login_user(my_user)
-        return flask.redirect(flask.url_for("bp.index"))
+            if not my_user or not check_password_hash(my_user.password, password):
+                flask.flash("Please check your login details and try again")
+                return redirect("/login")
+
+            login_user(my_user)
+            return flask.redirect(flask.url_for("bp.index"))
 
     return flask.render_template("login.html")
 
+@app.route("/login/callback")
+def callback():
+    # Get authorization code Google sent back to you
+    code = flask.request.get("code")
+    
+    # Find out what URL to hit to get tokens that allow you to ask for
+    # things on behalf of a user
+    google_provider_cfg = get_google_provider_cfg()
+    token_endpoint = google_provider_cfg["token_endpoint"]
+
+    # Prepare and send a request to get tokens! Yay tokens!
+    token_url, headers, body = client.prepare_token_request(
+        token_endpoint,
+        authorization_response=request.url,
+        redirect_url=request.base_url,
+        code=code
+    )
+    token_response = requests.post(
+        token_url,
+        headers=headers,
+        data=body,
+        auth=(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET),
+    )
+
+    # Parse the tokens!
+    client.parse_request_body_response(json.dumps(token_response.json()))
 
 @app.route("/user", methods=["PUT"])
 @login_required
