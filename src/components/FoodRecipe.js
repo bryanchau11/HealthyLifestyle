@@ -72,9 +72,31 @@ function RecipeDetail() {
       setIngredientAndMeasure(ingredientAndMeasureResult);
     });
   }, []);
+  const [color, setColor] = useState('primary');
+  const [text, setText] = useState('Save Meal');
+  function saveMeal() {
+    const requestData = { save_meal: foodName };
+    fetch('/save_meal', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setColor(data.color);
+        setText(data.text);
+      });
+  }
   return (
     <div>
-      <h1>{foodName}</h1>
+      <h1>
+        {foodName}{' '}
+        <Button onClick={saveMeal} variant={color}>
+          {text}
+        </Button>
+      </h1>
       <img className="fixed_img" src={mealImage} alt="food pictures" />
       <h2>Ingredient</h2>
       <ul>
