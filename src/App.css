@@ -38,15 +38,6 @@
   }
 }
 
-.footer{
-  margin-top: 1rem;
-  padding: 1rem;
-  background-color: #343a40;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  color: white;
-}
 .fixed_img {
   width: 150px;
   height: 150px;
@@ -84,4 +75,7 @@
 
 ::-webkit-scrollbar {
   display: none;
+}
+body {
+  background-color: antiquewhite;
 }

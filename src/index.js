@@ -18,7 +18,7 @@ const routing = (
       <Header />
       <Routes>
         <Route exact path="/index" element={<App />} />
-        <Route exact path="/users" element={<Users />} />
+        <Route exact path="users" element={<Users />} />
         <Route exact path="/contact" element={<Contact />} />
         <Route exact path="/recipe/:foodName" element={<RecipeDetail />} />
         <Route exact path="/category/:categoryName" element={<Category />} />
