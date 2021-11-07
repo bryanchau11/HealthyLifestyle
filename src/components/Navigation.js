@@ -1,11 +1,16 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useRef } from 'react';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { Nav, Navbar, Container, Button, Form, FormControl } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../css/Header.css';
 function Header() {
   const args = JSON.parse(document.getElementById('data').text);
-
+  const textInput = useRef(null);
+  const navigate = useNavigate();
+  function onButtonClick() {
+    navigate(`/search/${textInput.current.value}`);
+    textInput.current.value = '';
+  }
   return (
     <>
       <Navbar bg="dark" variant="dark">
@@ -35,12 +40,15 @@ function Header() {
             </Nav.Link>
             <Form className="d-flex">
               <FormControl
-                type="search"
+                ref={textInput}
+                type="text"
                 placeholder="Search"
                 className="me-2"
                 aria-label="Search"
               />
-              <Button variant="outline-success">Search</Button>
+              <Button onClick={onButtonClick} variant="outline-success">
+                Search
+              </Button>
             </Form>
           </Nav>
           <Form method="POST" action="/logout">

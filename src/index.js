@@ -12,6 +12,7 @@ import Contact from './components/Contact';
 import RecipeDetail from './components/FoodRecipe';
 import Category from './components/Category';
 import Nutrition from './components/Nutrition';
+import Search from './components/Search';
 const routing = (
   <Router>
     <div>
@@ -23,6 +24,7 @@ const routing = (
         <Route exact path="/recipe/:foodName" element={<RecipeDetail />} />
         <Route exact path="/category/:categoryName" element={<Category />} />
         <Route exact path="/nutrition/:ingredientName" element={<Nutrition />} />
+        <Route exact path="search/:searchMeal" element={<Search />} />
         <Route element={<NotFoundPage />} />
       </Routes>
       <Footer />
