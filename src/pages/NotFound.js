@@ -1,11 +1,7 @@
 import React from 'react';
-
+import '../css/Notfound.css';
 const NotFoundPage = () => {
-  return (
-    <div>
-      <h2>404 Page Not Found!</h2>
-    </div>
-  );
+  return <div className="myDiv"></div>;
 };
 
 export default NotFoundPage;

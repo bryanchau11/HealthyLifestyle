@@ -1,0 +1,544 @@
+@keyframes typed {
+	/* string #{
+		$i
+	}
+	, char #{
+		$j
+	}
+	 */
+	/* string #{
+		$i
+	}
+	, char #{
+		$j
+	}
+	 */
+	 0%, 0.4891960784% {
+		 content: " ";
+	}
+	 0.4901960784%, 0.9793921569% {
+		 content: " �";
+	}
+	 0.9803921569%, 1.4695882353% {
+		 content: " �";
+	}
+	 1.4705882353%, 1.9597843137% {
+		 content: " �";
+	}
+	 1.9607843137%, 2.4499803922% {
+		 content: " 😔";
+	}
+	 2.4509803922%, 2.9401764706% {
+		 content: " 😔 ";
+	}
+	 2.9411764706%, 3.430372549% {
+		 content: " 😔 S";
+	}
+	 3.431372549%, 3.9205686275% {
+		 content: " 😔 So";
+	}
+	 3.9215686275%, 4.4107647059% {
+		 content: " 😔 Sor";
+	}
+	 4.4117647059%, 4.9009607843% {
+		 content: " 😔 Sorr";
+	}
+	 4.9019607843%, 5.3911568627% {
+		 content: " 😔 Sorry";
+	}
+	 5.3921568627%, 5.8813529412% {
+		 content: " 😔 Sorry ";
+	}
+	 5.8823529412%, 6.3715490196% {
+		 content: " 😔 Sorry w";
+	}
+	 6.3725490196%, 6.861745098% {
+		 content: " 😔 Sorry we";
+	}
+	 6.862745098%, 7.3519411765% {
+		 content: " 😔 Sorry we ";
+	}
+	 7.3529411765%, 7.8421372549% {
+		 content: " 😔 Sorry we c";
+	}
+	 7.8431372549%, 8.3323333333% {
+		 content: " 😔 Sorry we ca";
+	}
+	 8.3333333333%, 8.8225294118% {
+		 content: " 😔 Sorry we can";
+	}
+	 8.8235294118%, 9.3127254902% {
+		 content: " 😔 Sorry we can'";
+	}
+	 9.3137254902%, 9.8029215686% {
+		 content: " 😔 Sorry we can't";
+	}
+	 9.8039215686%, 10.2931176471% {
+		 content: " 😔 Sorry we can't ";
+	}
+	 10.2941176471%, 10.7833137255% {
+		 content: " 😔 Sorry we can't f";
+	}
+	 10.7843137255%, 11.2735098039% {
+		 content: " 😔 Sorry we can't fi";
+	}
+	 11.2745098039%, 11.7637058824% {
+		 content: " 😔 Sorry we can't fin";
+	}
+	 11.7647058824%, 12.2539019608% {
+		 content: " 😔 Sorry we can't find";
+	}
+	 12.2549019608%, 12.7440980392% {
+		 content: " 😔 Sorry we can't find ";
+	}
+	 12.7450980392%, 13.2342941176% {
+		 content: " 😔 Sorry we can't find y";
+	}
+	 13.2352941176%, 13.7244901961% {
+		 content: " 😔 Sorry we can't find yo";
+	}
+	 13.7254901961%, 14.2146862745% {
+		 content: " 😔 Sorry we can't find you";
+	}
+	 14.2156862745%, 14.7048823529% {
+		 content: " 😔 Sorry we can't find your";
+	}
+	 14.7058823529%, 15.1950784314% {
+		 content: " 😔 Sorry we can't find your ";
+	}
+	 15.1960784314%, 15.6852745098% {
+		 content: " 😔 Sorry we can't find your f";
+	}
+	 15.6862745098%, 16.1754705882% {
+		 content: " 😔 Sorry we can't find your fa";
+	}
+	 16.1764705882%, 16.6656666667% {
+		 content: " 😔 Sorry we can't find your fav";
+	}
+	 16.6666666667%, 17.1558627451% {
+		 content: " 😔 Sorry we can't find your favo";
+	}
+	 17.1568627451%, 17.6460588235% {
+		 content: " 😔 Sorry we can't find your favor";
+	}
+	 17.6470588235%, 18.136254902% {
+		 content: " 😔 Sorry we can't find your favori";
+	}
+	 18.137254902%, 18.6264509804% {
+		 content: " 😔 Sorry we can't find your favorit";
+	}
+	 18.6274509804%, 19.1166470588% {
+		 content: " 😔 Sorry we can't find your favorite";
+	}
+	 19.1176470588%, 19.6068431373% {
+		 content: " 😔 Sorry we can't find your favorite ";
+	}
+	 19.6078431373%, 20.0970392157% {
+		 content: " 😔 Sorry we can't find your favorite m";
+	}
+	 20.0980392157%, 20.5872352941% {
+		 content: " 😔 Sorry we can't find your favorite me";
+	}
+	 20.5882352941%, 21.0774313725% {
+		 content: " 😔 Sorry we can't find your favorite mea";
+	}
+	 21.0784313725%, 21.567627451% {
+		 content: " 😔 Sorry we can't find your favorite meal";
+	}
+	 21.568627451%, 22.0578235294% {
+		 content: " 😔 Sorry we can't find your favorite meal ";
+	}
+	 22.0588235294%, 22.5480196078% {
+		 content: " 😔 Sorry we can't find your favorite meal �";
+	}
+	 22.5490196078%, 23.0382156863% {
+		 content: " 😔 Sorry we can't find your favorite meal �";
+	}
+	 23.0392156863%, 23.5284117647% {
+		 content: " 😔 Sorry we can't find your favorite meal �";
+	}
+	 23.5294117647%, 34.2146862745% {
+		 content: " 😔 Sorry we can't find your favorite meal 😔";
+	}
+	 34.2156862745%, 34.6068431373% {
+		 content: " 😔 Sorry we can't find your favorite meal �";
+	}
+	 34.6078431373%, 34.999% {
+		 content: " 😔 Sorry we can't find your favorite meal �";
+	}
+	 35%, 35.3911568627% {
+		 content: " 😔 Sorry we can't find your favorite meal �";
+	}
+	 35.3921568627%, 35.7833137255% {
+		 content: " 😔 Sorry we can't find your favorite meal ";
+	}
+	 35.7843137255%, 36.1754705882% {
+		 content: " 😔 Sorry we can't find your favorite meal";
+	}
+	 36.1764705882%, 36.567627451% {
+		 content: " 😔 Sorry we can't find your favorite mea";
+	}
+	 36.568627451%, 36.9597843137% {
+		 content: " 😔 Sorry we can't find your favorite me";
+	}
+	 36.9607843137%, 37.3519411765% {
+		 content: " 😔 Sorry we can't find your favorite m";
+	}
+	 37.3529411765%, 37.7440980392% {
+		 content: " 😔 Sorry we can't find your favorite ";
+	}
+	 37.7450980392%, 38.136254902% {
+		 content: " 😔 Sorry we can't find your favorite";
+	}
+	 38.137254902%, 38.5284117647% {
+		 content: " 😔 Sorry we can't find your favorit";
+	}
+	 38.5294117647%, 38.9205686275% {
+		 content: " 😔 Sorry we can't find your favori";
+	}
+	 38.9215686275%, 39.3127254902% {
+		 content: " 😔 Sorry we can't find your favor";
+	}
+	 39.3137254902%, 39.7048823529% {
+		 content: " 😔 Sorry we can't find your favo";
+	}
+	 39.7058823529%, 40.0970392157% {
+		 content: " 😔 Sorry we can't find your fav";
+	}
+	 40.0980392157%, 40.4891960784% {
+		 content: " 😔 Sorry we can't find your fa";
+	}
+	 40.4901960784%, 40.8813529412% {
+		 content: " 😔 Sorry we can't find your f";
+	}
+	 40.8823529412%, 41.2735098039% {
+		 content: " 😔 Sorry we can't find your ";
+	}
+	 41.2745098039%, 41.6656666667% {
+		 content: " 😔 Sorry we can't find your";
+	}
+	 41.6666666667%, 42.0578235294% {
+		 content: " 😔 Sorry we can't find you";
+	}
+	 42.0588235294%, 42.4499803922% {
+		 content: " 😔 Sorry we can't find yo";
+	}
+	 42.4509803922%, 42.8421372549% {
+		 content: " 😔 Sorry we can't find y";
+	}
+	 42.8431372549%, 43.2342941176% {
+		 content: " 😔 Sorry we can't find ";
+	}
+	 43.2352941176%, 43.6264509804% {
+		 content: " 😔 Sorry we can't find";
+	}
+	 43.6274509804%, 44.0186078431% {
+		 content: " 😔 Sorry we can't fin";
+	}
+	 44.0196078431%, 44.4107647059% {
+		 content: " 😔 Sorry we can't fi";
+	}
+	 44.4117647059%, 44.8029215686% {
+		 content: " 😔 Sorry we can't f";
+	}
+	 44.8039215686%, 45.1950784314% {
+		 content: " 😔 Sorry we can't ";
+	}
+	 45.1960784314%, 45.5872352941% {
+		 content: " 😔 Sorry we can't";
+	}
+	 45.5882352941%, 45.9793921569% {
+		 content: " 😔 Sorry we can'";
+	}
+	 45.9803921569%, 46.3715490196% {
+		 content: " 😔 Sorry we can";
+	}
+	 46.3725490196%, 46.7637058824% {
+		 content: " 😔 Sorry we ca";
+	}
+	 46.7647058824%, 47.1558627451% {
+		 content: " 😔 Sorry we c";
+	}
+	 47.1568627451%, 47.5480196078% {
+		 content: " 😔 Sorry we ";
+	}
+	 47.5490196078%, 47.9401764706% {
+		 content: " 😔 Sorry we";
+	}
+	 47.9411764706%, 48.3323333333% {
+		 content: " 😔 Sorry w";
+	}
+	 48.3333333333%, 48.7244901961% {
+		 content: " 😔 Sorry ";
+	}
+	 48.7254901961%, 49.1166470588% {
+		 content: " 😔 Sorry";
+	}
+	 49.1176470588%, 49.5088039216% {
+		 content: " 😔 Sorr";
+	}
+	 49.5098039216%, 49.9009607843% {
+		 content: " 😔 Sor";
+	}
+	 49.9019607843%, 50.2931176471% {
+		 content: " 😔 So";
+	}
+	 50.2941176471%, 50.6852745098% {
+		 content: " 😔 S";
+	}
+	 50.6862745098%, 51.0774313725% {
+		 content: " 😔 ";
+	}
+	 51.0784313725%, 51.4695882353% {
+		 content: " 😔";
+	}
+	 51.4705882353%, 51.861745098% {
+		 content: " �";
+	}
+	 51.862745098%, 52.2539019608% {
+		 content: " �";
+	}
+	 52.2549019608%, 52.6460588235% {
+		 content: " �";
+	}
+	 52.6470588235%, 53.0382156863% {
+		 content: " ";
+	}
+	 53.0392156863%, 57.9401764706% {
+		 content: "​";
+	}
+	 57.9411764706%, 58.430372549% {
+		 content: "P";
+	}
+	 58.431372549%, 58.9205686275% {
+		 content: "Pl";
+	}
+	 58.9215686275%, 59.4107647059% {
+		 content: "Ple";
+	}
+	 59.4117647059%, 59.9009607843% {
+		 content: "Plea";
+	}
+	 59.9019607843%, 60.3911568627% {
+		 content: "Pleas";
+	}
+	 60.3921568627%, 60.8813529412% {
+		 content: "Please";
+	}
+	 60.8823529412%, 61.3715490196% {
+		 content: "Please ";
+	}
+	 61.3725490196%, 61.861745098% {
+		 content: "Please r";
+	}
+	 61.862745098%, 62.3519411765% {
+		 content: "Please re";
+	}
+	 62.3529411765%, 62.8421372549% {
+		 content: "Please ret";
+	}
+	 62.8431372549%, 63.3323333333% {
+		 content: "Please retu";
+	}
+	 63.3333333333%, 63.8225294118% {
+		 content: "Please retur";
+	}
+	 63.8235294118%, 64.3127254902% {
+		 content: "Please return";
+	}
+	 64.3137254902%, 64.8029215686% {
+		 content: "Please return ";
+	}
+	 64.8039215686%, 65.2931176471% {
+		 content: "Please return t";
+	}
+	 65.2941176471%, 65.7833137255% {
+		 content: "Please return to";
+	}
+	 65.7843137255%, 66.2735098039% {
+		 content: "Please return to ";
+	}
+	 66.2745098039%, 66.7637058824% {
+		 content: "Please return to t";
+	}
+	 66.7647058824%, 67.2539019608% {
+		 content: "Please return to th";
+	}
+	 67.2549019608%, 67.7440980392% {
+		 content: "Please return to the";
+	}
+	 67.7450980392%, 68.2342941176% {
+		 content: "Please return to the ";
+	}
+	 68.2352941176%, 68.7244901961% {
+		 content: "Please return to the h";
+	}
+	 68.7254901961%, 69.2146862745% {
+		 content: "Please return to the ho";
+	}
+	 69.2156862745%, 69.7048823529% {
+		 content: "Please return to the hom";
+	}
+	 69.7058823529%, 70.1950784314% {
+		 content: "Please return to the home";
+	}
+	 70.1960784314%, 70.6852745098% {
+		 content: "Please return to the home ";
+	}
+	 70.6862745098%, 71.1754705882% {
+		 content: "Please return to the home p";
+	}
+	 71.1764705882%, 71.6656666667% {
+		 content: "Please return to the home pa";
+	}
+	 71.6666666667%, 72.1558627451% {
+		 content: "Please return to the home pag";
+	}
+	 72.1568627451%, 72.6460588235% {
+		 content: "Please return to the home page";
+	}
+	 72.6470588235%, 83.3323333333% {
+		 content: "Please return to the home page!";
+	}
+	 83.3333333333%, 83.7244901961% {
+		 content: "Please return to the home page";
+	}
+	 83.7254901961%, 84.1166470588% {
+		 content: "Please return to the home pag";
+	}
+	 84.1176470588%, 84.5088039216% {
+		 content: "Please return to the home pa";
+	}
+	 84.5098039216%, 84.9009607843% {
+		 content: "Please return to the home p";
+	}
+	 84.9019607843%, 85.2931176471% {
+		 content: "Please return to the home ";
+	}
+	 85.2941176471%, 85.6852745098% {
+		 content: "Please return to the home";
+	}
+	 85.6862745098%, 86.0774313725% {
+		 content: "Please return to the hom";
+	}
+	 86.0784313725%, 86.4695882353% {
+		 content: "Please return to the ho";
+	}
+	 86.4705882353%, 86.861745098% {
+		 content: "Please return to the h";
+	}
+	 86.862745098%, 87.2539019608% {
+		 content: "Please return to the ";
+	}
+	 87.2549019608%, 87.6460588235% {
+		 content: "Please return to the";
+	}
+	 87.6470588235%, 88.0382156863% {
+		 content: "Please return to th";
+	}
+	 88.0392156863%, 88.430372549% {
+		 content: "Please return to t";
+	}
+	 88.431372549%, 88.8225294118% {
+		 content: "Please return to ";
+	}
+	 88.8235294118%, 89.2146862745% {
+		 content: "Please return to";
+	}
+	 89.2156862745%, 89.6068431373% {
+		 content: "Please return t";
+	}
+	 89.6078431373%, 89.999% {
+		 content: "Please return ";
+	}
+	 90%, 90.3911568627% {
+		 content: "Please return";
+	}
+	 90.3921568627%, 90.7833137255% {
+		 content: "Please retur";
+	}
+	 90.7843137255%, 91.1754705882% {
+		 content: "Please retu";
+	}
+	 91.1764705882%, 91.567627451% {
+		 content: "Please ret";
+	}
+	 91.568627451%, 91.9597843137% {
+		 content: "Please re";
+	}
+	 91.9607843137%, 92.3519411765% {
+		 content: "Please r";
+	}
+	 92.3529411765%, 92.7440980392% {
+		 content: "Please ";
+	}
+	 92.7450980392%, 93.136254902% {
+		 content: "Please";
+	}
+	 93.137254902%, 93.5284117647% {
+		 content: "Pleas";
+	}
+	 93.5294117647%, 93.9205686275% {
+		 content: "Plea";
+	}
+	 93.9215686275%, 94.3127254902% {
+		 content: "Ple";
+	}
+	 94.3137254902%, 94.7048823529% {
+		 content: "Pl";
+	}
+	 94.7058823529%, 95.0970392157% {
+		 content: "P";
+	}
+	 95.0980392157%, 100% {
+		 content: "​";
+	}
+}
+ @keyframes beam-blink {
+	 75% {
+		 border-color: transparent;
+	}
+}
+ * {
+	 backface-visibility: hidden;
+}
+ .myDiv {
+	 height: 100%;
+}
+ .myDiv {
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+     width: 100vw;
+     height: 100vh;
+	 background-color: #000;
+	 background-image: radial-gradient(rgba(255, 255, 255, 0.125), rgba(255, 255, 255, 0)), linear-gradient(to bottom, #000, #000 2px, #111 3px);
+	 background-repeat: repeat-y;
+	 background-position: center center;
+	 background-size: cover, 100% 3px;
+	 font-size: calc(10px + 2vw);
+	 font-family: 'VT323', monospace, sans-serif;
+	 color: #3f3;
+	 -webkit-font-smoothing: antialiased;
+	 -moz-osx-font-smoothing: grayscale;
+}
+ .myDiv::after {
+	 content: "​";
+	 position: relative;
+	 top: -13px;
+	 display: inline-block;
+	 padding-right: 3px;
+	 padding-right: calc(3px + 0.1vw);
+	 border-right: 10px solid rgba(51, 255, 51, 0.75);
+	 border-right: calc(1.1vw + 4px) solid rgba(51, 255, 51, 0.75);
+	 text-shadow: 0 0 5px rgba(51, 255, 51, 0.75);
+	 white-space: nowrap;
+	 animation: typed 20.4s linear 1s infinite, beam-blink 1s infinite;
+}
+ @media (max-width: 575px) {
+	 .myDiv::after {
+		 top: -33px;
+	}
+}
+ 
+ 

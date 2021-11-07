@@ -1,15 +1,20 @@
-import { React, useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+/* eslint-disable no-loop-func */
+import { React, useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../App.css';
-import { Button, Nav } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useScroll } from 'react-use-gesture';
 import { animated, useSpring } from 'react-spring';
-const request = require('request');
-function Users() {
-  const [error, setError] = React.useState('');
-  const [data, setData] = React.useState({ username: '' });
 
+function Users() {
+  const [error, setError] = useState('');
+  const [data, setData] = useState({ username: '' });
+  const args = JSON.parse(document.getElementById('data').text);
+  const [mealSave, setMealSave] = useState(args.saved_meal);
+
+  //const checkMealSaved = args.saved_meal;
+  //if (checkMealSaved.lenth !== 0) setMealSave(checkMealSaved);
   let calculate_bmi = (data) => {
     if (data.weight && data.height) {
       let height = data.height;
@@ -19,7 +24,7 @@ function Users() {
     }
   };
 
-  React.useState(() => {
+  useState(() => {
     const args = document.getElementById('data').text
       ? JSON.parse(document.getElementById('data').text)
       : '';
@@ -58,8 +63,7 @@ function Users() {
         setError(err.message);
       });
   };
-  // Display saved meal for current user
-  const [category, setCategory] = useState([]);
+
   const [style, set] = useSpring(() => ({
     transform: 'perspective(300px) rotateY(0deg)',
   }));
@@ -69,100 +73,102 @@ function Users() {
       transform: `perspective(500px) rotateY(${event.scrolling ? event.delta[0] : 0}deg)`,
     });
   });
-  useEffect(() => {
-    const options = {
-      method: 'GET',
-      url: 'https://themealdb.p.rapidapi.com/search.php',
-      qs: { s: 'Arrabiata' },
-      headers: {
-        'x-rapidapi-host': 'themealdb.p.rapidapi.com',
-        'x-rapidapi-key': `${process.env.REACT_APP_RapidAPI}`,
-        useQueryString: true,
-      },
-    };
-    var saveMeal = [];
-    request(options, function (error, response, body) {
-      if (error) throw new Error(error);
-      let result = JSON.parse(body).meals;
-      for (var i = 0; i < result.length; i++) {
-        saveMeal.push({ name: result[i].strMeal, image: result[i].strMealThumb });
-      }
-      setCategory(saveMeal);
-    });
-  }, []);
+
   return (
-    <div className="container">
-      <div className="form-group mt-2 mb-1">
-        <h4>Edit Profile</h4>
+    <>
+      <div className="container">
+        <div className="form-group mt-2 mb-1">
+          <h4>Edit Profile</h4>
+        </div>
+        <br />
+        <div className="col-6">
+          <form>
+            <div className="form-group mt-1">
+              <label>
+                <b>Username</b>
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="username"
+                placeholder="Update username"
+                defaultValue={data.current_user}
+              />
+            </div>
+            <div className="form-group mt-1">
+              <label>
+                <b>Password</b>
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                placeholder="Update Password"
+              />
+            </div>
+            <div className="form-group mt-1">
+              <label>
+                <b>Height</b>
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                id="height"
+                placeholder="Update Height"
+                min="0"
+                defaultValue={data.height}
+              />
+              <small className="form-text text-muted">Height in inches</small>
+            </div>
+            <div className="form-group mt-1">
+              <label>
+                <b>Weight</b>
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                id="weight"
+                placeholder="Update Weight"
+                min="0"
+                defaultValue={data.weight}
+              />
+              <small className="form-text text-muted">Weight in pounds</small>
+            </div>
+            <div className="form-group mt-1">
+              <label>
+                <b>Calculated BMI{' : '}</b>
+              </label>
+              <label>{data.bmi ? data.bmi : 'N/A'}</label>
+            </div>
+            <div className="form-group mt-1">
+              <small className="form-text text-danger">{error}</small>
+            </div>
+            <button type="button" className="btn btn-primary mt-1" onClick={(e) => update(e)}>
+              Update
+            </button>
+          </form>
+        </div>
       </div>
-      <div className="col-6">
-        <form>
-          <div className="form-group mt-1">
-            <label>
-              <b>Username</b>
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="username"
-              placeholder="Update username"
-              defaultValue={data.current_user}
-            />
-          </div>
-          <div className="form-group mt-1">
-            <label>
-              <b>Password</b>
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              placeholder="Update Password"
-            />
-          </div>
-          <div className="form-group mt-1">
-            <label>
-              <b>Height</b>
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              id="height"
-              placeholder="Update Height"
-              min="0"
-              defaultValue={data.height}
-            />
-            <small className="form-text text-muted">Height in inches</small>
-          </div>
-          <div className="form-group mt-1">
-            <label>
-              <b>Weight</b>
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              id="weight"
-              placeholder="Update Weight"
-              min="0"
-              defaultValue={data.weight}
-            />
-            <small className="form-text text-muted">Weight in pounds</small>
-          </div>
-          <div className="form-group mt-1">
-            <label>
-              <b>Calculated BMI{' : '}</b>
-            </label>
-            <label>{data.bmi ? data.bmi : 'N/A'}</label>
-          </div>
-          <div className="form-group mt-1">
-            <small className="form-text text-danger">{error}</small>
-          </div>
-          <button type="button" className="btn btn-primary mt-1" onClick={(e) => update(e)}>
-            Update
-          </button>
-        </form>
+      <h1>Your saved meal below</h1>
+      <div>
+        <div className="container" {...bind()}>
+          {mealSave.map((item) => (
+            <Nav.Link as={Link} to={`/recipe/${item.name}`}>
+              <animated.div
+                key={item.name}
+                className="card"
+                style={{
+                  ...style,
+                  backgroundImage: `url(${item.image})`,
+                }}
+              >
+                {item.name}
+              </animated.div>
+            </Nav.Link>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
