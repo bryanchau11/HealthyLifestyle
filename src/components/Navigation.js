@@ -1,15 +1,28 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { Nav, Navbar, Container, Button, Form, FormControl } from 'react-bootstrap';
+import { Nav, Navbar, Container, Button, Form, FormControl, Alert } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../css/Header.css';
 function Header() {
   const args = JSON.parse(document.getElementById('data').text);
+  const [show, setShow] = useState(false);
   const textInput = useRef(null);
   const navigate = useNavigate();
   function onButtonClick() {
-    navigate(`/search/${textInput.current.value}`);
-    textInput.current.value = '';
+    if (textInput.current.value == '') {
+      setShow(true);
+    } else {
+      navigate(`/search/${textInput.current.value}`);
+      textInput.current.value = '';
+    }
+  }
+  if (show) {
+    return (
+      <Alert variant="danger" onClose={() => setShow(false)} dismissible>
+        <Alert.Heading>Oh snap! Your input is null !</Alert.Heading>
+        Please enter something...
+      </Alert>
+    );
   }
   return (
     <>

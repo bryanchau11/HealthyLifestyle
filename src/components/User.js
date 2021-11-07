@@ -12,7 +12,6 @@ function Users() {
   const [data, setData] = useState({ username: '' });
   const args = JSON.parse(document.getElementById('data').text);
   const [mealSave, setMealSave] = useState(args.saved_meal);
-
   //const checkMealSaved = args.saved_meal;
   //if (checkMealSaved.lenth !== 0) setMealSave(checkMealSaved);
   let calculate_bmi = (data) => {
