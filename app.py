@@ -65,7 +65,7 @@ class Food(db.Model):
 
 
 engine = create_engine(db_url)
-User.__table__.drop(engine)
+# User.__table__.drop(engine)
 db.create_all()
 
 # Vars needed for google login
