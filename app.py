@@ -38,6 +38,7 @@ app.secret_key = os.getenv("SECRETKEY")  # don't defraud my app ok?
 
 db = SQLAlchemy(app)
 
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     unique_id = db.Column(db.String(30))
@@ -67,9 +68,7 @@ db.create_all()
 # Vars needed for google login
 GOOGLE_CLIENT_ID = os.getenv("GOOGLEOAUTH_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLEOAUTH_CLIENT_SECRET")
-GOOGLE_DISCOVERY_URL = (
-    "https://accounts.google.com/.well-known/openid-configuration"
-)
+GOOGLE_DISCOVERY_URL = "https://accounts.google.com/.well-known/openid-configuration"
 
 # OAuth 2 client setup
 client = WebApplicationClient(GOOGLE_CLIENT_ID)
@@ -165,7 +164,7 @@ def login():
         return flask.redirect(flask.url_for("bp.index"))
 
     if flask.request.method == "POST":
-        if flask.request.form['submit_button'] == "GOOGLE LOGIN":
+        if flask.request.form["submit_button"] == "GOOGLE LOGIN":
             # Find out what URL to hit for Google Login
             google_provider_cfg = requests.get(GOOGLE_DISCOVERY_URL).json()
             authorization_endpoint = google_provider_cfg["authorization_endpoint"]
@@ -176,7 +175,7 @@ def login():
                 scope=["openid", "email", "profile"],
             )
             return flask.redirect(request_uri)
-        if flask.request.form['submit_button'] == "LOG IN HERE":
+        if flask.request.form["submit_button"] == "LOG IN HERE":
             username = flask.request.form.get("username")
             password = flask.request.form.get("password")
             if username == "" or password == "":
@@ -193,6 +192,7 @@ def login():
 
     return flask.render_template("login.html")
 
+
 @app.route("/login/callback")
 def callback():
     # Get authorization code Google sent back to you
@@ -208,7 +208,7 @@ def callback():
         token_endpoint,
         authorization_response=flask.request.url,
         redirect_url=flask.request.base_url,
-        code=code
+        code=code,
     )
     token_response = requests.post(
         token_url,
@@ -239,17 +239,20 @@ def callback():
             return flask.redirect(flask.url_for("bp.index"))
     except:
         pass
-    
+
     new_user = User(
-        unique_id = unique_id,
-        username = users_name,
-        password = generate_password_hash("This is a google account use google login instead", method="sha256")
+        unique_id=unique_id,
+        username=users_name,
+        password=generate_password_hash(
+            "This is a google account use google login instead", method="sha256"
+        ),
     )
     db.session.add(new_user)
     db.session.commit()
 
     login_user(new_user)
     return flask.redirect(flask.url_for("bp.index"))
+
 
 @app.route("/user", methods=["PUT"])
 @login_required
@@ -329,11 +332,12 @@ def main():
         return flask.redirect(flask.url_for("bp.index"))
     return flask.redirect(flask.url_for("login"))
 
+
 # When running locally, comment out host and port
 # When deploying to Heroku, comment out ssl_context
 # If using chrome, go to link 'chrome://flags/#allow-insecure-localhost' and toggle
 app.run(
-    #ssl_context='adhoc'
-    host=os.getenv("IP", "0.0.0.0"),
-    port=int(os.getenv("PORT", 8081)),
+    ssl_context="adhoc"
+    # host=os.getenv("IP", "0.0.0.0"),
+    # port=int(os.getenv("PORT", 8081)),
 )
