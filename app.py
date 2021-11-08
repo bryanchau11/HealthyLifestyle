@@ -40,6 +40,7 @@ db = SQLAlchemy(app)
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    unique_id = db.Column(db.String(30))
     username = db.Column(db.String(80))
     password = db.Column(db.String(700))
     height = db.Column(db.String(10))
@@ -195,18 +196,18 @@ def login():
 @app.route("/login/callback")
 def callback():
     # Get authorization code Google sent back to you
-    code = flask.request.get("code")
+    code = flask.request.args.get("code")
 
     # Find out what URL to hit to get tokens that allow you to ask for
     # things on behalf of a user
-    google_provider_cfg = get_google_provider_cfg()
+    google_provider_cfg = requests.get(GOOGLE_DISCOVERY_URL).json()
     token_endpoint = google_provider_cfg["token_endpoint"]
 
     # Prepare and send a request to get tokens
     token_url, headers, body = client.prepare_token_request(
         token_endpoint,
-        authorization_response=request.url,
-        redirect_url=request.base_url,
+        authorization_response=flask.request.url,
+        redirect_url=flask.request.base_url,
         code=code
     )
     token_response = requests.post(
@@ -230,16 +231,19 @@ def callback():
         picture = userinfo_response.json()["picture"]
     else:
         return "User email not available or not verified by Google.", 400
+    try:
+        user = User.query.filter_by(unique_id=unique_id, username=users_name).first()
 
-    user = User.query.filter_by(id=unique_id, username=users_name).first()
-    if user:
-        login_user(user)
-        return flask.redirect(flask.url_for("bp.index"))
+        if user:
+            login_user(user)
+            return flask.redirect(flask.url_for("bp.index"))
+    except:
+        pass
     
     new_user = User(
-        id = unique_id,
+        unique_id = unique_id,
         username = users_name,
-        password = generate_password_hash("This is a google account use google login instead", sha256)
+        password = generate_password_hash("This is a google account use google login instead", method="sha256")
     )
     db.session.add(new_user)
     db.session.commit()
@@ -325,8 +329,11 @@ def main():
         return flask.redirect(flask.url_for("bp.index"))
     return flask.redirect(flask.url_for("login"))
 
-
+# When running locally, comment out host and port
+# When deploying to Heroku, comment out ssl_context
+# If using chrome, go to link 'chrome://flags/#allow-insecure-localhost' and toggle
 app.run(
-    host=os.getenv("IP", "0.0.0.0"),
-    port=int(os.getenv("PORT", 8081)),
+    ssl_context='adhoc'
+    #host=os.getenv("IP", "0.0.0.0"),
+    #port=int(os.getenv("PORT", 8081)),
 )
