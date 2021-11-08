@@ -46,7 +46,10 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(700))
     height = db.Column(db.String(10))
     weight = db.Column(db.String(10))
+    age = db.Column(db.String(10))
+    gender = db.Column(db.String(1))
     bmi = db.Column(db.String(10))
+    bfp = db.Column(db.String(10))
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -62,7 +65,7 @@ class Food(db.Model):
 
 
 engine = create_engine(db_url)
-# User.__table__.drop(engine)
+User.__table__.drop(engine)
 db.create_all()
 
 # Vars needed for google login
@@ -97,6 +100,9 @@ def index():
         "current_user": current_user.username,
         "height": current_user.height,
         "weight": current_user.weight,
+        "age": current_user.age,
+        "gender": current_user.gender,
+        "bfp": current_user.bfp,
         "bmi": current_user.bmi,
         "list_of_food": list_of_food,
         "list_of_image": list_of_image,
@@ -264,37 +270,47 @@ def get_user():
         "height": current_user.height,
         "weight": current_user.weight,
     }
+    user = User.query.filter_by(username=current_user.username).first()
     if data["username"] != "":
-        user = User.query.filter_by(username=current_user.username).first()
         user.username = data["username"]
-        db.session.commit()
         current_user.username = data["username"]
         DATA["current_user"] = data["username"]
 
     if data["height"] != "":
-        user = User.query.filter_by(username=current_user.username).first()
+        current_user.height = data["height"]
         user.height = data["height"]
-        db.session.commit()
         DATA["height"] = data["height"]
 
     if data["weight"] != "":
-        user = User.query.filter_by(username=current_user.username).first()
+        current_user.weight = data["weight"]
         user.weight = data["weight"]
-        db.session.commit()
         DATA["weight"] = data["weight"]
 
     if data["password"] != "":
-        user = User.query.filter_by(username=current_user.username).first()
         user.password = generate_password_hash(data["password"], method="sha256")
-        db.session.commit()
         DATA["password"] = data["password"]
 
     if data["bmi"] != "":
-        user = User.query.filter_by(username=current_user.username).first()
+        current_user.bmi = data["bmi"]
         user.bmi = data["bmi"]
-        db.session.commit()
         DATA["bmi"] = data["bmi"]
 
+    if data["age"] != "":
+        current_user.age = data["age"]
+        user.age = data["age"]
+        DATA["age"] = data["age"]
+
+    if data["gender"] != "":
+        current_user.gender = data["gender"]
+        user.gender = data["gender"]
+        DATA["gender"] = data["gender"]
+
+    if data["bfp"] != "":
+        current_user.bfp = data["bfp"]
+        user.bfp = data["bfp"]
+        DATA["bfp"] = data["bfp"]
+
+    db.session.commit()
     response = app.response_class(
         response=json.dumps(DATA), status=200, mimetype="application/json"
     )
