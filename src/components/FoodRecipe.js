@@ -5,6 +5,7 @@ import '../App.css';
 import { Button, Nav } from 'react-bootstrap';
 import YoutubeEmbed from './YoutubeEmbed';
 import 'bootstrap/dist/css/bootstrap.css';
+import { Rating, RatingView } from 'react-simple-star-rating';
 function RecipeDetail() {
   const args = JSON.parse(document.getElementById('data').text);
   const list = args.list_of_item;
@@ -89,6 +90,14 @@ function RecipeDetail() {
         setText(data.text);
       });
   }
+  // Rating meal
+  const [rating, setRating] = useState(0); // initial rating value
+
+  // Catch Rating value
+  const handleRating = (rate) => {
+    setRating(rate);
+    // Some logic
+  };
   return (
     <div>
       <h1>
@@ -96,6 +105,7 @@ function RecipeDetail() {
         <Button onClick={saveMeal} variant={color}>
           {text}
         </Button>
+        <Rating onClick={handleRating} ratingValue={rating} /* Rating Props */ />
       </h1>
       <img className="fixed_img" src={mealImage} alt="food pictures" />
       <h2>Ingredient</h2>
