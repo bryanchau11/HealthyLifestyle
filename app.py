@@ -377,6 +377,11 @@ def user_rating():
         db.session.commit()
 
 
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return flask.redirect(flask.url_for("bp.index"))
+
 @app.route("/")
 def main():
     if current_user.is_authenticated:
