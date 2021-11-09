@@ -8,9 +8,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Rating, RatingView } from 'react-simple-star-rating';
 function RecipeDetail() {
   const args = JSON.parse(document.getElementById('data').text);
-  const list = args.list_of_item;
+  //const list = args.list_of_item;
   const { foodName } = useParams();
-  const thisFood = list.find((i) => i.food === foodName);
+  //const thisFood = list.find((i) => i.food === foodName);
   const request = require('request');
   const [instruction, setInstruction] = useState();
   const [mealImage, setImage] = useState();
@@ -29,6 +29,23 @@ function RecipeDetail() {
     }
     return ID;
   }
+  const [avgRating, setAvgRating] = useState();
+  useEffect(() => {
+    const requestData = { foodName: foodName };
+    fetch('/get_average_rating', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setAvgRating(data.rating);
+      });
+  });
+
+  // Getting list of ingredient for specific food
   useEffect(() => {
     const options = {
       method: 'GET',
@@ -97,10 +114,19 @@ function RecipeDetail() {
   const handleRating = (rate) => {
     setRating(rate);
     // Some logic
+    const requestData = { userRating: rate, food: foodName };
+    fetch('/user_rating', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    });
   };
   return (
     <div>
       <h1>
+        AVERAGE RATING: <Rating ratingValue={avgRating} /> <br />
         {foodName}{' '}
         <Button onClick={saveMeal} variant={color}>
           {text}

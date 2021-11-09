@@ -62,6 +62,12 @@ class Food(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80))
     food = db.Column(db.String(100))
+
+
+class Rating(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80))
+    food = db.Column(db.String(100))
     rating = db.Column(db.Integer)
 
 
@@ -99,9 +105,6 @@ def index():
             name, image = get_meal(meal.food)
             meal_db_list.append({"name": name, "image": image})
 
-    # Displaying average rating for each food, 0 if there is no rate yet.
-    rating_list = []
-    rating_object = Food.query.filter_by()
     DATA = {
         "current_user": current_user.username,
         "height": current_user.height,
@@ -346,6 +349,32 @@ def delete_meal():
     meal_db = Food.query.filter_by(username=current_user.username, food=meal).first()
     db.session.delete(meal_db)
     db.session.commit()
+
+
+@app.route("/get_average_rating", methods=["POST"])
+def avg_rating():
+    meal = flask.request.json.get("foodName")
+    meal_db = Rating.query.filter_by(food=meal).all()
+    sum = 0
+    for i in meal_db:
+        sum += i.rating
+    if len(meal_db) == 0:
+        return flask.jsonify({"rating": 0})
+    else:
+        return flask.jsonify({"rating": sum / len(meal_db)})
+
+
+@app.route("/user_rating", methods=["POST"])
+def user_rating():
+    meal = flask.request.json.get("userRating")
+    food = flask.request.json.get("food")
+    meal_db = Rating.query.filter_by(username=current_user.username, food=food).first()
+    if meal_db is None:
+        db.session.add(Rating(username=current_user.username, food=food, rating=meal))
+        db.session.commit()
+    else:
+        meal_db.rating = meal
+        db.session.commit()
 
 
 @app.route("/")
