@@ -34,7 +34,7 @@ if db_url.startswith("postgres://"):
 app.config["SQLALCHEMY_DATABASE_URI"] = db_url
 # Gets rid of a warning
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.secret_key = os.getenv("SECRETKEY")  # don't defraud my app ok?
+app.secret_key = os.getenv("SECRETKEY")
 
 db = SQLAlchemy(app)
 
@@ -62,10 +62,11 @@ class Food(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80))
     food = db.Column(db.String(100))
+    rating = db.Column(db.Integer)
 
 
 engine = create_engine(db_url)
-User.__table__.drop(engine)
+# User.__table__.drop(engine)
 db.create_all()
 
 # Vars needed for google login
@@ -87,6 +88,7 @@ def index():
         {"food": food, "image": image}
         for food, image in zip(list_of_food, list_of_image)
     ]
+    # Getting saved meal for current user
     meal_db_list = []
     meal_db = Food.query.filter_by(username=current_user.username).all()
     if len(meal_db) == 0:
@@ -96,6 +98,10 @@ def index():
 
             name, image = get_meal(meal.food)
             meal_db_list.append({"name": name, "image": image})
+
+    # Displaying average rating for each food, 0 if there is no rate yet.
+    rating_list = []
+    rating_object = Food.query.filter_by()
     DATA = {
         "current_user": current_user.username,
         "height": current_user.height,
