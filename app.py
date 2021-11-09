@@ -48,8 +48,8 @@ class User(UserMixin, db.Model):
     weight = db.Column(db.String(10))
     age = db.Column(db.String(10))
     gender = db.Column(db.String(1))
-    bmi = db.Column(db.String(10))
-    bfp = db.Column(db.String(10))
+    bmi = db.Column(db.String(100))
+    bfp = db.Column(db.String(100))
 
     def __repr__(self):
         return f"<User {self.username}>"
@@ -270,7 +270,7 @@ def callback():
 @login_required
 def get_user():
     data = flask.request.get_json(force=True)
-    print(data)
+    # print(data)
     DATA = {
         "current_user": current_user.username,
         "height": current_user.height,

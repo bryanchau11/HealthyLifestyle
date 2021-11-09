@@ -3,7 +3,6 @@
 ## Requirements
 1. `npm install`
 2. `pip install -r requirements.txt`
-3. `testing`
 ## Run Application
 1. Run command in terminal (in your project directory): `npm run build`. This will update anything related to your `App.js` file (so `public/index.html`, any CSS you're pulling in, etc).
 2. Run command in terminal (in your project directory): `python3 app.py`
