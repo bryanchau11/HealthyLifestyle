@@ -8,7 +8,8 @@ function Header() {
   const [show, setShow] = useState(false);
   const textInput = useRef(null);
   const navigate = useNavigate();
-  function onButtonClick() {
+  const onButtonClick = (event) => {
+    event.preventDefault()
     if (textInput.current.value == '') {
       setShow(true);
     } else {
@@ -51,7 +52,7 @@ function Header() {
             <Nav.Link as={NavLink} to="/contact">
               Contact
             </Nav.Link>
-            <Form className="d-flex">
+            <Form className="d-flex" onSubmit={onButtonClick}>
               <FormControl
                 ref={textInput}
                 type="text"

@@ -29,21 +29,6 @@ function RecipeDetail() {
     }
     return ID;
   }
-  const [avgRating, setAvgRating] = useState();
-  useEffect(() => {
-    const requestData = { foodName: foodName };
-    fetch('/get_average_rating', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setAvgRating(data.rating);
-      });
-  });
 
   // Getting list of ingredient for specific food
   useEffect(() => {
@@ -123,6 +108,21 @@ function RecipeDetail() {
       body: JSON.stringify(requestData),
     });
   };
+  const [avgRating, setAvgRating] = useState();
+  useEffect(() => {
+    const requestData = { foodName: foodName };
+    fetch('/get_average_rating', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setAvgRating(data.rating);
+      });
+  }, [rating]);
   return (
     <div>
       <h1>
