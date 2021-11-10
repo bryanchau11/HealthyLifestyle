@@ -52,28 +52,28 @@ class User(UserMixin, db.Model):
     bfp = db.Column(db.String(100))
 
     def __repr__(self):
-        return f"<User {self.username}>"
+        return f"<User {self.email}>"
 
-    def get_username(self):
-        return self.username
+    def get_email(self):
+        return self.email
 
 
 class Food(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80))
+    email = db.Column(db.String(80))
     food = db.Column(db.String(100))
 
 
 class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80))
+    email = db.Column(db.String(80))
     food = db.Column(db.String(100))
     rating = db.Column(db.Integer)
 
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80))
+    email = db.Column(db.String(80))
     food = db.Column(db.String(100))
     comment = db.Column(db.String(500))
 
@@ -103,7 +103,7 @@ def index():
     ]
     # Getting saved meal for current user
     meal_db_list = []
-    meal_db = Food.query.filter_by(username=current_user.username).all()
+    meal_db = Food.query.filter_by(email=current_user.email).all()
     if len(meal_db) == 0:
         pass
     else:
@@ -203,7 +203,7 @@ def login():
             email = flask.request.form.get("email")
             password = flask.request.form.get("password")
             if email == "" or password == "":
-                flask.flash("Please enter username or password")
+                flask.flash("Please enter email or password")
                 return flask.render_template("login.html")
             my_user = User.query.filter_by(email=email).first()
 
@@ -306,11 +306,11 @@ def get_user():
     data = flask.request.get_json(force=True)
     # print(data)
     DATA = {
-        "current_user": current_user.username,
+        "current_user": current_user.email,
         "height": current_user.height,
         "weight": current_user.weight,
     }
-    user = User.query.filter_by(username=current_user.username).first()
+    user = User.query.filter_by(email=current_user.email).first()
     if data["username"] != "":
         user.username = data["username"]
         current_user.username = data["username"]
@@ -359,7 +359,7 @@ def get_user():
 
 @app.route("/save_meal", methods=["POST"])
 def save_meal():
-    meal_db = Food.query.filter_by(username=current_user.username).all()
+    meal_db = Food.query.filter_by(email=current_user.email).all()
     meal_db_list = [meal.food for meal in meal_db]
     meal = flask.request.json.get("save_meal")
     result_color = "success"
@@ -369,7 +369,7 @@ def save_meal():
         result_text = "You already saved this meal!!"
         pass
     else:
-        db.session.add(Food(username=current_user.username, food=meal))
+        db.session.add(Food(email=current_user.email, food=meal))
         db.session.commit()
     return flask.jsonify({"color": result_color, "text": result_text})
 
@@ -377,7 +377,7 @@ def save_meal():
 @app.route("/delete_meal", methods=["POST"])
 def delete_meal():
     meal = flask.request.json.get("delete_meal")
-    meal_db = Food.query.filter_by(username=current_user.username, food=meal).first()
+    meal_db = Food.query.filter_by(email=current_user.email, food=meal).first()
     db.session.delete(meal_db)
     db.session.commit()
 
@@ -399,9 +399,9 @@ def avg_rating():
 def user_rating():
     meal = flask.request.json.get("userRating")
     food = flask.request.json.get("food")
-    meal_db = Rating.query.filter_by(username=current_user.username, food=food).first()
+    meal_db = Rating.query.filter_by(email=current_user.email, food=food).first()
     if meal_db is None:
-        db.session.add(Rating(username=current_user.username, food=food, rating=meal))
+        db.session.add(Rating(email=current_user.email, food=food, rating=meal))
         db.session.commit()
     else:
         meal_db.rating = meal

@@ -22,19 +22,19 @@ function Users() {
       let BMI = (weight / (height * height)) * 703;
       return BMI.toFixed(2);
     }
-    return null
+    return null;
   };
 
   let calculate_bfp = (age, bmi, gender) => {
     if (age && bmi && gender) {
       if (gender === 'F') {
-        return ((1.20 * bmi) + (0.23 * age)) - 5.4
+        return 1.2 * bmi + 0.23 * age - 5.4;
       }
       if (gender === 'M') {
-        return ((1.20 * bmi) + (0.23 * age)) - 16.2
+        return 1.2 * bmi + 0.23 * age - 16.2;
       }
     }
-    return null
+    return null;
   };
 
   useState(() => {
@@ -49,18 +49,18 @@ function Users() {
     let weight = document.getElementById('weight').value;
     let password = document.getElementById('password').value;
     let age = document.getElementById('age').value;
-    let gender = null
-    let genderElements = document.getElementsByName("gender")
+    let gender = null;
+    let genderElements = document.getElementsByName('gender');
     genderElements.forEach((genderButton) => {
       if (genderButton.checked) {
-        gender = genderButton.value
+        gender = genderButton.value;
       }
-    })
+    });
     let bmi = calculate_bmi({ height, weight });
     let bfp = calculate_bfp(age, bmi, gender);
 
     if (!username) {
-      setError('Username cannot be empty.');
+      setError('username cannot be empty.');
       return;
     }
     setError('');
@@ -117,7 +117,7 @@ function Users() {
             <form>
               <div className="form-group mt-1">
                 <label>
-                  <b>Username</b>
+                  <b>username</b>
                 </label>
                 <input
                   type="text"
@@ -153,9 +153,23 @@ function Users() {
               </div>
               <div className="form-group mt-1">
                 <label>
-                  <b>Gender</b><br />
-                  <input type="radio" value="M" name="gender" defaultChecked={data.gender === 'M' ? true : false} /> Male
-                  <input type="radio" value="F" className="ml-1" name="gender" defaultChecked={data.gender === 'F' ? true : false} /> Female
+                  <b>Gender</b>
+                  <br />
+                  <input
+                    type="radio"
+                    value="M"
+                    name="gender"
+                    defaultChecked={data.gender === 'M' ? true : false}
+                  />{' '}
+                  Male
+                  <input
+                    type="radio"
+                    value="F"
+                    className="ml-1"
+                    name="gender"
+                    defaultChecked={data.gender === 'F' ? true : false}
+                  />{' '}
+                  Female
                 </label>
               </div>
               <div className="form-group mt-1">
@@ -216,24 +230,26 @@ function Users() {
       <h1>Your saved meal below</h1>
       <div>
         <div className="container" {...bind()}>
-          {mealSave ? mealSave.map((item) => (
-            <div>
-              <Nav.Link as={Link} to={`/recipe/${item.name}`}>
-                {item.name}
-              </Nav.Link>
-              <animated.div
-                key={item.name}
-                className="card"
-                style={{
-                  ...style,
-                  backgroundImage: `url(${item.image})`,
-                }}
-              ></animated.div>
-              <Button variant="primary" type="button" onClick={() => deleteItem(item)}>
-                X
-              </Button>
-            </div>
-          )) : ''}
+          {mealSave
+            ? mealSave.map((item) => (
+                <div>
+                  <Nav.Link as={Link} to={`/recipe/${item.name}`}>
+                    {item.name}
+                  </Nav.Link>
+                  <animated.div
+                    key={item.name}
+                    className="card"
+                    style={{
+                      ...style,
+                      backgroundImage: `url(${item.image})`,
+                    }}
+                  ></animated.div>
+                  <Button variant="primary" type="button" onClick={() => deleteItem(item)}>
+                    X
+                  </Button>
+                </div>
+              ))
+            : ''}
         </div>
       </div>
     </>
