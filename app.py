@@ -71,6 +71,13 @@ class Rating(db.Model):
     rating = db.Column(db.Integer)
 
 
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80))
+    food = db.Column(db.String(100))
+    comment = db.Column(db.String(500))
+
+
 engine = create_engine(db_url)
 # User.__table__.drop(engine)
 db.create_all()
