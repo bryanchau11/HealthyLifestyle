@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable eqeqeq */
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import '../App.css';
 import { Button, Nav } from 'react-bootstrap';
@@ -8,18 +8,17 @@ import YoutubeEmbed from './YoutubeEmbed';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Rating, RatingView } from 'react-simple-star-rating';
 import { Divider, Avatar, Grid, Paper } from '@material-ui/core';
-import { Box, TextField } from '@mui/material';
+import { Box, TextField, useFormControl } from '@mui/material';
 import AddCommentIcon from '@mui/icons-material/AddComment';
+import { Form, FormControl, Alert, FloatingLabel } from 'react-bootstrap';
+const request = require('request');
 function RecipeDetail() {
   const args = JSON.parse(document.getElementById('data').text);
-  //const list = args.list_of_item;
+  const userName = args.current_user;
+  const userEmail = args.current_user_email;
   const { foodName } = useParams();
-  //const thisFood = list.find((i) => i.food === foodName);
-  const request = require('request');
   const [instruction, setInstruction] = useState();
   const [mealImage, setImage] = useState();
-  //const [ingredient, setIngredient] = useState([]);
-  //const [measure, setMeasure] = useState([]);
   const [ingredientAndMeasure, setIngredientAndMeasure] = useState([]);
   const [youtubeLink, setYoutubeLink] = useState();
   function YouTubeGetID(url) {
@@ -129,6 +128,79 @@ function RecipeDetail() {
   }, [rating]);
   const imgLink =
     'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*';
+  function Comment(prop) {
+    return (
+      <Grid container wrap="nowrap" spacing={2} style={{ backgroundColor: 'rgb(236, 226, 212)' }}>
+        <Grid item>
+          <Avatar alt="Remy Sharp" src={imgLink} />
+        </Grid>
+        <Grid justifyContent="left" item xs zeroMinWidth>
+          <h4 style={{ margin: 0, textAlign: 'left' }}>
+            {prop.username} : {prop.email}
+          </h4>
+          <p style={{ textAlign: 'left' }}>{prop.comment}</p>
+          <p style={{ textAlign: 'left', color: 'gray' }}>posted 1 minute ago</p>
+        </Grid>
+      </Grid>
+    );
+  }
+  //  Get all comments for a specific food
+  const [commentThread, setCommentThread] = useState([]);
+
+  useEffect(() => {
+    var commentThreadList = [];
+    const requestData = { foodName: foodName };
+    fetch('/get_comment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.comment);
+        console.log(typeof data.comment);
+        //var item = '';
+        for (var i = 0; i < data.comment.length; i++) {
+          commentThreadList.push({
+            email: data.comment[i][0],
+            username: data.comment[i][1],
+            comment: data.comment[i][2],
+          });
+        }
+        setCommentThread(commentThreadList);
+      });
+
+    console.log(commentThread);
+  }, []);
+  const textInput = useRef(null);
+  const saveComment = (event) => {
+    event.preventDefault();
+    var commentThreadList = [...commentThread];
+    commentThreadList.push({
+      email: userEmail,
+      username: userName,
+      comment: textInput.current.value,
+    });
+    setCommentThread(commentThreadList);
+    console.log({ email: userEmail, username: userName, comment: textInput.current.value });
+    const requestData = {
+      email: userEmail,
+      username: userName,
+      comment: textInput.current.value,
+      food: foodName,
+    };
+
+    fetch('/save_comment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    });
+    textInput.current.value = '';
+  };
   return (
     <div>
       <h1>
@@ -159,56 +231,43 @@ function RecipeDetail() {
       <h2>Instruction</h2>
       <div>{instruction}</div>
       <YoutubeEmbed embedId={youtubeLink} />
+      <Paper style={{ padding: '40px 20px', backgroundColor: 'rgb(228, 214, 196)' }}>
+        {commentThread.map((item) => (
+          <Comment username={item.username} comment={item.comment} email={item.email} />
+        ))}
 
-      <Grid container wrap="nowrap" spacing={2}>
-        <Grid item>
-          <Avatar alt="Remy Sharp" src={imgLink} />
-        </Grid>
-        <Grid justifyContent="left" item xs zeroMinWidth>
-          <h4 style={{ margin: 0, textAlign: 'left' }}>Michel Michel</h4>
-          <p style={{ textAlign: 'left' }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean luctus ut est sed
-            faucibus. Duis bibendum ac ex vehicula laoreet. Suspendisse congue vulputate lobortis.
-            Pellentesque at interdum tortor. Quisque arcu quam, malesuada vel mauris et, posuere
-            sagittis ipsum. Aliquam ultricies a ligula nec faucibus. In elit metus, efficitur
-            lobortis nisi quis, molestie porttitor metus. Pellentesque et neque risus. Aliquam
-            vulputate, mauris vitae tincidunt interdum, mauris mi vehicula urna, nec feugiat quam
-            lectus vitae ex.{' '}
-          </p>
-          <p style={{ textAlign: 'left', color: 'gray' }}>posted 1 minute ago</p>
-        </Grid>
-      </Grid>
-      <Grid container wrap="nowrap" spacing={2}>
-        <Grid item>
-          <Avatar alt="Remy Sharp" src={imgLink} />
-        </Grid>
-        <Grid justifyContent="left" item xs zeroMinWidth>
-          <h4 style={{ margin: 0, textAlign: 'left' }}>Michel Michel</h4>
-          <p style={{ textAlign: 'left' }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean luctus ut est sed
-            faucibus. Duis bibendum ac ex vehicula laoreet. Suspendisse congue vulputate lobortis.
-            Pellentesque at interdum tortor. Quisque arcu quam, malesuada vel mauris et, posuere
-            sagittis ipsum. Aliquam ultricies a ligula nec faucibus. In elit metus, efficitur
-            lobortis nisi quis, molestie porttitor metus. Pellentesque et neque risus. Aliquam
-            vulputate, mauris vitae tincidunt interdum, mauris mi vehicula urna, nec feugiat quam
-            lectus vitae ex.{' '}
-          </p>
-          <p style={{ textAlign: 'left', color: 'gray' }}>posted 1 minute ago</p>
-        </Grid>
-      </Grid>
-      <Box
-        component="form"
-        sx={{
-          '& > :not(style)': { m: 1, width: '25ch' },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField id="outlined-basic" label="Type your comment" variant="outlined" />
-        <Button variant="contained" endIcon={<AddCommentIcon />}>
-          Comment
-        </Button>
-      </Box>
+        {/*<Box
+          component="form"
+          sx={{
+            '& > :not(style)': { m: 1, width: '25ch' },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            type="text"
+            ref="myField"
+            id="outlined-basic"
+            label="Type your comment"
+            variant="outlined"
+          />
+          <Button variant="contained" endIcon={<AddCommentIcon />} onClick={saveComment}>
+            Comment
+          </Button>
+        </Box>*/}
+        <Form className="d-flex" onSubmit={saveComment}>
+          <FormControl
+            ref={textInput}
+            type="text"
+            className="me-2"
+            placeholder="Type your comment"
+            aria-label="Search"
+          />
+          <Button onClick={saveComment} variant="outline-success">
+            Save Comment
+          </Button>
+        </Form>
+      </Paper>
     </div>
   );
 }
