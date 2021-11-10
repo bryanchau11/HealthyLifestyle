@@ -41,7 +41,7 @@ db = SQLAlchemy(app)
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(30))
+    email = db.Column(db.String(80))
     username = db.Column(db.String(80))
     password = db.Column(db.String(700))
     height = db.Column(db.String(10))
@@ -247,7 +247,9 @@ def callback():
         users_name = userinfo_response.json()["given_name"]
         picture = userinfo_response.json()["picture"]
     else:
-        return "User email not available or not verified by Google.", 400
+        flask.flash("User email not available or not verified by Google.")
+        return redirect("/login")
+
     try:
         user = User.query.filter_by(email=email).first()
 
@@ -261,7 +263,7 @@ def callback():
         email=email,
         username=users_name,
         password=generate_password_hash(
-            "This is a google account use google login instead", method="sha256"
+            os.getenv("GOOGLE_LOGIN_PASSWORD"), method="sha256"
         ),
     )
     db.session.add(new_user)
@@ -269,6 +271,26 @@ def callback():
 
     login_user(new_user)
     return flask.redirect(flask.url_for("bp.index"))
+
+
+@app.route("/login/confirm", methods=["POST", "PUT"])
+def confirm():
+    if flask.request.method == "POST":
+        email = flask.request.form.get("email")
+        password = flask.request.form.get("password")
+        user = User.query.filter_by(email=email, password=password).first()
+
+        if user:
+            user.isgoogle = True
+            db.session.commit()
+            login_user(user)
+            return flask.redirect(flask.url_for("bp.index"))
+        else:
+            flask.flash(
+                "Login unsuccessful.  Please check login information and try again."
+            )
+            return redirect("/login")
+    return flask.render_template("confirm.html")
 
 
 @app.route("/user", methods=["PUT"])
@@ -379,10 +401,11 @@ def user_rating():
         db.session.commit()
 
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
 def catch_all(path):
     return flask.redirect(flask.url_for("bp.index"))
+
 
 @app.route("/")
 def main():
@@ -395,7 +418,7 @@ def main():
 # When deploying to Heroku, comment out ssl_context
 # If using chrome, go to link 'chrome://flags/#allow-insecure-localhost' and toggle
 app.run(
-    # ssl_context="adhoc"
-    host=os.getenv("IP", "0.0.0.0"),
-    port=int(os.getenv("PORT", 8081)),
+    ssl_context="adhoc"
+    # host=os.getenv("IP", "0.0.0.0"),
+    # port=int(os.getenv("PORT", 8081)),
 )
