@@ -71,6 +71,13 @@ class Rating(db.Model):
     rating = db.Column(db.Integer)
 
 
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80))
+    food = db.Column(db.String(100))
+    comment = db.Column(db.String(500))
+
+
 engine = create_engine(db_url)
 # User.__table__.drop(engine)
 db.create_all()
@@ -377,10 +384,11 @@ def user_rating():
         db.session.commit()
 
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
 def catch_all(path):
     return flask.redirect(flask.url_for("bp.index"))
+
 
 @app.route("/")
 def main():

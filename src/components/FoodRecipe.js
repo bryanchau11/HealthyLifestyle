@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable eqeqeq */
 import { React, useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
@@ -6,6 +7,9 @@ import { Button, Nav } from 'react-bootstrap';
 import YoutubeEmbed from './YoutubeEmbed';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Rating, RatingView } from 'react-simple-star-rating';
+import { Divider, Avatar, Grid, Paper } from '@material-ui/core';
+import { Box, TextField } from '@mui/material';
+import AddCommentIcon from '@mui/icons-material/AddComment';
 function RecipeDetail() {
   const args = JSON.parse(document.getElementById('data').text);
   //const list = args.list_of_item;
@@ -123,6 +127,8 @@ function RecipeDetail() {
         setAvgRating(data.rating);
       });
   }, [rating]);
+  const imgLink =
+    'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*';
   return (
     <div>
       <h1>
@@ -153,6 +159,56 @@ function RecipeDetail() {
       <h2>Instruction</h2>
       <div>{instruction}</div>
       <YoutubeEmbed embedId={youtubeLink} />
+
+      <Grid container wrap="nowrap" spacing={2}>
+        <Grid item>
+          <Avatar alt="Remy Sharp" src={imgLink} />
+        </Grid>
+        <Grid justifyContent="left" item xs zeroMinWidth>
+          <h4 style={{ margin: 0, textAlign: 'left' }}>Michel Michel</h4>
+          <p style={{ textAlign: 'left' }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean luctus ut est sed
+            faucibus. Duis bibendum ac ex vehicula laoreet. Suspendisse congue vulputate lobortis.
+            Pellentesque at interdum tortor. Quisque arcu quam, malesuada vel mauris et, posuere
+            sagittis ipsum. Aliquam ultricies a ligula nec faucibus. In elit metus, efficitur
+            lobortis nisi quis, molestie porttitor metus. Pellentesque et neque risus. Aliquam
+            vulputate, mauris vitae tincidunt interdum, mauris mi vehicula urna, nec feugiat quam
+            lectus vitae ex.{' '}
+          </p>
+          <p style={{ textAlign: 'left', color: 'gray' }}>posted 1 minute ago</p>
+        </Grid>
+      </Grid>
+      <Grid container wrap="nowrap" spacing={2}>
+        <Grid item>
+          <Avatar alt="Remy Sharp" src={imgLink} />
+        </Grid>
+        <Grid justifyContent="left" item xs zeroMinWidth>
+          <h4 style={{ margin: 0, textAlign: 'left' }}>Michel Michel</h4>
+          <p style={{ textAlign: 'left' }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean luctus ut est sed
+            faucibus. Duis bibendum ac ex vehicula laoreet. Suspendisse congue vulputate lobortis.
+            Pellentesque at interdum tortor. Quisque arcu quam, malesuada vel mauris et, posuere
+            sagittis ipsum. Aliquam ultricies a ligula nec faucibus. In elit metus, efficitur
+            lobortis nisi quis, molestie porttitor metus. Pellentesque et neque risus. Aliquam
+            vulputate, mauris vitae tincidunt interdum, mauris mi vehicula urna, nec feugiat quam
+            lectus vitae ex.{' '}
+          </p>
+          <p style={{ textAlign: 'left', color: 'gray' }}>posted 1 minute ago</p>
+        </Grid>
+      </Grid>
+      <Box
+        component="form"
+        sx={{
+          '& > :not(style)': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <TextField id="outlined-basic" label="Type your comment" variant="outlined" />
+        <Button variant="contained" endIcon={<AddCommentIcon />}>
+          Comment
+        </Button>
+      </Box>
     </div>
   );
 }

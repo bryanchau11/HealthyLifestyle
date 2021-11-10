@@ -3,20 +3,21 @@ import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { Nav, Navbar, Container, Button, Form, FormControl, Alert } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../css/Header.css';
+import SearchIcon from '@mui/icons-material/Search';
 function Header() {
   const args = JSON.parse(document.getElementById('data').text);
   const [show, setShow] = useState(false);
   const textInput = useRef(null);
   const navigate = useNavigate();
   const onButtonClick = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     if (textInput.current.value == '') {
       setShow(true);
     } else {
       navigate(`/search/${textInput.current.value}`);
       textInput.current.value = '';
     }
-  }
+  };
   if (show) {
     return (
       <Alert variant="danger" onClose={() => setShow(false)} dismissible>
@@ -52,7 +53,12 @@ function Header() {
             <Nav.Link as={NavLink} to="/contact">
               Contact
             </Nav.Link>
-            <Form className="d-flex" onSubmit={onButtonClick}>
+
+            <Form
+              className="d-flex"
+              onSubmit={onButtonClick}
+              endIcon={<SearchIcon color="success" fontSize="large" />}
+            >
               <FormControl
                 ref={textInput}
                 type="text"
