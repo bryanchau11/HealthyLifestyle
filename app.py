@@ -41,7 +41,7 @@ db = SQLAlchemy(app)
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    unique_id = db.Column(db.String(30))
+    email = db.Column(db.String(80))
     username = db.Column(db.String(80))
     password = db.Column(db.String(700))
     height = db.Column(db.String(10))
@@ -154,16 +154,18 @@ def signup():
     if current_user.is_authenticated:
         return flask.redirect(flask.url_for("bp.index"))
     if flask.request.method == "POST":
+        email = flask.request.form.get("email")
         username = flask.request.form.get("username")
         password = flask.request.form.get("password")
-        if username == "" or password == "":
-            flask.flash("Please enter username or password")
+        if email == "" or username == "" or password == "":
+            flask.flash("Please enter an email, username, and password")
             return flask.render_template("signup.html")
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(email=email).first()
         if user:
             flask.flash("User exists")
             return flask.render_template("signup.html")
         new_user = User(
+            email=email,
             username=username,
             password=generate_password_hash(password, method="sha256"),
         )
@@ -191,12 +193,12 @@ def login():
             )
             return flask.redirect(request_uri)
         if flask.request.form["submit_button"] == "LOG IN HERE":
-            username = flask.request.form.get("username")
+            email = flask.request.form.get("email")
             password = flask.request.form.get("password")
-            if username == "" or password == "":
+            if email == "" or password == "":
                 flask.flash("Please enter username or password")
                 return flask.render_template("login.html")
-            my_user = User.query.filter_by(username=username).first()
+            my_user = User.query.filter_by(email=email).first()
 
             if not my_user or not check_password_hash(my_user.password, password):
                 flask.flash("Please check your login details and try again")
@@ -241,13 +243,15 @@ def callback():
     userinfo_response = requests.get(uri, headers=headers, data=body)
 
     if userinfo_response.json().get("email_verified"):
-        unique_id = userinfo_response.json()["sub"]
+        email = userinfo_response.json()["email"]
         users_name = userinfo_response.json()["given_name"]
         picture = userinfo_response.json()["picture"]
     else:
-        return "User email not available or not verified by Google.", 400
+        flask.flash("User email not available or not verified by Google.")
+        return redirect("/login")
+
     try:
-        user = User.query.filter_by(unique_id=unique_id, username=users_name).first()
+        user = User.query.filter_by(email=email).first()
 
         if user:
             login_user(user)
@@ -256,10 +260,10 @@ def callback():
         pass
 
     new_user = User(
-        unique_id=unique_id,
+        email=email,
         username=users_name,
         password=generate_password_hash(
-            "This is a google account use google login instead", method="sha256"
+            os.getenv("GOOGLE_LOGIN_PASSWORD"), method="sha256"
         ),
     )
     db.session.add(new_user)
@@ -267,6 +271,26 @@ def callback():
 
     login_user(new_user)
     return flask.redirect(flask.url_for("bp.index"))
+
+
+@app.route("/login/confirm", methods=["POST", "PUT"])
+def confirm():
+    if flask.request.method == "POST":
+        email = flask.request.form.get("email")
+        password = flask.request.form.get("password")
+        user = User.query.filter_by(email=email, password=password).first()
+
+        if user:
+            user.isgoogle = True
+            db.session.commit()
+            login_user(user)
+            return flask.redirect(flask.url_for("bp.index"))
+        else:
+            flask.flash(
+                "Login unsuccessful.  Please check login information and try again."
+            )
+            return redirect("/login")
+    return flask.render_template("confirm.html")
 
 
 @app.route("/user", methods=["PUT"])
@@ -377,10 +401,11 @@ def user_rating():
         db.session.commit()
 
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
 def catch_all(path):
     return flask.redirect(flask.url_for("bp.index"))
+
 
 @app.route("/")
 def main():
