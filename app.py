@@ -74,6 +74,7 @@ class Rating(db.Model):
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(80))
+    username = db.Column(db.String(80))
     food = db.Column(db.String(100))
     comment = db.Column(db.String(500))
 
@@ -104,6 +105,7 @@ def index():
     # Getting saved meal for current user
     meal_db_list = []
     meal_db = Food.query.filter_by(email=current_user.email).all()
+
     if len(meal_db) == 0:
         pass
     else:
@@ -113,6 +115,7 @@ def index():
             meal_db_list.append({"name": name, "image": image})
 
     DATA = {
+        "current_user_email": current_user.email,
         "current_user": current_user.username,
         "height": current_user.height,
         "weight": current_user.weight,
@@ -406,6 +409,35 @@ def user_rating():
     else:
         meal_db.rating = meal
         db.session.commit()
+
+
+@app.route("/get_comment", methods=["POST"])
+def get_comment():
+    meal = flask.request.json.get("foodName")
+    comment_db = Comment.query.filter_by(food=meal).all()
+    email = []
+    username = []
+    comment = []
+    result = list(zip(email, username, comment))
+    if len(comment_db) == 0:
+        return flask.jsonify({"comment": result})
+    else:
+        for i in comment_db:
+            email.append(i.email)
+            username.append(i.username)
+            comment.append(i.comment)
+        result = list(zip(email, username, comment))
+        return flask.jsonify({"comment": result})
+
+
+@app.route("/save_comment", methods=["POST"])
+def save_comment():
+    email = flask.request.json.get("email")
+    username = flask.request.json.get("username")
+    comment = flask.request.json.get("comment")
+    food = flask.request.json.get("food")
+    db.session.add(Comment(email=email, username=username, food=food, comment=comment))
+    db.session.commit()
 
 
 @app.route("/", defaults={"path": ""})
