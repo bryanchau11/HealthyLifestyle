@@ -1,18 +1,21 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Footer from './components/Footer';
 import Header from './components/Navigation';
 import NotFoundPage from './pages/NotFound';
 import Users from './components/User';
+// eslint-disable-next-line import/no-named-as-default
 import Contact from './components/Contact';
 import RecipeDetail from './components/FoodRecipe';
 import Category from './components/Category';
 import Nutrition from './components/Nutrition';
 import Search from './components/Search';
+
 const routing = (
   <Router>
     <div>

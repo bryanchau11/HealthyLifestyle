@@ -44,9 +44,15 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "airbnb",
+      "airbnb/hooks"
     ]
   },
+  "eslintIgnore": [
+    "setupTests.js",
+    "reportWebVitals.js"
+  ],
   "engines": {
     "node": "16.13.0",
     "npm": "8.1.0"
@@ -63,5 +69,10 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8081"
+  "proxy": "http://localhost:8081",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^19.0.0",
+    "eslint-config-react-app": "^6.0.0"
+  }
 }

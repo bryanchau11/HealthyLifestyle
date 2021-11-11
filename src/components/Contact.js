@@ -1,5 +1,15 @@
-import React, { useRef } from 'react';
-import { useState } from 'react';
+/* eslint-disable react/function-component-definition */
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
+/* eslint-disable jsx-a11y/media-has-caption */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable
+react/no-array-index-key,
+react-hooks/exhaustive-deps,
+react/jsx-filename-extension,
+quote-props,
+*/
+import React, { useRef, useState } from 'react';
 import emailjs from 'emailjs-com';
 
 export const Contact = () => {
@@ -21,36 +31,31 @@ export const Contact = () => {
   const sendEmail = (e) => {
     e.preventDefault();
 
-    if (messageValue == '') {
+    if (messageValue === '') {
       alert('No Message to Send');
       return;
-    } else if (emailValue == '') {
+    }
+    if (emailValue === '') {
       alert('Please Enter a Return Email');
       return;
-    } else if (nameValue == '') {
+    }
+    if (nameValue === '') {
       alert('Please Enter a Name or UserName');
       return;
     }
-    emailjs
-      .sendForm(
-        'healthyLifestyle',
-        'contact_healthyLifestyle',
-        form.current,
-        `${process.env.REACT_APP_UserID}`,
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-          alert('Email Sent!');
-          setNameValue('');
-          setEmailValue('');
-          setMessageValue('');
-        },
-        (error) => {
-          alert('Oops, something went wrong');
-          console.log(error.text);
-        },
-      );
+    emailjs.sendForm('healthyLifestyle', 'contact_healthyLifestyle', form.current, `${process.env.REACT_APP_UserID}`).then(
+      (result) => {
+        console.log(result.text);
+        alert('Email Sent!');
+        setNameValue('');
+        setEmailValue('');
+        setMessageValue('');
+      },
+      (error) => {
+        alert('Oops, something went wrong');
+        console.log(error.text);
+      },
+    );
   };
   return (
     <div>

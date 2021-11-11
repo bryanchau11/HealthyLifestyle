@@ -1,17 +1,52 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable no-param-reassign */
+/* eslint-disable react/function-component-definition */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable eqeqeq */
+/* eslint-disable no-console */
+/* eslint-disable jsx-a11y/media-has-caption */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable
+react/no-array-index-key,
+react-hooks/exhaustive-deps,
+react/jsx-filename-extension,
+quote-props,
+*/
+// eslint-disable-next-line object-curly-newline
 import { React, useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import '../App.css';
-import { Button, Nav } from 'react-bootstrap';
-import YoutubeEmbed from './YoutubeEmbed';
+import { Button, Form, FormControl } from 'react-bootstrap';
+
 import 'bootstrap/dist/css/bootstrap.css';
-import { Rating, RatingView } from 'react-simple-star-rating';
-import { Divider, Avatar, Grid, Paper } from '@material-ui/core';
-import { Box, TextField, useFormControl } from '@mui/material';
-import AddCommentIcon from '@mui/icons-material/AddComment';
-import { Form, FormControl, Alert, FloatingLabel } from 'react-bootstrap';
+import { Rating } from 'react-simple-star-rating';
+import { Avatar, Grid, Paper } from '@material-ui/core';
+import YoutubeEmbed from './YoutubeEmbed';
+
 const request = require('request');
+
+const imgLink = 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*';
+function Comment(prop) {
+  return (
+    <Grid container wrap="nowrap" spacing={2} style={{ backgroundColor: 'rgb(236, 226, 212)' }}>
+      <Grid item>
+        <Avatar alt="Remy Sharp" src={imgLink} />
+      </Grid>
+      <Grid justifyContent="left" item xs zeroMinWidth>
+        <h4 style={{ margin: 0, textAlign: 'left' }}>
+          {prop.username} : {prop.email}
+        </h4>
+        <p style={{ textAlign: 'left' }}>{prop.comment}</p>
+        <p style={{ textAlign: 'left', color: 'gray' }}>posted 1 minute ago</p>
+      </Grid>
+    </Grid>
+  );
+}
 function RecipeDetail() {
   const args = JSON.parse(document.getElementById('data').text);
   const userName = args.current_user;
@@ -22,10 +57,12 @@ function RecipeDetail() {
   const [ingredientAndMeasure, setIngredientAndMeasure] = useState([]);
   const [youtubeLink, setYoutubeLink] = useState();
   function YouTubeGetID(url) {
-    var ID = '';
+    let ID = '';
     url = url.replace(/(>|<)/gi, '').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
     if (url[2] !== undefined) {
+      // eslint-disable-next-line no-useless-escape
       ID = url[2].split(/[^0-9a-z_\-]/i);
+      // eslint-disable-next-line prefer-destructuring
       ID = ID[0];
     } else {
       ID = url;
@@ -46,34 +83,34 @@ function RecipeDetail() {
       },
     };
 
+    // eslint-disable-next-line func-names
     request(options, function (error, response, body) {
       if (error) throw new Error(error);
-      let result = JSON.parse(body).meals[0];
+      const result = JSON.parse(body).meals[0];
       setInstruction(result.strInstructions);
       setImage(result.strMealThumb);
-      var ingredientArray = [];
-      var key = '';
+      const ingredientArray = [];
+      let key = '';
       for (key in result) {
         if (key.startsWith('strIngredient')) {
           if (result[key] != '' && result[key] != null) ingredientArray.push(result[key]);
         }
       }
-      //setIngredient(ingredientArray);
-      var measureArray = [];
+      const measureArray = [];
       for (key in result) {
         if (key.startsWith('strMeasure')) {
           if (result[key] != '' && result[key] != null) measureArray.push(result[key]);
         }
       }
-      //setMeasure(measureArray);
-      var ingredientAndMeasureResult = [];
-      for (var i = 0; i < ingredientArray.length; i++) {
+      const ingredientAndMeasureResult = [];
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < ingredientArray.length; i++) {
         ingredientAndMeasureResult.push({
           ingre: ingredientArray[i],
           meas: measureArray[i],
         });
       }
-      var videoLink = YouTubeGetID(result.strYoutube);
+      const videoLink = YouTubeGetID(result.strYoutube);
       setYoutubeLink(videoLink);
       setIngredientAndMeasure(ingredientAndMeasureResult);
     });
@@ -113,6 +150,7 @@ function RecipeDetail() {
   };
   const [avgRating, setAvgRating] = useState();
   useEffect(() => {
+    // eslint-disable-next-line object-shorthand
     const requestData = { foodName: foodName };
     fetch('/get_average_rating', {
       method: 'POST',
@@ -126,29 +164,14 @@ function RecipeDetail() {
         setAvgRating(data.rating);
       });
   }, [rating]);
-  const imgLink =
-    'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*';
-  function Comment(prop) {
-    return (
-      <Grid container wrap="nowrap" spacing={2} style={{ backgroundColor: 'rgb(236, 226, 212)' }}>
-        <Grid item>
-          <Avatar alt="Remy Sharp" src={imgLink} />
-        </Grid>
-        <Grid justifyContent="left" item xs zeroMinWidth>
-          <h4 style={{ margin: 0, textAlign: 'left' }}>
-            {prop.username} : {prop.email}
-          </h4>
-          <p style={{ textAlign: 'left' }}>{prop.comment}</p>
-          <p style={{ textAlign: 'left', color: 'gray' }}>posted 1 minute ago</p>
-        </Grid>
-      </Grid>
-    );
-  }
+  // eslint-disable-next-line operator-linebreak
+
   //  Get all comments for a specific food
   const [commentThread, setCommentThread] = useState([]);
 
   useEffect(() => {
-    var commentThreadList = [];
+    const commentThreadList = [];
+    // eslint-disable-next-line object-shorthand
     const requestData = { foodName: foodName };
     fetch('/get_comment', {
       method: 'POST',
@@ -161,8 +184,7 @@ function RecipeDetail() {
       .then((data) => {
         console.log(data.comment);
         console.log(typeof data.comment);
-        //var item = '';
-        for (var i = 0; i < data.comment.length; i++) {
+        for (let i = 0; i < data.comment.length; i++) {
           commentThreadList.push({
             email: data.comment[i][0],
             username: data.comment[i][1],
@@ -177,7 +199,7 @@ function RecipeDetail() {
   const textInput = useRef(null);
   const saveComment = (event) => {
     event.preventDefault();
-    var commentThreadList = [...commentThread];
+    const commentThreadList = [...commentThread];
     commentThreadList.push({
       email: userEmail,
       username: userName,
@@ -216,12 +238,7 @@ function RecipeDetail() {
       <ul>
         {ingredientAndMeasure.map((item) => (
           <li>
-            <Button
-              style={{ color: 'black' }}
-              as={Link}
-              to={`/nutrition/${item.ingre}`}
-              variant="outline-info"
-            >
+            <Button style={{ color: 'black' }} as={Link} to={`/nutrition/${item.ingre}`} variant="outline-info">
               {item.ingre} : {item.meas}
             </Button>
           </li>
@@ -235,34 +252,8 @@ function RecipeDetail() {
         {commentThread.map((item) => (
           <Comment username={item.username} comment={item.comment} email={item.email} />
         ))}
-
-        {/*<Box
-          component="form"
-          sx={{
-            '& > :not(style)': { m: 1, width: '25ch' },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            type="text"
-            ref="myField"
-            id="outlined-basic"
-            label="Type your comment"
-            variant="outlined"
-          />
-          <Button variant="contained" endIcon={<AddCommentIcon />} onClick={saveComment}>
-            Comment
-          </Button>
-        </Box>*/}
         <Form className="d-flex" onSubmit={saveComment}>
-          <FormControl
-            ref={textInput}
-            type="text"
-            className="me-2"
-            placeholder="Type your comment"
-            aria-label="Search"
-          />
+          <FormControl ref={textInput} type="text" className="me-2" placeholder="Type your comment" aria-label="Search" />
           <Button onClick={saveComment} variant="outline-success">
             Save Comment
           </Button>

@@ -1,9 +1,32 @@
+/* eslint-disable object-curly-newline */
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable no-plusplus */
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable no-param-reassign */
+/* eslint-disable react/function-component-definition */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable eqeqeq */
+/* eslint-disable no-console */
+/* eslint-disable jsx-a11y/media-has-caption */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable
+react/no-array-index-key,
+react-hooks/exhaustive-deps,
+react/jsx-filename-extension,
+quote-props,
+*/
+// eslint-disable-next-line object-curly-newline
 import React, { useRef, useState } from 'react';
-import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Nav, Navbar, Container, Button, Form, FormControl, Alert } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../css/Header.css';
 import SearchIcon from '@mui/icons-material/Search';
+
 function Header() {
   const args = JSON.parse(document.getElementById('data').text);
   const [show, setShow] = useState(false);
@@ -27,7 +50,7 @@ function Header() {
     );
   }
   return (
-    <>
+    <div>
       <Navbar bg="dark" variant="dark">
         <Container>
           <div class="wrapper">
@@ -54,18 +77,8 @@ function Header() {
               Contact
             </Nav.Link>
 
-            <Form
-              className="d-flex"
-              onSubmit={onButtonClick}
-              endIcon={<SearchIcon color="success" fontSize="large" />}
-            >
-              <FormControl
-                ref={textInput}
-                type="text"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-              />
+            <Form className="d-flex" onSubmit={onButtonClick} endIcon={<SearchIcon color="success" fontSize="large" />}>
+              <FormControl ref={textInput} type="text" placeholder="Search" className="me-2" aria-label="Search" />
               <Button onClick={onButtonClick} variant="outline-success">
                 Search
               </Button>
@@ -78,7 +91,7 @@ function Header() {
           </Form>
         </Container>
       </Navbar>
-    </>
+    </div>
   );
 }
 export default Header;
