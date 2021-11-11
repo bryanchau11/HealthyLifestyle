@@ -1,6 +1,12 @@
-import flask
+# pylint: disable = E1101, C0413, W1508, R0903, W0603, E0401, W0511, C0103, E0237, W0702, W0622
+"""[summary]
+
+    Returns:
+        [type]: [description]
+"""
 import os
 import json
+import flask
 from dotenv import load_dotenv, find_dotenv
 from flask_login import (
     login_user,
@@ -8,20 +14,18 @@ from flask_login import (
     LoginManager,
     logout_user,
     login_required,
+    UserMixin,
 )
-import random
-import base64
 import requests
-import urllib.request
-from flask import redirect, send_from_directory
+from flask import redirect
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
+from werkzeug.security import generate_password_hash, check_password_hash
+from oauthlib.oauth2 import WebApplicationClient
 from function.recommendedMeals import get_recommended_meals, get_meal
 
 load_dotenv(find_dotenv())
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
-from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
-from oauthlib.oauth2 import WebApplicationClient
+
 
 app = flask.Flask(__name__, static_folder="./build/static")
 # This tells our Flask app to look at the results of `npm build` instead of the
@@ -40,6 +44,16 @@ db = SQLAlchemy(app)
 
 
 class User(UserMixin, db.Model):
+    """[summary]
+
+    Args:
+        UserMixin ([type]): [description]
+        db ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(80))
     username = db.Column(db.String(80))
@@ -55,16 +69,33 @@ class User(UserMixin, db.Model):
         return f"<User {self.email}>"
 
     def get_email(self):
+        """[summary]
+
+        Returns:
+            [type]: [description]
+        """
         return self.email
 
 
 class Food(db.Model):
+    """[summary]
+
+    Args:
+        db ([type]): [description]
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(80))
     food = db.Column(db.String(100))
 
 
 class Rating(db.Model):
+    """[summary]
+
+    Args:
+        db ([type]): [description]
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(80))
     food = db.Column(db.String(100))
@@ -72,6 +103,12 @@ class Rating(db.Model):
 
 
 class Comment(db.Model):
+    """[summary]
+
+    Args:
+        db ([type]): [description]
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(80))
     username = db.Column(db.String(80))
@@ -97,6 +134,11 @@ bp = flask.Blueprint("bp", __name__, template_folder="./build")
 @bp.route("/index")
 @login_required
 def index():
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
     list_of_food, list_of_image = get_recommended_meals()
     list_of_item = [
         {"food": food, "image": image}
@@ -156,11 +198,24 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_name):
+    """[summary]
+
+    Args:
+        user_name ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
     return User.query.get(user_name)
 
 
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
     if current_user.is_authenticated:
         return flask.redirect(flask.url_for("bp.index"))
     if flask.request.method == "POST":
@@ -187,6 +242,11 @@ def signup():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
     if current_user.is_authenticated:
         return flask.redirect(flask.url_for("bp.index"))
 
@@ -222,6 +282,11 @@ def login():
 
 @app.route("/login/callback")
 def callback():
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
     # Get authorization code Google sent back to you
     code = flask.request.args.get("code")
 
@@ -255,7 +320,7 @@ def callback():
     if userinfo_response.json().get("email_verified"):
         email = userinfo_response.json()["email"]
         users_name = userinfo_response.json()["given_name"]
-        picture = userinfo_response.json()["picture"]
+        # picture = userinfo_response.json()["picture"]
     else:
         flask.flash("User email not available or not verified by Google.")
         return redirect("/login")
@@ -285,6 +350,11 @@ def callback():
 
 @app.route("/login/confirm", methods=["POST", "PUT"])
 def confirm():
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
     if flask.request.method == "POST":
         email = flask.request.form.get("email")
         password = flask.request.form.get("password")
@@ -295,19 +365,23 @@ def confirm():
             db.session.commit()
             login_user(user)
             return flask.redirect(flask.url_for("bp.index"))
-        else:
-            flask.flash(
-                "Login unsuccessful.  Please check login information and try again."
-            )
-            return redirect("/login")
+
+        flask.flash(
+            "Login unsuccessful.  Please check login information and try again."
+        )
+        return redirect("/login")
     return flask.render_template("confirm.html")
 
 
 @app.route("/user", methods=["PUT"])
 @login_required
 def get_user():
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
     data = flask.request.get_json(force=True)
-    # print(data)
     DATA = {
         "current_user": current_user.email,
         "height": current_user.height,
@@ -362,6 +436,11 @@ def get_user():
 
 @app.route("/save_meal", methods=["POST"])
 def save_meal():
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
     meal_db = Food.query.filter_by(email=current_user.email).all()
     meal_db_list = [meal.food for meal in meal_db]
     meal = flask.request.json.get("save_meal")
@@ -370,7 +449,6 @@ def save_meal():
     if meal in meal_db_list:
         result_color = "danger"
         result_text = "You already saved this meal!!"
-        pass
     else:
         db.session.add(Food(email=current_user.email, food=meal))
         db.session.commit()
@@ -379,6 +457,7 @@ def save_meal():
 
 @app.route("/delete_meal", methods=["POST"])
 def delete_meal():
+    """[summary]"""
     meal = flask.request.json.get("delete_meal")
     meal_db = Food.query.filter_by(email=current_user.email, food=meal).first()
     db.session.delete(meal_db)
@@ -387,6 +466,11 @@ def delete_meal():
 
 @app.route("/get_average_rating", methods=["POST"])
 def avg_rating():
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
     meal = flask.request.json.get("foodName")
     meal_db = Rating.query.filter_by(food=meal).all()
     sum = 0
@@ -394,12 +478,13 @@ def avg_rating():
         sum += i.rating
     if len(meal_db) == 0:
         return flask.jsonify({"rating": 0})
-    else:
-        return flask.jsonify({"rating": sum / len(meal_db)})
+
+    return flask.jsonify({"rating": sum / len(meal_db)})
 
 
 @app.route("/user_rating", methods=["POST"])
 def user_rating():
+    """[summary]"""
     meal = flask.request.json.get("userRating")
     food = flask.request.json.get("food")
     meal_db = Rating.query.filter_by(email=current_user.email, food=food).first()
@@ -413,6 +498,11 @@ def user_rating():
 
 @app.route("/get_comment", methods=["POST"])
 def get_comment():
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
     meal = flask.request.json.get("foodName")
     comment_db = Comment.query.filter_by(food=meal).all()
     email = []
@@ -421,17 +511,17 @@ def get_comment():
     result = list(zip(email, username, comment))
     if len(comment_db) == 0:
         return flask.jsonify({"comment": result})
-    else:
-        for i in comment_db:
-            email.append(i.email)
-            username.append(i.username)
-            comment.append(i.comment)
-        result = list(zip(email, username, comment))
-        return flask.jsonify({"comment": result})
+    for i in comment_db:
+        email.append(i.email)
+        username.append(i.username)
+        comment.append(i.comment)
+    result = list(zip(email, username, comment))
+    return flask.jsonify({"comment": result})
 
 
 @app.route("/save_comment", methods=["POST"])
 def save_comment():
+    """[summary]"""
     email = flask.request.json.get("email")
     username = flask.request.json.get("username")
     comment = flask.request.json.get("comment")
@@ -442,12 +532,25 @@ def save_comment():
 
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
-def catch_all(path):
+def catch_all():
+    """[summary]
+
+    Args:
+        path ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
     return flask.redirect(flask.url_for("bp.index"))
 
 
 @app.route("/")
 def main():
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
     if current_user.is_authenticated:
         return flask.redirect(flask.url_for("bp.index"))
     return flask.redirect(flask.url_for("login"))

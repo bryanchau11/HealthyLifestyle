@@ -1,11 +1,26 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-plusplus */
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable react/function-component-definition */
+/* eslint-disable no-console */
+/* eslint-disable jsx-a11y/media-has-caption */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable
+react/no-array-index-key,
+react-hooks/exhaustive-deps,
+react/jsx-filename-extension,
+quote-props,
+*/
 import { React, useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import '../App.css';
-import { Button, Nav } from 'react-bootstrap';
+import { Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useScroll } from 'react-use-gesture';
 import { animated, useSpring } from 'react-spring';
+
 const request = require('request');
+
 function Category() {
   const { categoryName } = useParams();
   const [category, setCategory] = useState([]);
@@ -29,11 +44,13 @@ function Category() {
         useQueryString: true,
       },
     };
-    var categoryMeal = [];
-    request(options, function (error, response, body) {
-      if (error) throw new Error(error);
-      let result = JSON.parse(body).meals;
-      for (var i = 0; i < result.length; i++) {
+    const categoryMeal = [];
+    request(options, (error, response, body) => {
+      if (error) {
+        throw new Error(error);
+      }
+      const result = JSON.parse(body).meals;
+      for (let i = 0; i < result.length; i++) {
         categoryMeal.push({ name: result[i].strMeal, image: result[i].strMealThumb });
       }
       setCategory(categoryMeal);
@@ -46,10 +63,10 @@ function Category() {
       <div>
         <div className="container" {...bind()}>
           {category.map((item) => (
-            <div> 
-            <Nav.Link as={Link} to={`/recipe/${item.name}`}>
-            {item.name}
-                </Nav.Link>
+            <div>
+              <Nav.Link as={Link} to={`/recipe/${item.name}`}>
+                {item.name}
+              </Nav.Link>
               <animated.div
                 key={item.name}
                 className="card"
@@ -57,10 +74,7 @@ function Category() {
                   ...style,
                   backgroundImage: `url(${item.image})`,
                 }}
-              >
-                 
-              </animated.div>
-            
+              />
             </div>
           ))}
         </div>

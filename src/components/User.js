@@ -1,4 +1,34 @@
+/* eslint-disable prefer-destructuring */
+/* eslint-disable no-shadow */
+/* eslint-disable no-alert */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-loop-func */
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable nonblock-statement-body-position */
+/* eslint-disable curly */
+/* eslint-disable eqeqeq */
+/* eslint-disable object-curly-newline */
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable no-plusplus */
+/* eslint-disable react/jsx-no-bind */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable no-param-reassign */
+/* eslint-disable react/function-component-definition */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable eqeqeq */
+/* eslint-disable no-console */
+/* eslint-disable jsx-a11y/media-has-caption */
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable
+react/no-array-index-key,
+react-hooks/exhaustive-deps,
+react/jsx-filename-extension,
+quote-props,
+*/
+// eslint-disable-next-line object-curly-newline
 import { React, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
@@ -12,20 +42,18 @@ function Users() {
   const [data, setData] = useState({ username: '' });
   const args = JSON.parse(document.getElementById('data').text);
   const [mealSave, setMealSave] = useState(args.saved_meal);
-  //const checkMealSaved = args.saved_meal;
-  //if (checkMealSaved.lenth !== 0) setMealSave(checkMealSaved);
 
-  let calculate_bmi = (data) => {
+  const calculateBmi = (data) => {
     if (data.weight && data.height) {
-      let height = data.height;
-      let weight = data.weight;
-      let BMI = (weight / (height * height)) * 703;
+      const height = data.height;
+      const weight = data.weight;
+      const BMI = (weight / (height * height)) * 703;
       return BMI.toFixed(2);
     }
     return null;
   };
 
-  let calculate_bfp = (age, bmi, gender) => {
+  const calculateBfp = (age, bmi, gender) => {
     if (age && bmi && gender) {
       if (gender === 'F') {
         return 1.2 * bmi + 0.23 * age - 5.4;
@@ -38,26 +66,25 @@ function Users() {
   };
 
   useState(() => {
-    const args = JSON.parse(document.getElementById('data').text);
     setData(args);
   }, []);
 
   const update = (e) => {
     e.preventDefault();
-    let username = document.getElementById('username').value;
-    let height = document.getElementById('height').value;
-    let weight = document.getElementById('weight').value;
-    let password = document.getElementById('password').value;
-    let age = document.getElementById('age').value;
+    const username = document.getElementById('username').value;
+    const height = document.getElementById('height').value;
+    const weight = document.getElementById('weight').value;
+    const password = document.getElementById('password').value;
+    const age = document.getElementById('age').value;
     let gender = null;
-    let genderElements = document.getElementsByName('gender');
+    const genderElements = document.getElementsByName('gender');
     genderElements.forEach((genderButton) => {
       if (genderButton.checked) {
         gender = genderButton.value;
       }
     });
-    let bmi = calculate_bmi({ height, weight });
-    let bfp = calculate_bfp(age, bmi, gender);
+    const bmi = calculateBmi({ height, weight });
+    const bfp = calculateBfp(age, bmi, gender);
 
     if (!username) {
       setError('username cannot be empty.');
@@ -75,7 +102,7 @@ function Users() {
       .then((response) => response.json())
       .then((result) => {
         setData(result);
-        calculate_bmi(result);
+        calculateBmi(result);
         alert('Profile Updated Successfully!');
       })
       .catch((err) => {
@@ -119,85 +146,40 @@ function Users() {
                 <label>
                   <b>username</b>
                 </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="username"
-                  placeholder="Update username"
-                  defaultValue={data.current_user}
-                />
+                <input type="text" className="form-control" id="username" placeholder="Update username" defaultValue={data.current_user} />
               </div>
               <div className="form-group mt-1">
                 <label>
                   <b>Password</b>
                 </label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="password"
-                  placeholder="Update Password"
-                />
+                <input type="password" className="form-control" id="password" placeholder="Update Password" />
               </div>
               <div className="form-group mt-1">
                 <label>
                   <b>Age</b>
                 </label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="age"
-                  placeholder="Update Age"
-                  min="0"
-                  defaultValue={data.age}
-                />
+                <input type="number" className="form-control" id="age" placeholder="Update Age" min="0" defaultValue={data.age} />
               </div>
               <div className="form-group mt-1">
                 <label>
                   <b>Gender</b>
                   <br />
-                  <input
-                    type="radio"
-                    value="M"
-                    name="gender"
-                    defaultChecked={data.gender === 'M' ? true : false}
-                  />{' '}
-                  Male
-                  <input
-                    type="radio"
-                    value="F"
-                    className="ml-1"
-                    name="gender"
-                    defaultChecked={data.gender === 'F' ? true : false}
-                  />{' '}
-                  Female
+                  <input type="radio" value="M" name="gender" defaultChecked={data.gender === 'M'} /> Male
+                  <input type="radio" value="F" className="ml-1" name="gender" defaultChecked={data.gender === 'F'} /> Female
                 </label>
               </div>
               <div className="form-group mt-1">
                 <label>
                   <b>Height</b>
                 </label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="height"
-                  placeholder="Update Height"
-                  min="0"
-                  defaultValue={data.height}
-                />
+                <input type="number" className="form-control" id="height" placeholder="Update Height" min="0" defaultValue={data.height} />
                 <small className="form-text text-muted">Height in inches</small>
               </div>
               <div className="form-group mt-1">
                 <label>
                   <b>Weight</b>
                 </label>
-                <input
-                  type="number"
-                  className="form-control"
-                  id="weight"
-                  placeholder="Update Weight"
-                  min="0"
-                  defaultValue={data.weight}
-                />
+                <input type="number" className="form-control" id="weight" placeholder="Update Weight" min="0" defaultValue={data.weight} />
                 <small className="form-text text-muted">Weight in pounds</small>
               </div>
               <div className="form-group mt-1">
@@ -232,6 +214,7 @@ function Users() {
         <div className="container" {...bind()}>
           {mealSave
             ? mealSave.map((item) => (
+                // eslint-disable-next-line react/jsx-indent
                 <div>
                   <Nav.Link as={Link} to={`/recipe/${item.name}`}>
                     {item.name}
@@ -243,11 +226,12 @@ function Users() {
                       ...style,
                       backgroundImage: `url(${item.image})`,
                     }}
-                  ></animated.div>
+                  />
                   <Button variant="primary" type="button" onClick={() => deleteItem(item)}>
                     X
                   </Button>
                 </div>
+                // eslint-disable-next-line indent
               ))
             : ''}
         </div>

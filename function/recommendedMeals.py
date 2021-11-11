@@ -1,13 +1,22 @@
-from dotenv import load_dotenv, find_dotenv
-import flask
+# pylint: disable = C0103
+"""[summary]
+
+    Returns:
+        [type]: [description]
+"""
 import os
 import requests
+from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 
 
 def get_recommended_meals():
+    """[summary]
 
+    Returns:
+        [type]: [description]
+    """
     url = "https://themealdb.p.rapidapi.com/randomselection.php"
     headers = {
         "x-rapidapi-host": "themealdb.p.rapidapi.com",
@@ -25,6 +34,14 @@ def get_recommended_meals():
 
 
 def get_meal(meal):
+    """[summary]
+
+    Args:
+        meal ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
     url = "https://themealdb.p.rapidapi.com/search.php"
 
     querystring = {"s": meal}
@@ -37,5 +54,4 @@ def get_meal(meal):
     response = requests.request("GET", url, headers=headers, params=querystring).json()
     if response["meals"] is None:
         return None
-    else:
-        return response["meals"][0]["strMeal"], response["meals"][0]["strMealThumb"]
+    return response["meals"][0]["strMeal"], response["meals"][0]["strMealThumb"]
