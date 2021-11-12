@@ -20,7 +20,7 @@ def get_recommended_meals():
     url = "https://themealdb.p.rapidapi.com/randomselection.php"
     headers = {
         "x-rapidapi-host": "themealdb.p.rapidapi.com",
-        "x-rapidapi-key": os.getenv("RapidAPI"),
+        "x-rapidapi-key": os.getenv("RAPIDAPI"),
     }
 
     response = requests.request("GET", url, headers=headers).json()
@@ -48,7 +48,7 @@ def get_meal(meal):
 
     headers = {
         "x-rapidapi-host": "themealdb.p.rapidapi.com",
-        "x-rapidapi-key": os.getenv("RapidAPI"),
+        "x-rapidapi-key": os.getenv("RAPIDAPI"),
     }
 
     response = requests.request("GET", url, headers=headers, params=querystring)
