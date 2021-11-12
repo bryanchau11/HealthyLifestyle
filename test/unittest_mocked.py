@@ -1,5 +1,5 @@
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, patch, Mock
 
 import sys
 import os
@@ -19,6 +19,31 @@ parent = os.path.dirname(current)
 # the sys.path.
 sys.path.append(parent)
 from function.recommendedMeals import get_meal
+from app import delete_meal_db, Food
+
+
+class AppDBTest(unittest.TestCase):
+    def setUp(self):
+        self.initial_db_mock = (
+            Food(
+                email="This is the current user email",
+                food="This is the meal 1",
+            ),
+        )
+
+    def test_delete_meal(self):
+
+        with patch("app.Food.query") as mock_query:
+
+            mock_query.all.return_value = self.initial_db_mock
+
+            todos = delete_meal_db(
+                "This is the current user email", "This is the meal 1"
+            )
+            self.assertEqual(
+                todos,
+                None,
+            )
 
 
 class recommendedMealsTest(unittest.TestCase):

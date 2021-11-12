@@ -459,7 +459,20 @@ def save_meal():
 def delete_meal():
     """[summary]"""
     meal = flask.request.json.get("delete_meal")
-    meal_db = Food.query.filter_by(email=current_user.email, food=meal).first()
+    delete_meal_db(current_user.email, meal)
+
+
+def delete_meal_db(email, food):
+    """[summary]
+
+    Args:
+        emai ([type]): [description]
+        food ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    meal_db = Food.query.filter_by(email=email, food=food).first()
     db.session.delete(meal_db)
     db.session.commit()
 
