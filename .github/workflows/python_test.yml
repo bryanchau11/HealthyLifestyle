@@ -15,7 +15,6 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   test:
-    environment: polar-plains-74523
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     strategy:
@@ -43,6 +42,8 @@ jobs:
       - name: Lint files
         run: find . -name '*.py' -exec pylint {} \;
       
-        
+        env:
+          RAPIDAPI: ${{ secrets.RAPIDAPI }}
       - name: Run tests
+         
         run: python3 test/unittest_mocked.py
