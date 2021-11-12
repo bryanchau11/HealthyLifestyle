@@ -3,7 +3,9 @@ from unittest.mock import MagicMock, patch
 
 import sys
 import os
+from dotenv import load_dotenv, find_dotenv
 
+load_dotenv(find_dotenv())
 
 # getting the name of the directory
 # where the this file is present.
