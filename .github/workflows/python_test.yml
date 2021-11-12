@@ -42,8 +42,8 @@ jobs:
       - name: Lint files
         run: find . -name '*.py' -exec pylint {} \;
       
+         
+      - name: Run tests
         env:
           RAPIDAPI: ${{ secrets.RAPIDAPI }}
-      - name: Run tests
-         
         run: python3 test/unittest_mocked.py
