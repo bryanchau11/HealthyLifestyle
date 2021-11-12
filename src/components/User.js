@@ -36,34 +36,35 @@ import { Nav, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useScroll } from 'react-use-gesture';
 import { animated, useSpring } from 'react-spring';
+import { calculateBmi, calculateBfp } from './Calculate';
 
+/* const calculateBmi = (data) => {
+  if (data.weight && data.height) {
+    const height = data.height;
+    const weight = data.weight;
+    const BMI = (weight / (height * height)) * 703;
+    return BMI.toFixed(2);
+  }
+  return null;
+};
+
+const calculateBfp = (age, bmi, gender) => {
+  if (age && bmi && gender) {
+    if (gender === 'F') {
+      return 1.2 * bmi + 0.23 * age - 5.4;
+    }
+    if (gender === 'M') {
+      return 1.2 * bmi + 0.23 * age - 16.2;
+    }
+  }
+  return null;
+};
+*/
 function Users() {
   const [error, setError] = useState('');
   const [data, setData] = useState({ username: '' });
   const args = JSON.parse(document.getElementById('data').text);
   const [mealSave, setMealSave] = useState(args.saved_meal);
-
-  const calculateBmi = (data) => {
-    if (data.weight && data.height) {
-      const height = data.height;
-      const weight = data.weight;
-      const BMI = (weight / (height * height)) * 703;
-      return BMI.toFixed(2);
-    }
-    return null;
-  };
-
-  const calculateBfp = (age, bmi, gender) => {
-    if (age && bmi && gender) {
-      if (gender === 'F') {
-        return 1.2 * bmi + 0.23 * age - 5.4;
-      }
-      if (gender === 'M') {
-        return 1.2 * bmi + 0.23 * age - 16.2;
-      }
-    }
-    return null;
-  };
 
   useState(() => {
     setData(args);

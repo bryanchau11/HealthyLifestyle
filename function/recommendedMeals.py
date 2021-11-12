@@ -51,7 +51,11 @@ def get_meal(meal):
         "x-rapidapi-key": os.getenv("RapidAPI"),
     }
 
-    response = requests.request("GET", url, headers=headers, params=querystring).json()
-    if response["meals"] is None:
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    response_json = response.json()
+    if response_json["meals"] is None:
         return None
-    return response["meals"][0]["strMeal"], response["meals"][0]["strMealThumb"]
+    return (
+        response_json["meals"][0]["strMeal"],
+        response_json["meals"][0]["strMealThumb"],
+    )
