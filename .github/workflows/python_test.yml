@@ -46,4 +46,5 @@ jobs:
       - name: Run tests
         env:
           RAPIDAPI: ${{ secrets.RAPIDAPI }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: python3 test/unittest_mocked.py
