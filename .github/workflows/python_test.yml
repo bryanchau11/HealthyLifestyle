@@ -42,5 +42,5 @@ jobs:
       - name: Lint files
         run: find . -name '*.py' -exec pylint {} \;
         
-      #- name: Run tests
-      #  run: python3 unit_test_unmocked.py
+      - name: Run tests
+        run: python3 unittest_mocked.py
