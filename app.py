@@ -532,7 +532,7 @@ def save_comment():
 
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
-def catch_all():
+def catch_all(path):
     """[summary]
 
     Args:
