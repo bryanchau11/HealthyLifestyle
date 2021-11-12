@@ -5,3 +5,5 @@ flask-login
 Flask-SQLAlchemy
 psycopg2-binary
 oauthlib
+responses
+requests-mock
