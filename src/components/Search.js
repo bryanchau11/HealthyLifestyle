@@ -29,7 +29,7 @@ quote-props,
 import { React, useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import '../App.css';
-import { Nav } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useScroll } from 'react-use-gesture';
 import { animated, useSpring } from 'react-spring';
@@ -85,20 +85,28 @@ function Search() {
     <div>
       <h1>{searchMeal}</h1>
       <div>
-        <div className="container" {...bind()}>
+        <div className="containerv2" {...bind()}>
           {mealList.map((item) => (
             <div>
-              <Nav.Link as={Link} to={`/recipe/${item.name}`}>
-                {item.name}
-              </Nav.Link>
               <animated.div
                 key={item.name}
                 className="card"
                 style={{
                   ...style,
-                  backgroundImage: `url(${item.image})`,
+                  backgroundImage: 'url(https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg)',
                 }}
-              />
+              >
+                <Card style={{ width: '18rem' }}>
+                  <Card.Img variant="top" src={item.image} />
+                  <Card.Body>
+                    <Card.Title>{item.name}</Card.Title>
+                    <Card.Text>This {item.name} is very good</Card.Text>
+                    <Button as={Link} to={`/recipe/${item.name}`} variant="primary">
+                      Pick this meal
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </animated.div>
             </div>
           ))}
         </div>

@@ -5,7 +5,7 @@ import './index.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 import Header from './components/Navigation';
 import NotFoundPage from './pages/NotFound';
 import Users from './components/User';
@@ -32,7 +32,7 @@ const routing = (
         <Route exact path="/dropdown/:result" element={<AreaAndIngredient />} />
         <Route element={<NotFoundPage />} />
       </Routes>
-      <Footer />
+      {/* <Footer / > */}
     </div>
   </Router>
 );
