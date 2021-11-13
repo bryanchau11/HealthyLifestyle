@@ -459,7 +459,20 @@ def save_meal():
 def delete_meal():
     """[summary]"""
     meal = flask.request.json.get("delete_meal")
-    meal_db = Food.query.filter_by(email=current_user.email, food=meal).first()
+    delete_meal_db(current_user.email, meal)
+
+
+def delete_meal_db(email, food):
+    """[summary]
+
+    Args:
+        emai ([type]): [description]
+        food ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    meal_db = Food.query.filter_by(email=email, food=food).first()
     db.session.delete(meal_db)
     db.session.commit()
 
@@ -559,8 +572,9 @@ def main():
 # When running locally, comment out host and port
 # When deploying to Heroku, comment out ssl_context
 # If using chrome, go to link 'chrome://flags/#allow-insecure-localhost' and toggle
-app.run(
-    # ssl_context="adhoc"
-    host=os.getenv("IP", "0.0.0.0"),
-    port=int(os.getenv("PORT", 8081)),
-)
+if __name__ == "__main__":
+    app.run(
+        # ssl_context="adhoc"
+        host=os.getenv("IP", "0.0.0.0"),
+        port=int(os.getenv("PORT", 8081)),
+    )
