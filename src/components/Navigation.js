@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-closing-tag-location */
+/* eslint-disable semi */
+/* eslint-disable array-callback-return */
 /* eslint-disable object-curly-newline */
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable no-plusplus */
@@ -20,18 +23,22 @@ react/jsx-filename-extension,
 quote-props,
 */
 // eslint-disable-next-line object-curly-newline
-import React, { useRef, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { Nav, Navbar, Container, Button, Form, FormControl, Alert } from 'react-bootstrap';
+import React, { useRef, useState, useEffect } from 'react';
+import { NavLink, useNavigate, Link } from 'react-router-dom';
+import { Nav, Navbar, Container, Button, Form, FormControl, Alert, Dropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../css/Header.css';
 import SearchIcon from '@mui/icons-material/Search';
+
+const request = require('request');
 
 function Header() {
   const args = JSON.parse(document.getElementById('data').text);
   const [show, setShow] = useState(false);
   const textInput = useRef(null);
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
+  const [stateAreaList, setStateAreaList] = useState([]);
   const onButtonClick = (event) => {
     event.preventDefault();
     if (textInput.current.value == '') {
@@ -41,6 +48,38 @@ function Header() {
       textInput.current.value = '';
     }
   };
+  const areaList = [];
+  useEffect(() => {
+    const options = {
+      method: 'GET',
+      url: 'https://themealdb.p.rapidapi.com/list.php',
+      qs: { a: 'list' },
+      headers: {
+        'x-rapidapi-host': 'themealdb.p.rapidapi.com',
+        'x-rapidapi-key': `${process.env.REACT_APP_RapidAPI}`,
+        useQueryString: true,
+      },
+    };
+
+    request(options, function (error, response, body) {
+      if (error) throw new Error(error);
+      const result = JSON.parse(body).meals;
+      for (let i = 0; i < result.length; i++) {
+        areaList.push(result[i].strArea);
+      }
+      setStateAreaList(areaList);
+    });
+  }, []);
+
+  console.log(stateAreaList);
+  const obj = [];
+  for (let i = 0; i < stateAreaList.length; i++) {
+    obj.push(
+      <Dropdown.Item as={Link} to={`/dropdown/${stateAreaList[i]}`}>
+        {stateAreaList[i]}
+      </Dropdown.Item>,
+    );
+  }
   if (show) {
     return (
       <Alert variant="danger" onClose={() => setShow(false)} dismissible>
@@ -84,12 +123,18 @@ function Header() {
               </Button>
             </Form>
           </Nav>
-          <Form method="POST" action="/logout">
-            <Button variant="outline-danger" type="submit">
-              Logout
-            </Button>
-          </Form>
         </Container>
+        <Dropdown>
+          <Dropdown.Toggle variant="success" id="dropdown-basic">
+            Area
+          </Dropdown.Toggle>
+          <Dropdown.Menu>{obj}</Dropdown.Menu>
+        </Dropdown>
+        <Form method="POST" action="/logout">
+          <Button variant="outline-danger" type="submit">
+            Logout
+          </Button>
+        </Form>
       </Navbar>
     </div>
   );

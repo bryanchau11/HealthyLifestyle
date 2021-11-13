@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable eqeqeq */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-shadow */
@@ -73,6 +74,7 @@ function App() {
       setCategory(categoryObject);
     });
   }, []);
+
   return (
     <>
       <div>
