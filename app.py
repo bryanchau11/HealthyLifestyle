@@ -572,8 +572,9 @@ def main():
 # When running locally, comment out host and port
 # When deploying to Heroku, comment out ssl_context
 # If using chrome, go to link 'chrome://flags/#allow-insecure-localhost' and toggle
-app.run(
-    # ssl_context="adhoc"
-    host=os.getenv("IP", "0.0.0.0"),
-    port=int(os.getenv("PORT", 8081)),
-)
+if __name__ == "__main__":
+    app.run(
+        # ssl_context="adhoc"
+        host=os.getenv("IP", "0.0.0.0"),
+        port=int(os.getenv("PORT", 8081)),
+    )
