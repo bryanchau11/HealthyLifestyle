@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable no-plusplus */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/jsx-one-expression-per-line */
@@ -21,7 +22,8 @@ quote-props,
 import { React, useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import '../App.css';
-import { Button, Form, FormControl } from 'react-bootstrap';
+// eslint-disable-next-line object-curly-newline
+import { Button, Form, FormControl, Figure } from 'react-bootstrap';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import { Rating } from 'react-simple-star-rating';
@@ -52,7 +54,7 @@ function RecipeDetail() {
   const userName = args.current_user;
   const userEmail = args.current_user_email;
   const { foodName } = useParams();
-  const [instruction, setInstruction] = useState();
+  const [instruction, setInstruction] = useState([]);
   const [mealImage, setImage] = useState();
   const [ingredientAndMeasure, setIngredientAndMeasure] = useState([]);
   const [youtubeLink, setYoutubeLink] = useState();
@@ -87,7 +89,10 @@ function RecipeDetail() {
     request(options, function (error, response, body) {
       if (error) throw new Error(error);
       const result = JSON.parse(body).meals[0];
-      setInstruction(result.strInstructions);
+      // eslint-disable-next-line no-useless-escape
+      const res = result.strInstructions.split('.');
+
+      setInstruction(res);
       setImage(result.strMealThumb);
       const ingredientArray = [];
       let key = '';
@@ -233,7 +238,9 @@ function RecipeDetail() {
         </Button>
         <Rating onClick={handleRating} ratingValue={rating} /* Rating Props */ />
       </h1>
-      <img className="fixed_img" src={mealImage} alt="food pictures" />
+      <Figure>
+        <Figure.Image width={300} height={300} alt="food pictures" src={mealImage} />
+      </Figure>
       <h2>Ingredient</h2>
       <ul>
         {ingredientAndMeasure.map((item) => (
@@ -246,7 +253,11 @@ function RecipeDetail() {
       </ul>
       <br />
       <h2>Instruction</h2>
-      <div>{instruction}</div>
+      <ol>
+        {instruction.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ol>
       <YoutubeEmbed embedId={youtubeLink} />
       <Paper style={{ padding: '40px 20px', backgroundColor: 'rgb(228, 214, 196)' }}>
         {commentThread.map((item) => (
