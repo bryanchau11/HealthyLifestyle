@@ -37,16 +37,18 @@
     transform: rotate(360deg);
   }
 }
-
+.font-link {
+  font-family: 'Indie Flower', cursive;
+}
 .fixed_img {
   width: 150px;
   height: 150px;
 }
 .video-responsive {
   overflow: hidden;
-  padding-bottom: 56.25%;
+  padding-bottom: 100vh;
   position: relative;
-  height: 0;
+  height: 10px;
 }
 
 .video-responsive iframe {
