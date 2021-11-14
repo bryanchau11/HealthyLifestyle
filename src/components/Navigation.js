@@ -61,6 +61,7 @@ function Header() {
       },
     };
 
+    // eslint-disable-next-line func-names
     request(options, function (error, response, body) {
       if (error) throw new Error(error);
       const result = JSON.parse(body).meals;
