@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable eqeqeq */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-shadow */
@@ -32,7 +33,7 @@ quote-props,
 import './App.css';
 import { React, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Nav } from 'react-bootstrap';
+import { Card, Button, Popover, OverlayTrigger } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useScroll } from 'react-use-gesture';
 import { animated, useSpring } from 'react-spring';
@@ -68,49 +69,82 @@ function App() {
       if (error) throw new Error(error);
       const result = JSON.parse(body).categories;
       for (let i = 0; i < result.length; i++) {
-        categoryObject.push({ name: result[i].strCategory, image: result[i].strCategoryThumb });
+        // eslint-disable-next-line max-len
+        categoryObject.push({ name: result[i].strCategory, image: result[i].strCategoryThumb, description: result[i].strCategoryDescription });
       }
       setCategory(categoryObject);
     });
   }, []);
+
   return (
     <>
       <div>
         <h1>Pick your category</h1>
-        <div className="container" {...bind()}>
+        <div className="containerv2" {...bind()}>
           {category.map((item) => (
             <div>
-              <Nav.Link as={Link} to={`/category/${item.name}`}>
-                {item.name}
-              </Nav.Link>
               <animated.div
                 key={item.name}
                 className="card"
                 style={{
                   ...style,
-                  backgroundImage: `url(${item.image})`,
+                  backgroundImage: 'url(https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg)',
                 }}
-              />
+              >
+                <Card style={{ width: '18rem' }}>
+                  <Card.Img variant="top" src={item.image} />
+                  <Card.Body>
+                    <Card.Title>{item.name}</Card.Title>
+                    <Card.Text>
+                      {item.description.substring(0, 180)}{' '}
+                      <OverlayTrigger
+                        trigger="click"
+                        placement="right"
+                        overlay={
+                          // eslint-disable-next-line react/jsx-wrap-multilines
+                          <Popover id="popover-basic">
+                            <Popover.Header as="h3">{item.name}</Popover.Header>
+                            <Popover.Body>{item.description}</Popover.Body>
+                          </Popover>
+                        }
+                      >
+                        <Button variant="outline-info">Read more...</Button>
+                      </OverlayTrigger>
+                    </Card.Text>
+                    <Button as={Link} to={`/category/${item.name}`} variant="primary">
+                      Pick this category
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </animated.div>
             </div>
           ))}
         </div>
       </div>
-      <div style={{ marginTop: '30px' }}>
+      <div style={{ marginTop: '10px' }}>
         <h1>10 Random Meals</h1>
-        <div className="container" {...bind()}>
+        <div className="containerv2" {...bind()}>
           {list.map((item) => (
             <div>
-              <Nav.Link as={Link} to={`/recipe/${item.food}`}>
-                {item.food}
-              </Nav.Link>
               <animated.div
                 key={item.food}
                 className="card"
                 style={{
                   ...style,
-                  backgroundImage: `url(${item.image})`,
+                  backgroundImage: 'url(https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg)',
                 }}
-              />
+              >
+                <Card style={{ width: '18rem' }}>
+                  <Card.Img variant="top" src={item.image} />
+                  <Card.Body>
+                    <Card.Title>{item.food}</Card.Title>
+                    <Card.Text>This {item.food} is very good</Card.Text>
+                    <Button as={Link} to={`/recipe/${item.food}`} variant="primary">
+                      Pick this meal
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </animated.div>
             </div>
           ))}
         </div>

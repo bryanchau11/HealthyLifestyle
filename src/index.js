@@ -5,7 +5,7 @@ import './index.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 import Header from './components/Navigation';
 import NotFoundPage from './pages/NotFound';
 import Users from './components/User';
@@ -15,6 +15,7 @@ import RecipeDetail from './components/FoodRecipe';
 import Category from './components/Category';
 import Nutrition from './components/Nutrition';
 import Search from './components/Search';
+import AreaAndIngredient from './components/AreaAndIngredient';
 
 const routing = (
   <Router>
@@ -22,15 +23,16 @@ const routing = (
       <Header />
       <Routes>
         <Route exact path="/index" element={<App />} />
-        <Route exact path="users" element={<Users />} />
+        <Route exact path="/users" element={<Users />} />
         <Route exact path="/contact" element={<Contact />} />
         <Route exact path="/recipe/:foodName" element={<RecipeDetail />} />
         <Route exact path="/category/:categoryName" element={<Category />} />
         <Route exact path="/nutrition/:ingredientName" element={<Nutrition />} />
-        <Route exact path="search/:searchMeal" element={<Search />} />
+        <Route exact path="/search/:searchMeal" element={<Search />} />
+        <Route exact path="/dropdown/:result" element={<AreaAndIngredient />} />
         <Route element={<NotFoundPage />} />
       </Routes>
-      <Footer />
+      {/* <Footer / > */}
     </div>
   </Router>
 );
