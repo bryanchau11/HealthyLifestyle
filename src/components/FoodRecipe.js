@@ -23,7 +23,7 @@ import { React, useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import '../App.css';
 // eslint-disable-next-line object-curly-newline
-import { Button, Form, FormControl, Figure } from 'react-bootstrap';
+import { Button, Form, FormControl, Figure, Container, Row, Col } from 'react-bootstrap';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import { Rating } from 'react-simple-star-rating';
@@ -230,35 +230,55 @@ function RecipeDetail() {
   };
   return (
     <div>
-      <h1>
-        AVERAGE RATING: <Rating ratingValue={avgRating} /> <br />
-        {foodName}{' '}
-        <Button onClick={saveMeal} variant={color}>
-          {text}
-        </Button>
-        <Rating onClick={handleRating} ratingValue={rating} /* Rating Props */ />
-      </h1>
-      <Figure>
-        <Figure.Image width={300} height={300} alt="food pictures" src={mealImage} />
-      </Figure>
-      <h2>Ingredient</h2>
-      <ul>
-        {ingredientAndMeasure.map((item) => (
-          <li>
-            <Button style={{ color: 'black' }} as={Link} to={`/nutrition/${item.ingre}`} variant="outline-info">
-              {item.ingre} : {item.meas}
-            </Button>
-          </li>
-        ))}
-      </ul>
-      <br />
-      <h2>Instruction</h2>
-      <ol>
-        {instruction.map((item) => (
-          <li>{item}</li>
-        ))}
-      </ol>
+      <Container>
+        <Row>
+          <Col>
+            <h1>
+              {foodName} <br />
+              <Button onClick={saveMeal} variant={color}>
+                {text}
+              </Button>
+              <Rating onClick={handleRating} ratingValue={rating} /* Rating Props */ /> <br />
+            </h1>
+            <h3>
+              AVERAGE RATING: <Rating ratingValue={avgRating} />
+            </h3>
+          </Col>
+          <Col>
+            <Figure>
+              <Figure.Image width={400} height={600} alt="food pictures" src={mealImage} />
+            </Figure>
+          </Col>
+        </Row>
+      </Container>
+      <Container>
+        <Row>
+          <Col style={{ backgroundColor: 'burlywood' }}>
+            <h2>Ingredient</h2>
+            <ul>
+              {ingredientAndMeasure.map((item) => (
+                <li>
+                  <Button style={{ color: 'black' }} as={Link} to={`/nutrition/${item.ingre}`} variant="outline-info">
+                    {item.ingre} : {item.meas}
+                  </Button>
+                </li>
+              ))}
+            </ul>
+            <br />
+          </Col>
+          <Col>
+            <h2>Instruction</h2>
+            <ol>
+              {instruction.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ol>
+          </Col>
+        </Row>
+      </Container>
+
       <YoutubeEmbed embedId={youtubeLink} />
+
       <Paper style={{ padding: '40px 20px', backgroundColor: 'rgb(228, 214, 196)' }}>
         {commentThread.map((item) => (
           <Comment username={item.username} comment={item.comment} email={item.email} />
