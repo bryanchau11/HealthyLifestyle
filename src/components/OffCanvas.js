@@ -2,8 +2,8 @@
 /* eslint-disable react/function-component-definition */
 import React, { useState } from 'react';
 import { Button, Offcanvas } from 'react-bootstrap';
-// import { useNavigate } from 'react-router-dom';
-import ChatBot from 'react-simple-chatbot';
+import { Link } from 'react-router-dom';
+import { ChatBot, previousValue } from 'react-simple-chatbot';
 import '../App.css';
 
 function OffCanvas() {
@@ -46,7 +46,16 @@ function OffCanvas() {
               {
                 id: '4',
                 message: 'Yeah, who cares, bye!',
-                end: true,
+                trigger: '5',
+              },
+              {
+                id: '5',
+                component: (
+                  <Button as={Link} to={`/search/${previousValue}`}>
+                    {' '}
+                    {previousValue}
+                  </Button>
+                ),
               },
             ]}
           />
