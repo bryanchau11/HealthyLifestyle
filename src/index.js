@@ -16,6 +16,7 @@ import Category from './components/Category';
 import Nutrition from './components/Nutrition';
 import Search from './components/Search';
 import AreaAndIngredient from './components/AreaAndIngredient';
+import Chatbot from './components/Chatbot';
 
 const routing = (
   <Router>
@@ -33,6 +34,7 @@ const routing = (
         <Route element={<NotFoundPage />} />
       </Routes>
       {/* <Footer / > */}
+      <Chatbot />
     </div>
   </Router>
 );
