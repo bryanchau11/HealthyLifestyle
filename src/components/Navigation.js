@@ -92,7 +92,7 @@ function Header() {
   return (
     <div>
       <Navbar bg="dark" variant="dark">
-        <Container>
+        <Container style={{ height: '23vh' }}>
           <div class="wrapper">
             <span>W</span>
             <span>E</span>

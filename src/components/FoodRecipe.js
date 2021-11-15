@@ -29,7 +29,7 @@ import { Button, Form, FormControl, Figure, Container, Row, Col } from 'react-bo
 import 'bootstrap/dist/css/bootstrap.css';
 import { Rating } from 'react-simple-star-rating';
 import { Avatar, Grid, Paper } from '@material-ui/core';
-import noteBook from './note-pad-1425759.jpg';
+// import noteBook from './note-pad-1425759.jpg';
 import blackBoard from './black-1072366.jpg';
 import YoutubeEmbed from './YoutubeEmbed';
 
@@ -234,12 +234,7 @@ function RecipeDetail() {
     });
     textInput.current.value = '';
   };
-  const sectionStyle = {
-    backgroundImage: `url(${noteBook})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-  };
+
   const recipeBackground = {
     // backgroundImage: `url(${noteBook})`,
     // backgroundRepeat: 'no-repeat',
@@ -255,7 +250,7 @@ function RecipeDetail() {
     borderImage: 'url(https://images.unsplash.com/photo-1597113366853-fea190b6cd82?ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8d29vZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80) 30 stretch',
   };
   return (
-    <div style={sectionStyle}>
+    <div>
       <div>
         <Container style={recipeBackground}>
           <Row>
