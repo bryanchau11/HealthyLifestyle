@@ -37,6 +37,7 @@ function Header() {
   const [show, setShow] = useState(false);
   const textInput = useRef(null);
   const navigate = useNavigate();
+
   // eslint-disable-next-line no-unused-vars
   const [stateAreaList, setStateAreaList] = useState([]);
   const onButtonClick = (event) => {
@@ -63,7 +64,6 @@ function Header() {
 
     // eslint-disable-next-line func-names
     request(options, function (error, response, body) {
-      if (error) throw new Error(error);
       const result = JSON.parse(body).meals;
       for (let i = 0; i < result.length; i++) {
         areaList.push(result[i].strArea);
@@ -103,36 +103,36 @@ function Header() {
             <span>E</span>
           </div>
           <br />
-          <Navbar.Brand>Welcome {args.current_user}</Navbar.Brand>
+          <Navbar.Brand className="font-nav-bar">Welcome {args.current_user}</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link as={NavLink} to="/index">
+            <Nav.Link className="font-nav-bar" as={NavLink} to="/index">
               Home
             </Nav.Link>
 
-            <Nav.Link as={NavLink} to="/users">
+            <Nav.Link className="font-nav-bar" as={NavLink} to="/users">
               Users
             </Nav.Link>
 
-            <Nav.Link as={NavLink} to="/contact">
+            <Nav.Link className="font-nav-bar" as={NavLink} to="/contact">
               Contact
             </Nav.Link>
 
             <Form className="d-flex" onSubmit={onButtonClick} endIcon={<SearchIcon color="success" fontSize="large" />}>
               <FormControl ref={textInput} type="text" placeholder="Search" className="me-2" aria-label="Search" />
-              <Button onClick={onButtonClick} variant="outline-success">
+              <Button className="font-nav-bar" onClick={onButtonClick} variant="outline-success">
                 Search
               </Button>
             </Form>
           </Nav>
         </Container>
         <Dropdown>
-          <Dropdown.Toggle variant="success" id="dropdown-basic">
+          <Dropdown.Toggle className="font-nav-bar" variant="success" id="dropdown-basic">
             Area
           </Dropdown.Toggle>
           <Dropdown.Menu>{obj}</Dropdown.Menu>
         </Dropdown>
         <Form method="POST" action="/logout">
-          <Button variant="outline-danger" type="submit">
+          <Button className="font-nav-bar" variant="outline-danger" type="submit">
             Logout
           </Button>
         </Form>

@@ -49,12 +49,15 @@ function Comment(prop) {
           Email: {prop.email}
         </h4>
         <br />
-        <p style={{ textAlign: 'left' }}>{prop.comment}</p>
-        <p style={{ textAlign: 'left', color: 'gray' }}>posted 1 minute ago</p>
+        <p className="font-comment" style={{ textAlign: 'left' }}>
+          {prop.comment}
+        </p>
+        <p style={{ textAlign: 'left', color: '#cfd190' }}>posted on {prop.datePosted}</p>
       </Grid>
     </Grid>
   );
 }
+
 function RecipeDetail() {
   const args = JSON.parse(document.getElementById('data').text);
   const userName = args.current_user;
@@ -179,7 +182,10 @@ function RecipeDetail() {
 
   //  Get all comments for a specific food
   const [commentThread, setCommentThread] = useState([]);
-
+  const [date, setDate] = useState(new Date().toLocaleString());
+  useEffect(() => {
+    setDate(new Date().toLocaleString());
+  }, [commentThread]);
   useEffect(() => {
     const commentThreadList = [];
     // eslint-disable-next-line object-shorthand
@@ -200,12 +206,11 @@ function RecipeDetail() {
             email: data.comment[i][0],
             username: data.comment[i][1],
             comment: data.comment[i][2],
+            commentDate: data.comment[i][3],
           });
         }
         setCommentThread(commentThreadList);
       });
-
-    console.log(commentThread);
   }, []);
   const textInput = useRef(null);
   const saveComment = (event) => {
@@ -215,14 +220,17 @@ function RecipeDetail() {
       email: userEmail,
       username: userName,
       comment: textInput.current.value,
+      commentDate: date,
     });
     setCommentThread(commentThreadList);
-    console.log({ email: userEmail, username: userName, comment: textInput.current.value });
+    // eslint-disable-next-line max-len
+    // console.log({ email: userEmail, username: userName, comment: textInput.current.value, commentDate: date });
     const requestData = {
       email: userEmail,
       username: userName,
       comment: textInput.current.value,
       food: foodName,
+      commentDate: date,
     };
 
     fetch('/save_comment', {
@@ -236,10 +244,6 @@ function RecipeDetail() {
   };
 
   const recipeBackground = {
-    // backgroundImage: `url(${noteBook})`,
-    // backgroundRepeat: 'no-repeat',
-    // backgroundPosition: 'center',
-    // backgroundSize: 'container',
     backgroundImage: `url(${blackBoard})`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
@@ -315,7 +319,7 @@ function RecipeDetail() {
               </Col>
               <Col>
                 {commentThread.map((item) => (
-                  <Comment className="font-link" username={item.username} comment={item.comment} email={item.email} />
+                  <Comment className="font-link" username={item.username} comment={item.comment} email={item.email} datePosted={item.commentDate} />
                 ))}
               </Col>
             </Row>

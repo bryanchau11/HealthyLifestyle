@@ -42,10 +42,28 @@
 }
 .font-curly {
   color: wheat;
-  font-size: 100px;
+  font-size: 70px;
   font-family: 'Amatic SC', cursive;
 font-family: 'Gloria Hallelujah', cursive;
 font-family: 'Great Vibes', cursive;
+font-family: 'Road Rage', cursive;
+}
+.font-nav-bar {
+  color: wheat;
+  font-size: 40px;
+  font-family: 'Amatic SC', cursive;
+font-family: 'Gloria Hallelujah', cursive;
+font-family: 'Great Vibes', cursive;
+font-family: 'Playball', cursive;
+font-family: 'Road Rage', cursive;
+}
+.font-comment {
+  color: #dfe0ad;
+  font-size: 22px;
+  font-family: 'Amatic SC', cursive;
+font-family: 'Gloria Hallelujah', cursive;
+font-family: 'Great Vibes', cursive;
+font-family: 'Playball', cursive;
 font-family: 'Road Rage', cursive;
 }
 .fixed_img {

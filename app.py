@@ -114,6 +114,7 @@ class Comment(db.Model):
     username = db.Column(db.String(80))
     food = db.Column(db.String(100))
     comment = db.Column(db.String(500))
+    comment_date = db.Column(db.String(100))
 
 
 engine = create_engine(db_url)
@@ -521,14 +522,16 @@ def get_comment():
     email = []
     username = []
     comment = []
-    result = list(zip(email, username, comment))
+    comment_date = []
+    result = list(zip(email, username, comment, comment_date))
     if len(comment_db) == 0:
         return flask.jsonify({"comment": result})
     for i in comment_db:
         email.append(i.email)
         username.append(i.username)
         comment.append(i.comment)
-    result = list(zip(email, username, comment))
+        comment_date.append(i.comment_date)
+    result = list(zip(email, username, comment, comment_date))
     return flask.jsonify({"comment": result})
 
 
@@ -539,7 +542,16 @@ def save_comment():
     username = flask.request.json.get("username")
     comment = flask.request.json.get("comment")
     food = flask.request.json.get("food")
-    db.session.add(Comment(email=email, username=username, food=food, comment=comment))
+    date = flask.request.json.get("commentDate")
+    db.session.add(
+        Comment(
+            email=email,
+            username=username,
+            food=food,
+            comment=comment,
+            comment_date=date,
+        )
+    )
     db.session.commit()
 
 
