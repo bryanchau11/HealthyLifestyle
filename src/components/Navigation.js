@@ -29,6 +29,7 @@ import { Nav, Navbar, Container, Button, Form, FormControl, Alert, Dropdown } fr
 import 'bootstrap/dist/css/bootstrap.css';
 import '../css/Header.css';
 import SearchIcon from '@mui/icons-material/Search';
+import OffCanvas from './OffCanvas';
 
 const request = require('request');
 
@@ -131,6 +132,7 @@ function Header() {
           </Dropdown.Toggle>
           <Dropdown.Menu>{obj}</Dropdown.Menu>
         </Dropdown>
+        <OffCanvas />
         <Form method="POST" action="/logout">
           <Button className="font-nav-bar" variant="outline-danger" type="submit">
             Logout
