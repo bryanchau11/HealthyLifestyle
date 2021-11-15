@@ -79,7 +79,8 @@ function App() {
   return (
     <>
       <div>
-        <h1>Pick your category</h1>
+        <h1 className="font-curly">Pick your category</h1>
+
         <div className="containerv2" {...bind()}>
           {category.map((item) => (
             <div>
@@ -88,13 +89,12 @@ function App() {
                 className="card"
                 style={{
                   ...style,
-                  backgroundImage: 'url(https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg)',
                 }}
               >
                 <Card style={{ width: '18rem' }}>
                   <Card.Img variant="top" src={item.image} />
-                  <Card.Body>
-                    <Card.Title>{item.name}</Card.Title>
+                  <Card.Body className="card-color">
+                    <Card.Title style={{ color: 'wheat', fontSize: '30px' }}>{item.name}</Card.Title>
                     <Card.Text>
                       {item.description.substring(0, 180)}{' '}
                       <OverlayTrigger
@@ -122,7 +122,7 @@ function App() {
         </div>
       </div>
       <div style={{ marginTop: '10px' }}>
-        <h1>10 Random Meals</h1>
+        <h1 className="font-curly">10 Random Meals</h1>
         <div className="containerv2" {...bind()}>
           {list.map((item) => (
             <div>
@@ -136,8 +136,8 @@ function App() {
               >
                 <Card style={{ width: '18rem' }}>
                   <Card.Img variant="top" src={item.image} />
-                  <Card.Body>
-                    <Card.Title>{item.food}</Card.Title>
+                  <Card.Body className="card-color">
+                    <Card.Title style={{ color: 'wheat', fontSize: '30px' }}>{item.food}</Card.Title>
                     <Card.Text>This {item.food} is very good</Card.Text>
                     <Button as={Link} to={`/recipe/${item.food}`} variant="primary">
                       Pick this meal

@@ -32,34 +32,12 @@ quote-props,
 import { React, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Container, Row } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import { useScroll } from 'react-use-gesture';
 import { animated, useSpring } from 'react-spring';
 import { calculateBmi, calculateBfp } from './Calculate';
 
-/* const calculateBmi = (data) => {
-  if (data.weight && data.height) {
-    const height = data.height;
-    const weight = data.weight;
-    const BMI = (weight / (height * height)) * 703;
-    return BMI.toFixed(2);
-  }
-  return null;
-};
-
-const calculateBfp = (age, bmi, gender) => {
-  if (age && bmi && gender) {
-    if (gender === 'F') {
-      return 1.2 * bmi + 0.23 * age - 5.4;
-    }
-    if (gender === 'M') {
-      return 1.2 * bmi + 0.23 * age - 16.2;
-    }
-  }
-  return null;
-};
-*/
 function Users() {
   const [error, setError] = useState('');
   const [data, setData] = useState({ username: '' });
@@ -134,83 +112,87 @@ function Users() {
     });
   }
   return (
-    <>
-      <div className="container">
-        <div className="row">
-          <div className="form-group mt-2 mb-1 col-4">
-            <h4>Edit Profile</h4>
+    <div>
+      <Container>
+        <Row>
+          <div className="container" style={{ color: 'wheat' }}>
+            <div className="row">
+              <div className="form-group mt-2 mb-1 col-4">
+                <h4 className="font-curly">Edit Profile</h4>
+              </div>
+              <br />
+              <div className="col-8">
+                <form>
+                  <div className="form-group mt-1">
+                    <label>
+                      <b>username</b>
+                    </label>
+                    <input type="text" className="form-control" id="username" placeholder="Update username" defaultValue={data.current_user} />
+                  </div>
+                  <div className="form-group mt-1">
+                    <label>
+                      <b>Password</b>
+                    </label>
+                    <input type="password" className="form-control" id="password" placeholder="Update Password" />
+                  </div>
+                  <div className="form-group mt-1">
+                    <label>
+                      <b>Age</b>
+                    </label>
+                    <input type="number" className="form-control" id="age" placeholder="Update Age" min="0" defaultValue={data.age} />
+                  </div>
+                  <div className="form-group mt-1">
+                    <label>
+                      <b>Gender</b>
+                      <br />
+                      <input type="radio" value="M" name="gender" defaultChecked={data.gender === 'M'} /> Male
+                      <input type="radio" value="F" className="ml-1" name="gender" defaultChecked={data.gender === 'F'} /> Female
+                    </label>
+                  </div>
+                  <div className="form-group mt-1">
+                    <label>
+                      <b>Height</b>
+                    </label>
+                    <input type="number" className="form-control" id="height" placeholder="Update Height" min="0" defaultValue={data.height} />
+                    <small className="form-text text-muted">Height in inches</small>
+                  </div>
+                  <div className="form-group mt-1">
+                    <label>
+                      <b>Weight</b>
+                    </label>
+                    <input type="number" className="form-control" id="weight" placeholder="Update Weight" min="0" defaultValue={data.weight} />
+                    <small className="form-text text-muted">Weight in pounds</small>
+                  </div>
+                  <div className="form-group mt-1">
+                    <label>
+                      <b>Calculated Values</b>
+                    </label>
+                  </div>
+                  <div className="form-group">
+                    <label>
+                      <b>BMI{' : '}</b>
+                    </label>
+                    <label>{data.bmi ? data.bmi : 'N/A'}</label>
+                  </div>
+                  <div className="form-group mt-1">
+                    <label>
+                      <b>Body Fat Percentage{' : '}</b>
+                    </label>
+                    <label>{data.bfp ? data.bfp : 'N/A'}</label>
+                  </div>
+                  <div className="form-group mt-1">
+                    <small className="form-text text-danger">{error}</small>
+                  </div>
+                  <button type="button" className="btn btn-primary mt-1" onClick={(e) => update(e)}>
+                    Update
+                  </button>
+                </form>
+              </div>
+            </div>
           </div>
-          <br />
-          <div className="col-8">
-            <form>
-              <div className="form-group mt-1">
-                <label>
-                  <b>username</b>
-                </label>
-                <input type="text" className="form-control" id="username" placeholder="Update username" defaultValue={data.current_user} />
-              </div>
-              <div className="form-group mt-1">
-                <label>
-                  <b>Password</b>
-                </label>
-                <input type="password" className="form-control" id="password" placeholder="Update Password" />
-              </div>
-              <div className="form-group mt-1">
-                <label>
-                  <b>Age</b>
-                </label>
-                <input type="number" className="form-control" id="age" placeholder="Update Age" min="0" defaultValue={data.age} />
-              </div>
-              <div className="form-group mt-1">
-                <label>
-                  <b>Gender</b>
-                  <br />
-                  <input type="radio" value="M" name="gender" defaultChecked={data.gender === 'M'} /> Male
-                  <input type="radio" value="F" className="ml-1" name="gender" defaultChecked={data.gender === 'F'} /> Female
-                </label>
-              </div>
-              <div className="form-group mt-1">
-                <label>
-                  <b>Height</b>
-                </label>
-                <input type="number" className="form-control" id="height" placeholder="Update Height" min="0" defaultValue={data.height} />
-                <small className="form-text text-muted">Height in inches</small>
-              </div>
-              <div className="form-group mt-1">
-                <label>
-                  <b>Weight</b>
-                </label>
-                <input type="number" className="form-control" id="weight" placeholder="Update Weight" min="0" defaultValue={data.weight} />
-                <small className="form-text text-muted">Weight in pounds</small>
-              </div>
-              <div className="form-group mt-1">
-                <label>
-                  <b>Calculated Values</b>
-                </label>
-              </div>
-              <div className="form-group">
-                <label>
-                  <b>BMI{' : '}</b>
-                </label>
-                <label>{data.bmi ? data.bmi : 'N/A'}</label>
-              </div>
-              <div className="form-group mt-1">
-                <label>
-                  <b>Body Fat Percentage{' : '}</b>
-                </label>
-                <label>{data.bfp ? data.bfp : 'N/A'}</label>
-              </div>
-              <div className="form-group mt-1">
-                <small className="form-text text-danger">{error}</small>
-              </div>
-              <button type="button" className="btn btn-primary mt-1" onClick={(e) => update(e)}>
-                Update
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-      <h1>Your saved meal below</h1>
+        </Row>
+      </Container>
+      <h1 className="font-curly">Your saved meal below</h1>
       <div>
         <div className="containerv2" {...bind()}>
           {mealSave
@@ -227,8 +209,8 @@ function Users() {
                   >
                     <Card style={{ width: '18rem' }}>
                       <Card.Img variant="top" src={item.image} />
-                      <Card.Body>
-                        <Card.Title>{item.name}</Card.Title>
+                      <Card.Body className="card-color">
+                        <Card.Title style={{ color: 'wheat', fontSize: '30px' }}>{item.name}</Card.Title>
                         <Card.Text>This {item.name} is very good</Card.Text>
                         <Button as={Link} to={`/recipe/${item.name}`} variant="primary">
                           Pick this meal
@@ -245,7 +227,7 @@ function Users() {
             : ''}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
