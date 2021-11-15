@@ -40,6 +40,14 @@
 .font-link {
   font-family: 'Indie Flower', cursive;
 }
+.font-curly {
+  color: wheat;
+  font-size: 100px;
+  font-family: 'Amatic SC', cursive;
+font-family: 'Gloria Hallelujah', cursive;
+font-family: 'Great Vibes', cursive;
+font-family: 'Road Rage', cursive;
+}
 .fixed_img {
   width: 150px;
   height: 150px;
@@ -61,13 +69,22 @@
   display: flex;
   overflow-x: scroll;
   width: 100%;
-
+  
 }
 .containerv2 {
   display: flex;
   overflow-x: scroll;
   width: 100%;
   height: 60vh;
+  font-family: 'Indie Flower', cursive;
+}
+.card-color {
+  background: linear-gradient( #151515, #2e2e2e);
+  color: white;
+  font-family: 'Amatic SC', cursive;
+font-family: 'Gloria Hallelujah', cursive;
+font-family: 'Road Rage', cursive;
+font-size:  25px;
 }
 .card {
   flex-shrink: 0;
@@ -78,11 +95,18 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  background: linear-gradient( #151515, #2e2e2e);
+  color: white;
 }
 
 ::-webkit-scrollbar {
   display: none;
 }
 body {
-  background-color: antiquewhite;
+  /*background-color: antiquewhite;*/
+  background: linear-gradient( #151515, #2e2e2e);
+  background-image: url('components/note-pad-1425759.jpg');
+  background-repeat: 'no-repeat';
+  background-position: 'center';
+  background-size: 'cover';
 }

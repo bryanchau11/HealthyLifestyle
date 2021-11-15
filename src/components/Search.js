@@ -83,7 +83,7 @@ function Search() {
 
   return (
     <div>
-      <h1>{searchMeal}</h1>
+      <h1 className="font-curly">{searchMeal}</h1>
       <div>
         <div className="containerv2" {...bind()}>
           {mealList.map((item) => (
@@ -98,8 +98,8 @@ function Search() {
               >
                 <Card style={{ width: '18rem' }}>
                   <Card.Img variant="top" src={item.image} />
-                  <Card.Body>
-                    <Card.Title>{item.name}</Card.Title>
+                  <Card.Body className="card-color">
+                    <Card.Title style={{ color: 'wheat', fontSize: '30px' }}>{item.name}</Card.Title>
                     <Card.Text>This {item.name} is very good</Card.Text>
                     <Button as={Link} to={`/recipe/${item.name}`} variant="primary">
                       Pick this meal

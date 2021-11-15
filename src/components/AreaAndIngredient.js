@@ -60,7 +60,7 @@ function AreaAndIngredient() {
 
   return (
     <div>
-      <h1>{result}</h1>
+      <h1 className="font-curly">{result}</h1>
       <div>
         <div className="containerv2" {...bind()}>
           {area.map((item) => (
@@ -75,8 +75,8 @@ function AreaAndIngredient() {
               >
                 <Card style={{ width: '18rem' }}>
                   <Card.Img variant="top" src={item.image} />
-                  <Card.Body>
-                    <Card.Title>{item.name}</Card.Title>
+                  <Card.Body className="card-color">
+                    <Card.Title style={{ color: 'wheat', fontSize: '30px' }}>{item.name}</Card.Title>
                     <Card.Text>This {item.name} is very good</Card.Text>
                     <Button as={Link} to={`/recipe/${item.name}`} variant="primary">
                       Pick this meal

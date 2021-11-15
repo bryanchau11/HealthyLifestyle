@@ -11,6 +11,8 @@ quote-props,
 */
 import React, { useRef, useState } from 'react';
 import emailjs from 'emailjs-com';
+import noteBook from './note-pad-1425759.jpg';
+import '../App.css';
 
 export const Contact = () => {
   const form = useRef();
@@ -57,8 +59,14 @@ export const Contact = () => {
       },
     );
   };
+  const sectionStyle = {
+    backgroundImage: `url(${noteBook})`,
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+  };
   return (
-    <div>
+    <div style={sectionStyle}>
       <h1>Contact Us</h1>
       <form onSubmit={sendEmail} ref={form}>
         <label>Name:</label>
