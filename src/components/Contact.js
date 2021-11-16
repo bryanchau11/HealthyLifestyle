@@ -33,16 +33,16 @@ export const Contact = () => {
   const sendEmail = (e) => {
     e.preventDefault();
 
-    if (messageValue === '') {
-      alert('No Message to Send');
-      return;
-    }
     if (emailValue === '') {
       alert('Please Enter a Return Email');
       return;
     }
     if (nameValue === '') {
       alert('Please Enter a Name or UserName');
+      return;
+    }
+    if (messageValue === '') {
+      alert('No Message to Send');
       return;
     }
     emailjs.sendForm('healthyLifestyle', 'contact_healthyLifestyle', form.current, `${process.env.REACT_APP_UserID}`).then(
@@ -70,17 +70,17 @@ export const Contact = () => {
       <div style={{ color: 'wheat' }}>
         <h1>Questions? Feedback? Contact Us!</h1>
         <form onSubmit={sendEmail} ref={form}>
-          <label htmlFor="UsersName">Name:</label>
+          <label>Name:</label>
           <br />
-          <input type="text" id="UsersName" name="from_name" value={nameValue} onChange={handleName} placeholder="Name..." />
+          <input type="text" name="from_name" value={nameValue} onChange={handleName} placeholder="Name..." />
           <br />
-          <label htmlFor="UsersEmail">Email:</label>
+          <label>Email:</label>
           <br />
-          <input type="email" id="UsersEmail" name="user_email" value={emailValue} onChange={handleEmail} placeholder="Email..." />
+          <input type="email" name="user_email" value={emailValue} onChange={handleEmail} placeholder="Email..." />
           <br />
-          <label htmlFor="UsersMessage">Message:</label>
+          <label>Message:</label>
           <br />
-          <textarea name="message" id="UsersMessage" value={messageValue} onChange={handleMessage} placeholder="Message..." />
+          <textarea name="message" value={messageValue} onChange={handleMessage} placeholder="Message..." />
           <br />
           <input type="submit" name="Send" value="Send" />
         </form>
