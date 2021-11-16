@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  
 }
 
 .App-logo {
@@ -39,32 +38,34 @@
 }
 .font-link {
   font-family: 'Indie Flower', cursive;
+  color: wheat;
+  font-size: 24px;
 }
 .font-curly {
   color: wheat;
   font-size: 70px;
   font-family: 'Amatic SC', cursive;
-font-family: 'Gloria Hallelujah', cursive;
-font-family: 'Great Vibes', cursive;
-font-family: 'Road Rage', cursive;
+  font-family: 'Gloria Hallelujah', cursive;
+  font-family: 'Great Vibes', cursive;
+  font-family: 'Road Rage', cursive;
 }
 .font-nav-bar {
   color: wheat;
   font-size: 40px;
   font-family: 'Amatic SC', cursive;
-font-family: 'Gloria Hallelujah', cursive;
-font-family: 'Great Vibes', cursive;
-font-family: 'Playball', cursive;
-font-family: 'Road Rage', cursive;
+  font-family: 'Gloria Hallelujah', cursive;
+  font-family: 'Great Vibes', cursive;
+  font-family: 'Playball', cursive;
+  font-family: 'Road Rage', cursive;
 }
 .font-comment {
   color: #dfe0ad;
   font-size: 22px;
   font-family: 'Amatic SC', cursive;
-font-family: 'Gloria Hallelujah', cursive;
-font-family: 'Great Vibes', cursive;
-font-family: 'Playball', cursive;
-font-family: 'Road Rage', cursive;
+  font-family: 'Gloria Hallelujah', cursive;
+  font-family: 'Great Vibes', cursive;
+  font-family: 'Playball', cursive;
+  font-family: 'Road Rage', cursive;
 }
 .fixed_img {
   width: 150px;
@@ -87,7 +88,6 @@ font-family: 'Road Rage', cursive;
   display: flex;
   overflow-x: scroll;
   width: 100%;
-  
 }
 .containerv2 {
   display: flex;
@@ -97,12 +97,12 @@ font-family: 'Road Rage', cursive;
   font-family: 'Indie Flower', cursive;
 }
 .card-color {
-  background: linear-gradient( #151515, #2e2e2e);
+  background: linear-gradient(#151515, #2e2e2e);
   color: white;
   font-family: 'Amatic SC', cursive;
-font-family: 'Gloria Hallelujah', cursive;
-font-family: 'Road Rage', cursive;
-font-size:  25px;
+  font-family: 'Gloria Hallelujah', cursive;
+  font-family: 'Road Rage', cursive;
+  font-size: 25px;
 }
 .card {
   flex-shrink: 0;
@@ -113,7 +113,7 @@ font-size:  25px;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  background: linear-gradient( #151515, #2e2e2e);
+  background: linear-gradient(#151515, #2e2e2e);
   color: white;
 }
 
@@ -122,7 +122,7 @@ font-size:  25px;
 }
 body {
   /*background-color: antiquewhite;*/
-  background: linear-gradient( #151515, #2e2e2e);
+  background: linear-gradient(#151515, #2e2e2e);
   background-image: url('components/note-pad-1425759.jpg');
   background-repeat: 'no-repeat';
   background-position: 'center';
