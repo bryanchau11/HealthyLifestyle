@@ -66,8 +66,8 @@ function Nutrition() {
   }, []);
   return (
     <div>
-      <h1>{ingredientName}'s Nutrition Fact per serving size of 100g</h1>
-      <ul>
+      <h1 className="font-link">{ingredientName}'s Nutrition Fact per serving size of 100g</h1>
+      <ul className="font-link">
         {nutritionList.map((item) => (
           <li>
             {item.name} : {item.unit}
