@@ -70,15 +70,15 @@ export const Contact = () => {
       <div style={{ color: 'wheat' }}>
         <h1>Questions? Feedback? Contact Us!</h1>
         <form onSubmit={sendEmail} ref={form}>
-          <label>Name:</label>
+          <label>Name</label>
           <br />
           <input type="text" name="from_name" value={nameValue} onChange={handleName} placeholder="Name..." />
           <br />
-          <label>Email:</label>
+          <label>Email</label>
           <br />
           <input type="email" name="user_email" value={emailValue} onChange={handleEmail} placeholder="Email..." />
           <br />
-          <label>Message:</label>
+          <label>Message</label>
           <br />
           <textarea name="message" value={messageValue} onChange={handleMessage} placeholder="Message..." />
           <br />
