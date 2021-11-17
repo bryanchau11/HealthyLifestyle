@@ -38,6 +38,12 @@
 
 - Python flask
 
+## Few notes on Google Login
+
+- Our google login works locally fine with instructions to uncomment at the end of app.py.
+- We haven't registered ssl on heroku so it doesn't allow to use google login so we comment out the that option in login.html.
+- If you want to test locally, DM us so we can register your account as developer for testing, and comment out the line in login.html, follow instructions at the end of App.py
+
 ## Instruction to run my app
 
 1. Go to VSCODE, create a new directory where you are going to clone the code. Open the terminal.
