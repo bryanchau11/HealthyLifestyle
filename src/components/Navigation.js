@@ -109,7 +109,9 @@ function Header() {
             <Nav.Link className="font-nav-bar" as={NavLink} to="/index">
               Home
             </Nav.Link>
-
+            <Nav.Link className="font-nav-bar" as={NavLink} to="/categoryAndRandom">
+              Category
+            </Nav.Link>
             <Nav.Link className="font-nav-bar" as={NavLink} to="/users">
               Users
             </Nav.Link>
