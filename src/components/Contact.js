@@ -33,16 +33,16 @@ export const Contact = () => {
   const sendEmail = (e) => {
     e.preventDefault();
 
-    if (messageValue === '') {
-      alert('No Message to Send');
-      return;
-    }
     if (emailValue === '') {
       alert('Please Enter a Return Email');
       return;
     }
     if (nameValue === '') {
       alert('Please Enter a Name or UserName');
+      return;
+    }
+    if (messageValue === '') {
+      alert('No Message to Send');
       return;
     }
     emailjs.sendForm('healthyLifestyle', 'contact_healthyLifestyle', form.current, `${process.env.REACT_APP_UserID}`).then(
@@ -67,20 +67,24 @@ export const Contact = () => {
   };
   return (
     <div style={sectionStyle}>
-      <h1>Contact Us</h1>
-      <form onSubmit={sendEmail} ref={form}>
-        <label>Name:</label>
-        <input type="text" name="from_name" value={nameValue} onChange={handleName} />
-        <br />
-        <br />
-        <label>Email:</label>
-        <input type="email" name="user_email" value={emailValue} onChange={handleEmail} />
-        <br />
-        <br />
-        <label>Message:</label>
-        <textarea name="message" value={messageValue} onChange={handleMessage} />
-        <input type="submit" name="Send" value="Send" />
-      </form>
+      <div style={{ color: 'wheat' }}>
+        <h1>Questions? Feedback? Contact Us!</h1>
+        <form onSubmit={sendEmail} ref={form}>
+          <label>Name</label>
+          <br />
+          <input type="text" name="from_name" value={nameValue} onChange={handleName} placeholder="Name..." />
+          <br />
+          <label>Email</label>
+          <br />
+          <input type="email" name="user_email" value={emailValue} onChange={handleEmail} placeholder="Email..." />
+          <br />
+          <label>Message</label>
+          <br />
+          <textarea name="message" value={messageValue} onChange={handleMessage} placeholder="Message..." />
+          <br />
+          <input type="submit" name="Send" value="Send" />
+        </form>
+      </div>
     </div>
   );
 };
