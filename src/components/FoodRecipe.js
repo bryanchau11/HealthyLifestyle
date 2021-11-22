@@ -286,7 +286,7 @@ function RecipeDetail() {
                 {ingredientAndMeasure.map((item) => (
                   <li className="font-link">
                     <Button style={{ color: '#ffffff' }} as={Link} to={`/nutrition/${item.ingre}`} variant="outline-info">
-                      {item.ingre} : {item.meas}
+                      <img src={`https://www.themealdb.com/images/ingredients/${item.ingre}-Small.png`} alt="Good pics" /> {item.ingre} : {item.meas}
                     </Button>
                   </li>
                 ))}

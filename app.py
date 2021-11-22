@@ -478,6 +478,23 @@ def delete_meal_db(email, food):
     db.session.commit()
 
 
+def calculate_average(arr):
+    """[summary]
+
+    Args:
+        arr ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    if len(arr) == 0:
+        return 0
+    res = 0
+    for i in arr:
+        res += i
+    return res / len(arr)
+
+
 @app.route("/get_average_rating", methods=["POST"])
 def avg_rating():
     """[summary]
@@ -487,13 +504,8 @@ def avg_rating():
     """
     meal = flask.request.json.get("foodName")
     meal_db = Rating.query.filter_by(food=meal).all()
-    sum = 0
-    for i in meal_db:
-        sum += i.rating
-    if len(meal_db) == 0:
-        return flask.jsonify({"rating": 0})
-
-    return flask.jsonify({"rating": sum / len(meal_db)})
+    res_rating = [i.rating for i in meal_db]
+    return flask.jsonify({"rating": calculate_average(res_rating)})
 
 
 @app.route("/user_rating", methods=["POST"])
@@ -568,6 +580,9 @@ def catch_all(path):
     """
     return flask.redirect(flask.url_for("bp.index"))
 
+@app.route("/landing_page")
+def landing():
+    return flask.render_template("landing.html")
 
 @app.route("/")
 def main():
