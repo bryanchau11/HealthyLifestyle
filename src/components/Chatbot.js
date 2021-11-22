@@ -4,13 +4,11 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/function-component-definition */
 import React, { useEffect, useState } from 'react';
-import { OverlayTrigger, Button, Popover } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types';
 import ChatBot from 'react-simple-chatbot';
@@ -31,13 +29,13 @@ function Chatbot() {
 
     return <div> You will be redirected shortly</div>;
   }
-  function Profile(props) {
+  function Profile() {
     useEffect(() => {
       navigate('/users');
     }, []);
     return <div> You will be redirected shortly</div>;
   }
-  function Contact(props) {
+  function Contact() {
     useEffect(() => {
       navigate('/contact');
     }, []);
@@ -265,7 +263,6 @@ function Chatbot() {
       trigger: '1',
     },
   ];
-  // const popover = <Popover id="popover-basic"></Popover>;
   // eslint-disable-next-line react/jsx-props-no-spreading
   return <ChatBot headerTitle="Waifu Bot" recognitionEnable="true" steps={steps} {...config} />;
 }
