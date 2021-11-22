@@ -30,11 +30,27 @@ react/jsx-filename-extension,
 quote-props,
 */
 // eslint-disable-next-line object-curly-newline
-import './App.css';
-import { React } from 'react';
+// import './App.css';
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container, Row, Col } from 'react-bootstrap';
+import './Landing.css';
 
 function App() {
-  return <>This is Landing page</>;
+  return (
+    <Container className="header  ">
+      <Row style={{ backgroundColor: 'black', color: ' wheat' }}>
+        <Col>
+          <h1 className="text-center">
+            Discover the <span className="prime-color">flavors</span>
+            <br />
+            <span className="style-change">
+              of <span className="prime-color">food</span>fun
+            </span>
+          </h1>
+        </Col>
+      </Row>
+    </Container>
+  );
 }
-
 export default App;
