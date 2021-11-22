@@ -17,6 +17,7 @@ import Nutrition from './components/Nutrition';
 import Search from './components/Search';
 import AreaAndIngredient from './components/AreaAndIngredient';
 import Chatbot from './components/Chatbot';
+import CategoryAndRandom from './components/CategoryAndRandom';
 
 const routing = (
   <Router>
@@ -24,6 +25,7 @@ const routing = (
       <Header />
       <Routes>
         <Route exact path="/index" element={<App />} />
+        <Route exact path="/categoryAndRandom" element={<CategoryAndRandom />} />
         <Route exact path="/users" element={<Users />} />
         <Route exact path="/contact" element={<Contact />} />
         <Route exact path="/recipe/:foodName" element={<RecipeDetail />} />

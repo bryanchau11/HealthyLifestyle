@@ -580,6 +580,9 @@ def catch_all(path):
     """
     return flask.redirect(flask.url_for("bp.index"))
 
+@app.route("/landing_page")
+def landing():
+    return flask.render_template("landing.html")
 
 @app.route("/")
 def main():
