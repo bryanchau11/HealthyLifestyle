@@ -49,6 +49,16 @@
   font-family: 'Great Vibes', cursive;
   font-family: 'Road Rage', cursive;
 }
+.font-noticia {
+  font-family: 'Amatic SC', cursive;
+font-family: 'Gloria Hallelujah', cursive;
+font-family: 'Great Vibes', cursive;
+font-family: 'Noticia Text', serif;
+font-family: 'Playball', cursive;
+font-family: 'Road Rage', cursive;
+font-size: 28px;
+color: wheat;
+}
 .font-nav-bar {
   color: wheat;
   font-size: 40px;
@@ -123,7 +133,7 @@
 body {
   /*background-color: antiquewhite;*/
   background: linear-gradient(#151515, #2e2e2e);
-  background-image: url('components/note-pad-1425759.jpg');
+  background-image: url('components/background2.jpg');
   background-repeat: 'no-repeat';
   background-position: 'center';
   background-size: 'cover';

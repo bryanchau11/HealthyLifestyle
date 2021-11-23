@@ -63,7 +63,7 @@ export const Contact = () => {
   };
 
   return (
-    <div className="bg-info contact4 overflow-hiddedn position-relative">
+    <div className="bg-info contact4 overflow-hiddedn position-relative" style={{ height: '60vh' }}>
       <div className="row no-gutters">
         <div className="container">
           <div className="col-lg-6 contact-box mb-4 mb-md-0">
