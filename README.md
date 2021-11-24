@@ -2,7 +2,8 @@
 
 ## Heroku deploy
 
-[http://polar-plains-74523.herokuapp.com/]
+Sprint 1: [http://polar-plains-74523.herokuapp.com/]
+Sprint 2: [https://healthy-lifestyle-swe.herokuapp.com/]
 
 ## Libraries
 
@@ -16,6 +17,8 @@
 - flask_login
 - flask_sqlalchemy
 - werkzeug.wrappers
+- Sweet Alert 2
+- React simple chatbot
 
 ## APIs
 
