@@ -39,7 +39,15 @@
 .font-link {
   font-family: 'Indie Flower', cursive;
   color: wheat;
-  font-size: 24px;
+  font-size: 26px;
+}
+.font-cardo {
+  color: wheat;
+  font-size: 26px;
+   
+font-family: 'Cardo', serif;
+
+
 }
 .font-curly {
   color: wheat;
@@ -71,11 +79,7 @@ color: wheat;
 .font-comment {
   color: #dfe0ad;
   font-size: 22px;
-  font-family: 'Amatic SC', cursive;
-  font-family: 'Gloria Hallelujah', cursive;
-  font-family: 'Great Vibes', cursive;
-  font-family: 'Playball', cursive;
-  font-family: 'Road Rage', cursive;
+  font-family: 'Cardo', serif;
 }
 .fixed_img {
   width: 150px;
