@@ -52,8 +52,8 @@
         button,
         input[type=submit] {
             border-radius: 20px;
-            border: 1px solid #FF4B2B;
-            background-color: #FF4B2B;
+            border: 1px solid #000000;
+            background-color: #000000;
             color: #FFFFFF;
             font-size: 12px;
             font-weight: bold;
@@ -172,9 +172,9 @@
         }
 
         .overlay {
-            background: #FF416C;
-            background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
-            background: linear-gradient(to right, #FF4B2B, #FF416C);
+            background: #0f0f0f;
+            background: -webkit-linear-gradient(to right, #222222, #000000);
+            background: linear-gradient(to right, #222222, #000000);
             background-repeat: no-repeat;
             background-size: cover;
             background-position: 0 0;
@@ -255,7 +255,7 @@
         }
 
         footer i {
-            color: red;
+            color: rgb(0, 0, 0);
         }
 
         footer a {
@@ -337,13 +337,18 @@
         const signUpButton = document.getElementById('signUp');
         const signInButton = document.getElementById('signIn');
         const container = document.getElementById('container');
-
+        function changeBackground(color) {
+            document.body.style.background = color;
+        }
         signUpButton.addEventListener('click', () => {
             container.classList.add("right-panel-active");
+            changeBackground("linear-gradient(90deg, #ffffff 50%, #000000 50%)");
+
         });
 
         signInButton.addEventListener('click', () => {
             container.classList.remove("right-panel-active");
+            changeBackground("linear-gradient(90deg, #000000 50%,#ffffff 50%)");
         });
     </script>
 </body>
