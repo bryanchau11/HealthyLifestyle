@@ -225,11 +225,11 @@ def signup():
         password = flask.request.form.get("password")
         if email == "" or username == "" or password == "":
             flask.flash("Please enter an email, username, and password")
-            return flask.render_template("signup.html")
+            return flask.render_template("login.html")
         user = User.query.filter_by(email=email).first()
         if user:
             flask.flash("User exists")
-            return flask.render_template("signup.html")
+            return flask.render_template("login.html")
         new_user = User(
             email=email,
             username=username,
@@ -238,7 +238,7 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
         return redirect("/login")
-    return flask.render_template("signup.html")
+    return flask.render_template("login.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -580,9 +580,11 @@ def catch_all(path):
     """
     return flask.redirect(flask.url_for("bp.index"))
 
+
 @app.route("/landing_page")
 def landing():
     return flask.render_template("landing.html")
+
 
 @app.route("/")
 def main():

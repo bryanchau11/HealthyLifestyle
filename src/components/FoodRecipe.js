@@ -24,16 +24,18 @@ import { useParams, Link } from 'react-router-dom';
 import '../App.css';
 import '../css/FoodRecipe.css';
 // eslint-disable-next-line object-curly-newline
-import { Button, Form, FormControl, Figure, Container, Row, Col } from 'react-bootstrap';
+import { Button, Form, FormControl, Figure, Container, Row, Col, Stack } from 'react-bootstrap';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import { Rating } from 'react-simple-star-rating';
 import { Avatar, Grid, Paper } from '@material-ui/core';
 // import noteBook from './note-pad-1425759.jpg';
-import blackBoard from './black-1072366.jpg';
+// import blackBoard from './black-1072366.jpg';
+import blackwood from './blackwood.jpg';
 import YoutubeEmbed from './YoutubeEmbed';
 
 const request = require('request');
+const Swal = require('sweetalert2');
 
 const imgLink = 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*';
 function Comment(prop) {
@@ -129,8 +131,8 @@ function RecipeDetail() {
       setIngredientAndMeasure(ingredientAndMeasureResult);
     });
   }, []);
-  const [color, setColor] = useState('primary');
-  const [text, setText] = useState('Save Meal');
+  // const [color, setColor] = useState('primary');
+  // const [text, setText] = useState('Save Meal');
   function saveMeal() {
     const requestData = { save_meal: foodName };
     fetch('/save_meal', {
@@ -142,8 +144,23 @@ function RecipeDetail() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setColor(data.color);
-        setText(data.text);
+        // setColor(data.color);
+        // setText(data.text);
+        if (data.color == 'success') {
+          Swal.fire({
+            icon: 'success',
+            title: 'Your meal has been saved!',
+            showConfirmButton: false,
+            timer: 2000,
+          });
+        }
+        if (data.color == 'danger') {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'You have already saved this meal!!',
+          });
+        }
       });
   }
   // Rating meal
@@ -244,7 +261,7 @@ function RecipeDetail() {
   };
 
   const recipeBackground = {
-    backgroundImage: `url(${blackBoard})`,
+    backgroundImage: `url(${blackwood})`,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: 'cover',
@@ -259,14 +276,14 @@ function RecipeDetail() {
         <Container style={recipeBackground}>
           <Row>
             <Col>
-              <h1 className="font-link">
+              <h1 className="font-cardo">
                 {foodName} <br />
-                <Button onClick={saveMeal} variant={color}>
-                  {text}
+                <Button onClick={saveMeal} variant="primary">
+                  Save this meal
                 </Button>
                 <Rating onClick={handleRating} ratingValue={rating} /* Rating Props */ /> <br />
               </h1>
-              <h3 className="font-link">
+              <h3 className="font-cardo">
                 AVERAGE RATING: <Rating ratingValue={avgRating} />
               </h3>
             </Col>
@@ -281,24 +298,32 @@ function RecipeDetail() {
         <Container style={recipeBackground}>
           <Row>
             <Col>
-              <h2 className="font-link">Ingredient</h2>
-              <ul>
+              <h2 className="font-cardo" style={{ fontSize: '35px' }}>
+                Ingredient
+              </h2>
+              <Stack gap={3}>
                 {ingredientAndMeasure.map((item) => (
-                  <li className="font-link">
+                  <div className="font-cardo">
                     <Button style={{ color: '#ffffff' }} as={Link} to={`/nutrition/${item.ingre}`} variant="outline-info">
-                      <img src={`https://www.themealdb.com/images/ingredients/${item.ingre}-Small.png`} alt="Good pics" /> {item.ingre} : {item.meas}
+                      <img src={`https://www.themealdb.com/images/ingredients/${item.ingre}-Small.png`} alt="Good pics" />{' '}
+                      <span className="font-cardo">
+                        {' '}
+                        {item.ingre} : {item.meas}{' '}
+                      </span>
                     </Button>
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </Stack>
               <br />
             </Col>
             <Col>
-              <h2 className="font-link">Instruction</h2>
+              <h2 className="font-cardo" style={{ fontSize: '35px' }}>
+                Instruction
+              </h2>
               <ol>
                 {instruction.map((item) => (
-                  <li className="font-link" style={{ fontSize: '20px' }}>
-                    {item}
+                  <li>
+                    <span className="font-cardo"> {item} </span>
                   </li>
                 ))}
               </ol>
@@ -309,7 +334,7 @@ function RecipeDetail() {
         <Container fluid="md" style={recipeBackground}>
           <Paper style={{ padding: '40px 20px', backgroundColor: '#303030', color: 'white' }}>
             <Row>
-              <Col className="font-link">
+              <Col className="font-cardo">
                 <Form className="d-flex" onSubmit={saveComment}>
                   <FormControl ref={textInput} type="text" className="me-2" placeholder="Type your comment" aria-label="Search" />
                   <Button onClick={saveComment} variant="outline-success">
@@ -319,7 +344,7 @@ function RecipeDetail() {
               </Col>
               <Col>
                 {commentThread.map((item) => (
-                  <Comment className="font-link" username={item.username} comment={item.comment} email={item.email} datePosted={item.commentDate} />
+                  <Comment className="font-cardo" username={item.username} comment={item.comment} email={item.email} datePosted={item.commentDate} />
                 ))}
               </Col>
             </Row>
