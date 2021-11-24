@@ -583,6 +583,11 @@ def catch_all(path):
 
 @app.route("/landing_page")
 def landing():
+    """[summary]
+
+    Returns:
+        [type]: [description]
+    """
     return flask.render_template("landing.html")
 
 
