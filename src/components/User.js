@@ -38,6 +38,8 @@ import { useScroll } from 'react-use-gesture';
 import { animated, useSpring } from 'react-spring';
 import { calculateBmi, calculateBfp } from './Calculate';
 
+const Swal = require('sweetalert2');
+
 function Users() {
   const [error, setError] = useState('');
   const [data, setData] = useState({ username: '' });
@@ -82,7 +84,14 @@ function Users() {
       .then((result) => {
         setData(result);
         calculateBmi(result);
-        alert('Profile Updated Successfully!');
+        // alert('Profile Updated Successfully!');
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Profile Updated Successfully!',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       })
       .catch((err) => {
         console.error('Request failed', err);

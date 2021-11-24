@@ -16,6 +16,8 @@ import emailjs from 'emailjs-com';
 
 import '../css/Contact.css';
 
+const Swal = require('sweetalert2');
+
 export const Contact = () => {
   const form = useRef();
   const [nameValue, setNameValue] = useState('');
@@ -36,27 +38,47 @@ export const Contact = () => {
     e.preventDefault();
 
     if (emailValue === '') {
-      alert('Please Enter a Return Email');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please Enter a Return Email!',
+      });
       return;
     }
     if (nameValue === '') {
-      alert('Please Enter a Name or UserName');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please Enter a Name or UserName!',
+      });
       return;
     }
     if (messageValue === '') {
-      alert('No Message to Send');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No Message to Send!',
+      });
       return;
     }
     emailjs.sendForm('healthyLifestyle', 'contact_healthyLifestyle', form.current, `${process.env.REACT_APP_UserID}`).then(
       (result) => {
         console.log(result.text);
-        alert('Email Sent!');
+        Swal.fire({
+          icon: 'success',
+          title: 'Email Sent!',
+          text: 'We have received your email!',
+        });
         setNameValue('');
         setEmailValue('');
         setMessageValue('');
       },
       (error) => {
-        alert('Oops, something went wrong');
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Oops, something went wrong!',
+        });
         console.log(error.text);
       },
     );
