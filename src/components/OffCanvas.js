@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-console */
 /* eslint-disable func-names */
@@ -49,15 +50,43 @@ function OffCanvas() {
       setIngredientOptions(val);
     });
   }, []);
+  const [mealList, setMealList] = useState(null);
 
   useEffect(() => {
     const param = [];
+
     if (selectedOption != null) {
       for (let i = 0; i < selectedOption.length; i++) {
-        param.push(selectedOption.value);
+        param.push(selectedOption[i].label);
       }
+
+      const options = {
+        method: 'GET',
+        url: 'https://themealdb.p.rapidapi.com/filter.php',
+        qs: { i: param.join() },
+        headers: {
+          'x-rapidapi-host': 'themealdb.p.rapidapi.com',
+          'x-rapidapi-key': `${process.env.REACT_APP_RapidAPI}`,
+          useQueryString: true,
+        },
+      };
+
+      request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+        const multiIngredients = [];
+        const result = JSON.parse(body).meals;
+
+        if (result != null) {
+          if (result.length !== 107) {
+            for (let i = 0; i < result.length; i++) {
+              multiIngredients.push({ name: result[i].strMeal, image: result[i].strMealThumb });
+            }
+          }
+        }
+        setMealList(multiIngredients);
+      });
     }
-    console.log(param);
+    setMealList(null);
   }, [selectedOption]);
   return (
     <>
@@ -72,6 +101,7 @@ function OffCanvas() {
         <Offcanvas.Body>
           <Select isMulti onChange={setSelectedOption} options={ingredientOptions} />
           {console.log(selectedOption)}
+          {mealList ? mealList.map((item) => <div>{item.name}</div>) : ''}
         </Offcanvas.Body>
       </Offcanvas>
     </>
