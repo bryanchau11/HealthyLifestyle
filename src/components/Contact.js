@@ -85,54 +85,56 @@ export const Contact = () => {
   };
 
   return (
-    <div className="bg-info contact4 overflow-hiddedn position-relative" style={{ height: '60vh' }}>
-      <div className="row no-gutters">
-        <div className="container">
-          <div className="col-lg-6 contact-box mb-4 mb-md-0">
-            <div className="">
-              <h1 className="title font-weight-light text-white mt-2">Contact Us</h1>
-              <form className="mt-3" onSubmit={sendEmail} ref={form}>
-                <div className="row">
-                  <div className="col-lg-12">
-                    <div className="form-group mt-2">
-                      <input className="form-control text-white" type="text" name="from_name" value={nameValue} onChange={handleName} placeholder="Name..." />
+    <div style={{ height: '120vh' }}>
+      <div className="bg-info contact4 overflow-hiddedn position-relative">
+        <div className="row no-gutters">
+          <div className="container">
+            <div className="col-lg-6 contact-box mb-4 mb-md-0">
+              <div className="">
+                <h1 className="title font-weight-light text-white mt-2">Contact Us</h1>
+                <form className="mt-3" onSubmit={sendEmail} ref={form}>
+                  <div className="row">
+                    <div className="col-lg-12">
+                      <div className="form-group mt-2">
+                        <input className="form-control text-white" type="text" name="from_name" value={nameValue} onChange={handleName} placeholder="Name..." />
+                      </div>
+                    </div>
+                    <div className="col-lg-12">
+                      <div className="form-group mt-2">
+                        <input className="form-control text-white" type="email" name="user_email" value={emailValue} onChange={handleEmail} placeholder="Email..." />
+                      </div>
+                    </div>
+                    <div className="col-lg-12">
+                      <div className="form-group mt-2">
+                        <textarea className="form-control text-white" rows="3" name="message" value={messageValue} onChange={handleMessage} placeholder="Message..." />
+                      </div>
+                    </div>
+                    <div className="col-lg-12 d-flex align-items-center mt-2">
+                      <button type="submit" className="btn bg-white text-inverse px-3 py-2" name="Send">
+                        <span> Submit</span>
+                      </button>
+                      <span className="ml-auto text-white align-self-center">
+                        <i className="icon-phone mr-2" />
+                        123 456 7890
+                      </span>
                     </div>
                   </div>
-                  <div className="col-lg-12">
-                    <div className="form-group mt-2">
-                      <input className="form-control text-white" type="email" name="user_email" value={emailValue} onChange={handleEmail} placeholder="Email..." />
-                    </div>
-                  </div>
-                  <div className="col-lg-12">
-                    <div className="form-group mt-2">
-                      <textarea className="form-control text-white" rows="3" name="message" value={messageValue} onChange={handleMessage} placeholder="Message..." />
-                    </div>
-                  </div>
-                  <div className="col-lg-12 d-flex align-items-center mt-2">
-                    <button type="submit" className="btn bg-white text-inverse px-3 py-2" name="Send">
-                      <span> Submit</span>
-                    </button>
-                    <span className="ml-auto text-white align-self-center">
-                      <i className="icon-phone mr-2" />
-                      123 456 7890
-                    </span>
-                  </div>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="col-lg-6 right-image p-r-0">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13269.175977192583!2d-84.3852819!3d33.753068!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x4ac19f9be05c6e97!2sGeorgia%20State%20University!5e0!3m2!1sen!2sus!4v1637605866126!5m2!1sen!2sus"
-            width="100%"
-            height="538"
-            frameBorder="0"
-            style={{ border: '0' }}
-            allowFullScreen
-            data-aos="fade-left"
-            data-aos-duration="3000"
-          />
+          <div className="col-lg-6 right-image p-r-0">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d13269.175977192583!2d-84.3852819!3d33.753068!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x4ac19f9be05c6e97!2sGeorgia%20State%20University!5e0!3m2!1sen!2sus!4v1637605866126!5m2!1sen!2sus"
+              width="100%"
+              height="538"
+              frameBorder="0"
+              style={{ border: '0' }}
+              allowFullScreen
+              data-aos="fade-left"
+              data-aos-duration="3000"
+            />
+          </div>
         </div>
       </div>
     </div>
