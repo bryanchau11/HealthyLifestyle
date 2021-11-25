@@ -15,9 +15,14 @@ const request = require('request');
 
 function OffCanvas() {
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
   const [ingredientOptions, setIngredientOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const handleClose = () => {
+    setShow(false);
+    setSelectedOption([]);
+  };
+  const handleShow = () => setShow(true);
   useEffect(() => {
     const options = {
       method: 'GET',
@@ -45,7 +50,15 @@ function OffCanvas() {
     });
   }, []);
 
-  const [selectedOption, setSelectedOption] = useState(null);
+  useEffect(() => {
+    const param = [];
+    if (selectedOption != null) {
+      for (let i = 0; i < selectedOption.length; i++) {
+        param.push(selectedOption.value);
+      }
+    }
+    console.log(param);
+  }, [selectedOption]);
   return (
     <>
       <Button className="font-nav-bar" variant="success" onClick={handleShow}>
