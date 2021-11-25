@@ -1,9 +1,23 @@
-.footer{
-    margin-top: 1rem;
-    padding: 1rem;
-    background-color: #343a40;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    color: white;
-  }
+footer {
+  background: url('https://i.pinimg.com/originals/fe/88/c3/fe88c30a003fb353dcd6ae4c9cd9bb87.jpg') repeat center;
+  display: table;
+  width: 100vw;
+  height: 8rem;
+  text-align: center;
+  padding: 1rem;
+  font-family: 'Arial', sans-serif;
+  font-size: .875rem;
+}
+
+.wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+footer p {
+  color: #ccc;
+  letter-spacing: .025rem;
+  margin-bottom: 1.5rem;
+  display: block;
+  font-size: 16px;
+}

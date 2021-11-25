@@ -18,6 +18,7 @@ import Search from './components/Search';
 import AreaAndIngredient from './components/AreaAndIngredient';
 import Chatbot from './components/Chatbot';
 import CategoryAndRandom from './components/CategoryAndRandom';
+import Footer from './components/Footer';
 
 const routing = (
   <Router>
@@ -35,7 +36,7 @@ const routing = (
         <Route exact path="/dropdown/:result" element={<AreaAndIngredient />} />
         <Route element={<NotFoundPage />} />
       </Routes>
-      {/* <Footer / > */}
+      <Footer />
       <Chatbot />
     </div>
   </Router>
