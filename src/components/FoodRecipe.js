@@ -320,13 +320,11 @@ function RecipeDetail() {
               <h2 className="font-cardo" style={{ fontSize: '35px' }}>
                 Instruction
               </h2>
-              <ol>
+              <Stack gap={3}>
                 {instruction.map((item) => (
-                  <li>
-                    <span className="font-cardo"> {item} </span>
-                  </li>
+                  <span className="font-cardo">{item}</span>
                 ))}
-              </ol>
+              </Stack>
             </Col>
           </Row>
         </Container>
