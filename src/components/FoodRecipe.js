@@ -130,7 +130,7 @@ function RecipeDetail() {
       setYoutubeLink(videoLink);
       setIngredientAndMeasure(ingredientAndMeasureResult);
     });
-  }, []);
+  }, [foodName]);
   // const [color, setColor] = useState('primary');
   // const [text, setText] = useState('Save Meal');
   function saveMeal() {
@@ -194,7 +194,7 @@ function RecipeDetail() {
       .then((data) => {
         setAvgRating(data.rating);
       });
-  }, [rating]);
+  }, [rating, foodName]);
   // eslint-disable-next-line operator-linebreak
 
   //  Get all comments for a specific food
@@ -228,7 +228,7 @@ function RecipeDetail() {
         }
         setCommentThread(commentThreadList);
       });
-  }, []);
+  }, [foodName]);
   const textInput = useRef(null);
   const saveComment = (event) => {
     event.preventDefault();
