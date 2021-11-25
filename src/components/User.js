@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable no-shadow */
 /* eslint-disable no-alert */
@@ -86,11 +87,10 @@ function Users() {
         calculateBmi(result);
         // alert('Profile Updated Successfully!');
         Swal.fire({
-          position: 'top-end',
           icon: 'success',
           title: 'Profile Updated Successfully!',
           showConfirmButton: false,
-          timer: 1500,
+          timer: 1800,
         });
       })
       .catch((err) => {
@@ -124,54 +124,40 @@ function Users() {
     <div>
       <Container>
         <Row>
-          <div className="container" style={{ color: 'wheat' }}>
-            <div className="row">
-              <div className="form-group mt-2 mb-1 col-4">
-                <h4 className="font-curly">Edit Profile</h4>
-              </div>
-              <br />
-              <div className="col-8">
-                <form>
-                  <div className="form-group mt-1">
-                    <label>
-                      <b>username</b>
-                    </label>
-                    <input type="text" className="form-control" id="username" placeholder="Update username" defaultValue={data.current_user} />
-                  </div>
-                  <div className="form-group mt-1">
-                    <label>
-                      <b>Password</b>
-                    </label>
-                    <input type="password" className="form-control" id="password" placeholder="Update Password" />
-                  </div>
-                  <div className="form-group mt-1">
-                    <label>
-                      <b>Age</b>
-                    </label>
-                    <input type="number" className="form-control" id="age" placeholder="Update Age" min="0" defaultValue={data.age} />
-                  </div>
-                  <div className="form-group mt-1">
-                    <label>
-                      <b>Gender</b>
-                      <br />
-                      <input type="radio" value="M" name="gender" defaultChecked={data.gender === 'M'} /> Male
-                      <input type="radio" value="F" className="ml-1" name="gender" defaultChecked={data.gender === 'F'} /> Female
-                    </label>
-                  </div>
-                  <div className="form-group mt-1">
-                    <label>
-                      <b>Height</b>
-                    </label>
-                    <input type="number" className="form-control" id="height" placeholder="Update Height" min="0" defaultValue={data.height} />
-                    <small className="form-text text-muted">Height in inches</small>
-                  </div>
-                  <div className="form-group mt-1">
-                    <label>
-                      <b>Weight</b>
-                    </label>
-                    <input type="number" className="form-control" id="weight" placeholder="Update Weight" min="0" defaultValue={data.weight} />
-                    <small className="form-text text-muted">Weight in pounds</small>
-                  </div>
+          <div className="shade">
+            <div className="blackboard">
+              <div className="form">
+                <p>
+                  <label>Username: </label>
+                  <input type="text" id="username" placeholder="Update username" defaultValue={data.current_user} />
+                </p>
+                <p>
+                  <label>Password: </label>
+                  <input type="password" id="password" placeholder="Update Password" />
+                </p>
+                <p>
+                  <label>Age: </label>
+                  <input type="number" id="age" placeholder="Update Age" min="0" defaultValue={data.age} />
+                </p>
+                <p>
+                  <label>Gender: </label> <br />
+                  <input type="radio" value="M" name="gender" defaultChecked={data.gender === 'M'} /> <span style={{ color: 'rgba(238, 238, 238, 0.7)' }}> Male </span>
+                  <input type="radio" value="F" name="gender" defaultChecked={data.gender === 'F'} />
+                  <span style={{ color: 'rgba(238, 238, 238, 0.7)' }}> Female </span>
+                </p>
+                <p>
+                  <label>Height: </label>
+
+                  <input type="number" id="height" placeholder="Update Height" min="0" defaultValue={data.height} />
+                  <br />
+                  <small className="form-text text-muted">Height in inches</small>
+                </p>
+                <p>
+                  <label>Weight: </label>
+                  <input type="number" id="weight" placeholder="Update Weight" min="0" defaultValue={data.weight} /> <br />
+                  <small className="form-text text-muted">Weight in pounds</small>
+                </p>
+                <p>
                   <div className="form-group mt-1">
                     <label>
                       <b>Calculated Values</b>
@@ -192,10 +178,12 @@ function Users() {
                   <div className="form-group mt-1">
                     <small className="form-text text-danger">{error}</small>
                   </div>
+                </p>
+                <p className="wipeout">
                   <button type="button" className="btn btn-primary mt-1" onClick={(e) => update(e)}>
                     Update
                   </button>
-                </form>
+                </p>
               </div>
             </div>
           </div>
