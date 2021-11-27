@@ -42,7 +42,7 @@ import Header from './img/header.png';
 
 function App() {
   return (
-    <Container className="header">
+    <Container className="header" style={{ height: '80vh' }}>
       <Row>
         <Col>
           <Row>
