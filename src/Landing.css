@@ -1,13 +1,16 @@
-.header {
-    background-color: white;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+.head1 {
+  padding: 400px 0 350px;
+  background-color: #b0b0b0;
+  background-image: url(https://preview.colorlib.com/theme/foodfun/assets/images/xbanner-bg.jpg.pagespeed.ic.E5Jiux3PYo.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
 }
-.header .prime-color {
+.head1 .prime-color {
     color: rgb(255, 182, 6);
 }
-.header .style-change {
+.head1 .style-change {
     font-style: normal;
 }
 .text-center {
