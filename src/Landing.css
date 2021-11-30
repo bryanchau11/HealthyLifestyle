@@ -1,86 +1,95 @@
-.head1 {
-  padding: 400px 0 350px;
-  background-color: #b0b0b0;
-  background-image: url(https://preview.colorlib.com/theme/foodfun/assets/images/xbanner-bg.jpg.pagespeed.ic.E5Jiux3PYo.jpg);
+.header {
+  background-color: white;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  position: relative;
 }
-.head1 .prime-color {
-    color: rgb(255, 182, 6);
+.header .prime-color {
+  color: rgb(255, 182, 6);
 }
-.head1 .style-change {
-    font-style: normal;
+.header .style-change {
+  font-style: normal;
 }
 .text-center {
-    text-align: center !important;
+  text-align: center !important;
 }
 
 header.masthead {
-    background-color: black;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    padding-top: 8rem;
-    padding-bottom: 8rem;
-    color: wheat;
+  background-color: black;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  color: wheat;
+}
+
+header.masthead .overlay {
+  background-color: black;
+  color: wheat;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+}
+
+
+@media (min-width: 768px) {
+  header.masthead {
+    padding-top: 12rem;
+    padding-bottom: 12rem;
   }
-  
-  header.masthead .overlay {
-    background-color: black;
-    color: wheat;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0.3;
+  header.masthead h1 {
+    font-size: 3rem;
   }
-  
-  
-  @media (min-width: 768px) {
-    header.masthead {
-      padding-top: 12rem;
-      padding-bottom: 12rem;
-    }
-    header.masthead h1 {
-      font-size: 3rem;
-    }
-  }
-  
+}
+
+.showcase .showcase-text {
+  padding: 3rem;
+}
+
+.showcase .showcase-img {
+  min-height: 30rem;
+  background-size: cover;
+}
+
+@media (min-width: 768px) {
   .showcase .showcase-text {
-    padding: 3rem;
+    padding: 7rem;
   }
-  
-  .showcase .showcase-img {
-    min-height: 30rem;
-    background-size: cover;
-  }
-  
-  @media (min-width: 768px) {
-    .showcase .showcase-text {
-      padding: 7rem;
-    }
-  }
-  
-  .features-icons {
-    padding-top: 7rem;
-    padding-bottom: 7rem;
-  }
-  
-  .features-icons .features-icons-item {
-    max-width: 20rem;
-  }
-  
-  .features-icons .features-icons-item .features-icons-icon {
-    height: 7rem;
-  }
-  
-  .features-icons .features-icons-item .features-icons-icon i {
-    font-size: 4.5rem;
-  }
-  
-  .features-icons .features-icons-item:hover .features-icons-icon i {
-    font-size: 5rem;
-  }
+}
+
+.features-icons {
+  padding-top: 7rem;
+  padding-bottom: 7rem;
+}
+
+.features-icons .features-icons-item {
+  max-width: 20rem;
+}
+
+.features-icons .features-icons-item .features-icons-icon {
+  height: 7rem;
+}
+
+.features-icons .features-icons-item .features-icons-icon i {
+  font-size: 4.5rem;
+}
+
+.features-icons .features-icons-item:hover .features-icons-icon i {
+  font-size: 5rem;
+}
+
+.centered{
+  margin: 0 auto;
+  width: 80%;
+}
+
+@media screen and (min-width: 480px) {
+  .centered{
+        margin: 0 auto;
+        width: 80%;
+      }
+}
