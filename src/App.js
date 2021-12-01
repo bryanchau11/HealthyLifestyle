@@ -73,8 +73,8 @@ function App() {
                   <img src={Landing1} style={{ maxHeight: '100%', maxWidth: '100%' }} alt="Header" />
                 </div>
                 <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-                  <h2>What functionality is</h2>
-                  <p class="lead mb-0">Content To be added</p>
+                  <h2>FUNCTIONALITY</h2>
+                  <p class="lead mb-0">Our app allows users to create a healthy meal prep for themselves. Our app can display foods by the area and their nutritional value; the user can also choose a recipe and cook that meal. Another feature is our EAT list and a link to YouTube where they can be taught how to cook a specific meal of their choosing. The food review/nutrition website may be an option for people on a diet to get recommended what to eat and daily nutrition. Other functionalities are the Chatbot, search filter, search box, multi-ingredients, comment on the food, rate food, and contact page. Our app displays the specific ingredients for specific dishes and filters by a particular category. Our app also has a function to calculate BMI and body fat percentage.</p>
                 </div>
               </div>
               <div class="row no-gutters">
@@ -82,8 +82,8 @@ function App() {
                   <img src={Landing2} style={{ maxHeight: '100%', maxWidth: '100%' }} alt="Header" />
                 </div>
                 <div class="col-lg-6 my-auto showcase-text">
-                  <h2>Why it matter</h2>
-                  <p class="lead mb-0">Content To be added</p>
+                  <h2>WHY IT MATTERS</h2>
+                  <p class="lead mb-0">These functionalities allow our users to choose a specific meal plan that works for them. Each function assists with the process of picking a meal that will work well with their diet. These functions matter because this gives our users options to make the best choice for their health. This enables our users to create a meal plan consistently with the assistance of visual aids to make their diet goals a reality.</p>
                 </div>
               </div>
               <div class="row no-gutters">
