@@ -68,9 +68,8 @@ function App() {
                 <div class="col-lg-6 order-lg-1 my-auto showcase-text">
                   <h2>FUNCTIONALITY</h2>
                   <p class="lead mb-0">
-                    Our app allows users to create a healthy meal prep for themselves. Our app can display foods by the area and their nutritional value; the user can also choose a recipe and cook that meal. Another feature is our EAT list and a link to YouTube where they can be taught how to cook a
-                    specific meal of their choosing. The food review/nutrition website may be an option for people on a diet to get recommended what to eat and daily nutrition. Other functionalities are the Chatbot, search filter, search box, multi-ingredients, comment on the food, rate food, and
-                    contact page. Our app displays the specific ingredients for specific dishes and filters by a particular category. Our app also has a function to calculate BMI and body fat percentage.
+                    Our app can display foods by the area and their nutritional value; the user can also choose a recipe and cook that meal. Another feature is our EAT list and a link to YouTube where they can be taught how to cook a specific meal of their choosing. Other functionalities are the
+                    Chatbot, search filter, search box, multi-ingredients, comment on the food, rate food, and contact page. Our app displays the specific ingredients for specific dishes and filters by a particular category. Our app also has a function to calculate BMI and body fat percentage.
                   </p>
                 </div>
               </div>
@@ -91,8 +90,11 @@ function App() {
                   <img src={Landing3} style={{ maxHeight: '100%', maxWidth: '100%' }} alt="Header" />
                 </div>
                 <div class="col-lg-6 order-lg-1 my-auto showcase-text">
-                  <h2>Our Meal Plans</h2>
-                  <p class="lead mb-0">Content To be added</p>
+                  <h2>OUR MISSION STATEMENT</h2>
+                  <p class="lead mb-0">
+                    Our end goal Healthy Lifestyle app seeks to create healthy and delicious meal plan options for our users. We strive to give our users consistent options to regulate their dietary needs. Our overall goal is to enable users to choose what’s best for their daily nutritional intake
+                    by utilizing the BMI and Body Fat Percentage calculators.
+                  </p>
                 </div>
               </div>
             </div>
