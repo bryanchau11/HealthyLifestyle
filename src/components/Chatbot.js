@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-console */
 /* eslint-disable prefer-arrow-callback */
@@ -15,6 +16,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ChatBot from 'react-simple-chatbot';
 import '../App.css';
+import { ThemeProvider } from 'styled-components';
 
 const request = require('request');
 
@@ -266,7 +268,29 @@ function Chatbot() {
     },
   ];
   // const popover = <Popover id="popover-basic"></Popover>;
-  // eslint-disable-next-line react/jsx-props-no-spreading
-  return <ChatBot headerTitle="Waifu Bot" recognitionEnable="true" steps={steps} {...config} />;
+  const theme = {
+    background: '#f5f8fb',
+    fontFamily: 'Helvetica Neue',
+    headerBgColor: '#EF6C00',
+    headerFontColor: '#fff',
+    headerFontSize: '15px',
+    botBubbleColor: '#EF6C00',
+    botFontColor: '#fff',
+    userBubbleColor: '#fff',
+    userFontColor: 'black',
+  };
+  return (
+    <ThemeProvider theme={theme}>
+      {' '}
+      <ChatBot
+        inputStyle={{ color: 'black' }}
+        headerTitle="Waifu Bot"
+        recognitionEnable="true"
+        steps={steps}
+        {...config}
+        botAvatar="https://cdn.vox-cdn.com/thumbor/IKk7n7EelJ1tJhAxBtAcJlOxSdQ=/0x0:4000x2667/1200x800/filters:focal(1525x402:2165x1042)/cdn.vox-cdn.com/uploads/chorus_image/image/69237422/1231446945.0.jpg"
+      />
+    </ThemeProvider>
+  );
 }
 export default Chatbot;
