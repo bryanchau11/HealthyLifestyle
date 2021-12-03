@@ -59,6 +59,18 @@ class AppDBTest(unittest.TestCase):
         """[summary]"""
         pass
 
+    def test_save_meal(self):
+        with patch("app.db.session.add", self.mock_add_to_db):
+            with patch("app.db.session.commit", self.mock_db_commit):
+                mock_filtered = MagicMock()
+                mock_filtered.all.return_value = self.db_mock
+                self.mock_add_to_db(
+                    Food(email="this is an email", food="This is the 3rd meal")
+                )
+                self.mock_db_commit()
+                self.assertEqual(len(self.db_mock), 3)
+                self.assertEqual(self.db_mock[2].food, "This is the 3rd meal")
+
     def test_delete_meal_db(self):
         """[summary]"""
         with patch("app.Food.query") as mock_query:
