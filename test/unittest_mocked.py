@@ -60,6 +60,7 @@ class AppDBTest(unittest.TestCase):
         pass
 
     def test_save_meal(self):
+        """[summary]"""
         with patch("app.db.session.add", self.mock_add_to_db):
             with patch("app.db.session.commit", self.mock_db_commit):
                 mock_filtered = MagicMock()
@@ -135,6 +136,12 @@ class recommendedMealsTest(unittest.TestCase):
 
 
 class userTests(unittest.TestCase):
+    """[summary]
+
+    Args:
+        unittest ([type]): [description]
+    """
+
     def setUp(self):
         self.db_mock = [
             User(
@@ -170,6 +177,7 @@ class userTests(unittest.TestCase):
         pass
 
     def test_signup(self):
+        """[summary]"""
         with patch("app.db.session.add", self.mock_add_to_db):
             with patch("app.db.session.commit", self.mock_db_commit):
                 mock_filtered = MagicMock()
@@ -177,12 +185,12 @@ class userTests(unittest.TestCase):
                 self.mock_add_to_db(
                     User(email="email3", username="user3", password="pass3")
                 )
-                self.mock_db_commit
 
                 self.assertEqual(len(self.db_mock), 3)
                 self.assertEqual(self.db_mock[2].email, "email3")
 
     def test_change_user_info(self):
+        """[summary]"""
         with patch("app.db.session.commit", self.mock_db_commit):
             mock_filtered = MagicMock()
             mock_filtered.all.return_value = self.db_mock
@@ -190,7 +198,6 @@ class userTests(unittest.TestCase):
             self.db_mock[0].height = "72"
             self.db_mock[0].weight = "130"
             self.db_mock[0].age = "22"
-            self.mock_db_commit
 
             self.assertEqual(
                 self.db_mock[0],
