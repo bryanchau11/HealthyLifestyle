@@ -22,7 +22,7 @@ parent = os.path.dirname(current)
 # the sys.path.
 sys.path.append(parent)
 from function.recommendedMeals import get_meal
-from app import delete_meal_db, Food
+from app import delete_meal_db, Food, User
 
 
 class AppDBTest(unittest.TestCase):
@@ -58,6 +58,20 @@ class AppDBTest(unittest.TestCase):
     def mock_db_commit(self):
         """[summary]"""
         pass
+
+    def test_save_meal(self):
+        """[summary]"""
+        with patch("app.db.session.add", self.mock_add_to_db):
+            with patch("app.db.session.commit", self.mock_db_commit):
+                mock_filtered = MagicMock()
+                mock_filtered.all.return_value = self.db_mock
+                self.mock_add_to_db(
+                    Food(email="this is an email", food="This is the 3rd meal")
+                )
+                self.mock_db_commit()
+
+                self.assertEqual(len(self.db_mock), 3)
+                self.assertEqual(self.db_mock[2].food, "This is the 3rd meal")
 
     def test_delete_meal_db(self):
         """[summary]"""
@@ -118,6 +132,83 @@ class recommendedMealsTest(unittest.TestCase):
             self.assertEqual(
                 get_meal("Beef and Mustard Pie")[1],
                 "https://www.themealdb.com/images/media/meals/sytuqu1511553755.jpg",
+            )
+
+
+class userTests(unittest.TestCase):
+    """[summary]
+
+    Args:
+        unittest ([type]): [description]
+    """
+
+    def setUp(self):
+        self.db_mock = [
+            User(
+                email="email1",
+                username="user1",
+                password="pass1",
+            ),
+            User(
+                email="email2",
+                username="user2",
+                password="pass2",
+            ),
+        ]
+
+    def mock_add_to_db(self, user):
+        """[summary]
+
+        Args:
+            meal ([type]): [description]
+        """
+        self.db_mock.append(user)
+
+    def mock_delete_from_db(self, user):
+        """[summary]
+
+        Args:
+            meal ([type]): [description]
+        """
+        self.db_mock = [entry for entry in self.db_mock if entry.email != user.email]
+
+    def mock_db_commit(self):
+        """[summary]"""
+        pass
+
+    def test_signup(self):
+        """[summary]"""
+        with patch("app.db.session.add", self.mock_add_to_db):
+            with patch("app.db.session.commit", self.mock_db_commit):
+                mock_filtered = MagicMock()
+                mock_filtered.all.return_value = self.db_mock
+                self.mock_add_to_db(
+                    User(email="email3", username="user3", password="pass3")
+                )
+
+                self.assertEqual(len(self.db_mock), 3)
+                self.assertEqual(self.db_mock[2].email, "email3")
+
+    def test_change_user_info(self):
+        """[summary]"""
+        with patch("app.db.session.commit", self.mock_db_commit):
+            mock_filtered = MagicMock()
+            mock_filtered.all.return_value = self.db_mock
+            self.db_mock[0].username = "test"
+            self.db_mock[0].height = "72"
+            self.db_mock[0].weight = "130"
+            self.db_mock[0].age = "22"
+
+            self.assertEqual(
+                self.db_mock[0],
+                User(
+                    email="email1",
+                    username="test",
+                    password="pass1",
+                    height="72",
+                    weight="130",
+                    age="22",
+                ),
             )
 
 
